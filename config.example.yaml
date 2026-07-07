@@ -10,7 +10,7 @@
 paths:
   # 卡牌图片源目录（包含各卡包子目录的根目录）
   # 该目录由上游采集工具 kadong_cards_crawler 生成（见 README 「关联项目」）
-  source_dir: "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦"
+  source_dir: "<你的本地图片目录绝对路径（真实值已存入 config.yaml）>"
   # data.js 输出路径（默认项目根目录下）
   output_file: "data.js"
 

@@ -157,16 +157,9 @@ def generate_card_id(pack_full_name, card_name):
     return hashlib.md5(raw.encode('utf-8')).hexdigest()[:16]
 
 
-def load_config():
-    """加载同目录 config.yaml（可选）覆盖脚本内置默认值。
-
-    返回 (cfg, loaded)。cfg 含 source_dir / output_file / image_extensions /
-    pack_order / rarity_order。未提供配置文件或缺少 PyYAML 时回退到内置默认值。
-    """
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    config_path = os.path.join(script_dir, "config.yaml")
-
-    cfg = {
+def _default_cfg():
+    """脚本内置默认配置。"""
+    return {
         "source_dir": SOURCE_DIR,
         "output_file": OUTPUT_FILE,
         "image_extensions": IMAGE_EXTENSIONS,
@@ -174,21 +167,39 @@ def load_config():
         "rarity_order": RARITY_ORDER,
     }
 
-    if not os.path.exists(config_path):
-        return cfg, False
+
+def load_config():
+    """加载同目录 config.yaml（可选）覆盖脚本内置默认值。
+
+    优先级：本地 config.yaml > config.example.yaml > 内置默认值。
+    返回 (cfg, loaded)。cfg 含 source_dir / output_file / image_extensions /
+    pack_order / rarity_order。未提供配置文件或缺少 PyYAML 时回退到内置默认值。
+    """
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    local_path = os.path.join(script_dir, "config.yaml")
+    example_path = os.path.join(script_dir, "config.example.yaml")
+
+    # 优先本地 config.yaml，读不到回退 config.example.yaml
+    if os.path.exists(local_path):
+        used_path = local_path
+    elif os.path.exists(example_path):
+        used_path = example_path
+    else:
+        return _default_cfg(), False
 
     if yaml is None:
-        print("[WARN] 未检测到 PyYAML，无法读取 config.yaml，将使用脚本内置默认值。")
+        print("[WARN] 未检测到 PyYAML，无法读取配置文件，将使用脚本内置默认值。")
         print("       如需使用配置文件，请先安装依赖: pip install pyyaml")
-        return cfg, False
+        return _default_cfg(), False
 
     try:
-        with open(config_path, "r", encoding="utf-8") as f:
+        with open(used_path, "r", encoding="utf-8") as f:
             user_cfg = yaml.safe_load(f) or {}
     except Exception as e:
-        print(f"[WARN] 读取 config.yaml 失败（{e}），回退到内置默认值。")
-        return cfg, False
+        print(f"[WARN] 读取配置文件失败（{e}），回退到内置默认值。")
+        return _default_cfg(), False
 
+    cfg = _default_cfg()
     paths = user_cfg.get("paths", {}) or {}
     scan = user_cfg.get("scan", {}) or {}
 
@@ -204,6 +215,7 @@ def load_config():
     if user_cfg.get("rarity_order"):
         cfg["rarity_order"] = list(user_cfg["rarity_order"])
 
+    print(f"[INFO] 已加载配置文件: {os.path.basename(used_path)}")
     return cfg, True
 
 
@@ -219,9 +231,6 @@ def main():
     global PACK_RANK, RARITY_RANK
     PACK_RANK = {name: i for i, name in enumerate(pack_order)}
     RARITY_RANK = {r: i for i, r in enumerate(rarity_order)}
-
-    if loaded:
-        print("[INFO] 已加载配置文件: config.yaml")
 
     if not os.path.isdir(source_dir):
         print(f"错误：源目录不存在: {source_dir}")
