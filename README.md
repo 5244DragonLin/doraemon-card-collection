@@ -1,6 +1,6 @@
 # doraemon-card-collection
 
-基于纯前端（原生 HTML/CSS/JS，零构建）的哆啦A梦正版卡牌收藏管理网站，支持真 3D Coverflow 圆环预览、卡包/级别分层浏览、收藏进度与本地持久化，**双击 `index.html` 即可离线使用**。
+基于纯前端（原生 HTML/CSS/JS，零构建）的哆啦A梦正版卡牌收藏管理网站，支持真 3D Coverflow 圆环预览、卡包/级别分层浏览、收藏进度与本地持久化。
 
 ## 为什么需要？
 
@@ -23,13 +23,9 @@
 
 ## 🖼️项目预览
 
-> 把网站截图放进 `screenshots/` 目录，替换下面的示例路径即可（建议 PNG 格式，文件名可自定义）。
+![image-20260707111340818](https://gitee.com/yhl5244/images/raw/master/image-20260707111340818.png)
 
-![首页卡牌网格浏览](screenshots/home.png)
-
-![3D Coverflow 圆环预览](screenshots/coverflow.png)
-
-![卡牌收藏与进度](screenshots/collection.png)
+![image-20260707111348807](https://gitee.com/yhl5244/images/raw/master/image-20260707111348807.png)
 
 ## 🚀快速开始
 
@@ -37,10 +33,10 @@
 
 ```bash
 # Gitee 镜像（国内访问快）
-git clone https://gitee.com/<your-username>/doraemon-card-collection.git
+git clone https://gitee.com/yhl5244/doraemon-card-collection.git
 
 # GitHub 原仓库
-git clone https://github.com/<your-username>/doraemon-card-collection.git
+git clone https://github.com/5244DragonLin/doraemon-card-collection.git
 
 cd doraemon-card-collection
 ```
