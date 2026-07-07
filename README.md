@@ -2,6 +2,12 @@
 
 基于纯前端（原生 HTML/CSS/JS，零构建）的哆啦A梦正版卡牌收藏管理网站，支持真 3D Coverflow 圆环预览、卡包/级别分层浏览、收藏进度与本地持久化。
 
+## 🖼️项目预览
+
+![项目预览图1](./assets/image-20260707111340818.png)
+
+![项目预览图2](./assets/image-20260707111348807.png)
+
 ## 为什么需要？
 
 - 哆啦A梦卡牌散落在大量图鉴文件夹中，难一眼览尽已收集情况
@@ -20,12 +26,6 @@
 - **检索筛选**：实时搜索 + 只看未拥有，快速定位缺口
 - **进度可视化**：总进度 + 卡包进度条 + 级别进度
 - **零依赖离线**：纯前端无构建，`file://` 直接打开，数据内联规避 CORS
-
-## 🖼️项目预览
-
-![项目预览图1](./assets/image-20260707111340818.png)
-
-![项目预览图2](./assets/image-20260707111348807.png)
 
 ## 🚀快速开始
 
@@ -90,16 +90,6 @@ rarity_order: [ ... ]    # 级别排序（从低到高，30 项）
 
 > 若未提供 `config.yaml`，脚本回退到内置默认值；读取配置文件需要 PyYAML（`pip install pyyaml`）。
 
-## 配置说明
-
-| 配置项（config.yaml 字段） | 说明 | 默认值 |
-|------|------|--------|
-| `paths.source_dir` | 卡牌图片源目录（含各卡包子目录）；应指向 kadong_cards_crawler 的输出目录 | `E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦` |
-| `paths.output_file` | `data.js` 输出路径（相对脚本目录或绝对路径） | 脚本同目录 `data.js` |
-| `scan.image_extensions` | 扫描的图片扩展名 | `.png`, `.jpg`, `.jpeg` |
-| `pack_order` | 卡包自定义排序（15 项） | 内置卡牌 / 周边顺序 |
-| `rarity_order` | 级别排序表（从低到高，30 项） | `R` ~ `金属卡` |
-
 ## 项目结构
 
 ```text
@@ -127,6 +117,16 @@ Script 加载顺序：
 <script src="app.js"></script>      <!-- 3. 核心逻辑 → App + CollectionStore -->
 <script src="carousel.js"></script> <!-- 4. 圆环模块 → CoverflowCarousel -->
 ```
+
+## 配置说明
+
+| 配置项（config.yaml 字段） | 说明 | 默认值 |
+|------|------|--------|
+| `paths.source_dir` | 卡牌图片源目录（含各卡包子目录）；应指向 kadong_cards_crawler 的输出目录 | `E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦` |
+| `paths.output_file` | `data.js` 输出路径（相对脚本目录或绝对路径） | 脚本同目录 `data.js` |
+| `scan.image_extensions` | 扫描的图片扩展名 | `.png`, `.jpg`, `.jpeg` |
+| `pack_order` | 卡包自定义排序（15 项） | 内置卡牌 / 周边顺序 |
+| `rarity_order` | 级别排序表（从低到高，30 项） | `R` ~ `金属卡` |
 
 ## ❓️FAQ
 
@@ -182,19 +182,13 @@ Script 加载顺序：
 
 ## 🔗关联项目
 
-本项目自身只做展示与收藏管理，**卡牌数据来自上游采集工具 [kadong_cards_crawler](https://gitee.com/yhl5244/kadong_cards_crawler)**：它会把哆啦A梦（卡动文创）正版卡牌图鉴爬取 / 整理到本地目录，本项目的 `generate_data.py` 再扫描该目录生成 `data.js`。
+本项目自身只做展示与收藏管理，卡牌数据来自上游采集工具：
 
-- GitHub 原仓库：https://github.com/5244DragonLin/kadong_cards_crawler
-
-- Gitee 镜像：https://gitee.com/yhl5244/kadong_cards_crawler
+- **[kadong_cards_crawler](https://github.com/5244DragonLin/kadong_cards_crawler)** — 哆啦A梦（卡动文创）正版卡牌图鉴爬取/整理工具，本项目的 `data.js` 数据源
+  - GitHub：https://github.com/5244DragonLin/kadong_cards_crawler
+  - Gitee：https://gitee.com/yhl5244/kadong_cards_crawler
 
 > 使用前请先克隆并运行 kadong_cards_crawler 获取图鉴目录，再在 `config.yaml`（`config.example.yaml` 复制而来）中将 `paths.source_dir` 指向它的输出目录，最后运行 `python generate_data.py`。
-
-## ⚠️免责声明
-
-本项目为个人收藏与学习用途的辅助工具，所有哆啦A梦卡牌图片及 IP 版权归原作者及权利方所有。
-
-项目不对图片做任何重新分发；数据由使用者本地的图鉴目录生成。因使用本工具产生的一切后果由使用者自行承担，作者不承担任何法律责任。
 
 ## ☕捐赠
 
@@ -203,6 +197,12 @@ Script 加载顺序：
 | 支付宝 | 微信 |
 |--------|------|
 | ![支付宝](./assets/donate_alipay.jpg) | ![微信](./assets/donate_wechat.jpg) |
+
+## ⚠️免责声明
+
+本项目为个人收藏与学习用途的辅助工具，所有哆啦A梦卡牌图片及 IP 版权归原作者及权利方所有。
+
+项目不对图片做任何重新分发；数据由使用者本地的图鉴目录生成。因使用本工具产生的一切后果由使用者自行承担，作者不承担任何法律责任。
 
 ## 📃许可证
 
