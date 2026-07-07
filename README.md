@@ -1,4 +1,4 @@
-# doraemon-card-collection
+﻿# doraemon-card-collection
 
 基于纯前端（原生 HTML/CSS/JS，零构建）的哆啦A梦正版卡牌收藏管理网站，支持真 3D Coverflow 圆环预览、卡包/级别分层浏览、收藏进度与本地持久化。
 
@@ -23,9 +23,9 @@
 
 ## 🖼️项目预览
 
-![image-20260707111340818](https://gitee.com/yhl5244/images/raw/master/image-20260707111340818.png)
+![项目预览图1](./screenshots/image-20260707111340818.png)
 
-![image-20260707111348807](https://gitee.com/yhl5244/images/raw/master/image-20260707111348807.png)
+![项目预览图2](./screenshots/image-20260707111348807.png)
 
 ## 🚀快速开始
 
