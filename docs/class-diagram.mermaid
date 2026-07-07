@@ -1,0 +1,98 @@
+classDiagram
+    class DoraemonData {
+        +Meta meta
+        +List~Pack~ packs
+    }
+
+    class Meta {
+        +String generatedAt
+        +String sourceDir
+        +int totalPacks
+        +int totalCards
+        +String version
+    }
+
+    class Pack {
+        +String id
+        +String type
+        +String name
+        +String fullName
+        +int cardCount
+        +List~Card~ cards
+    }
+
+    class Card {
+        +String id
+        +String name
+        +String rarity
+        +String rarityName
+        +String number
+        +String path
+        +String fileExt
+    }
+
+    class AppConfig {
+        +List~String~ RARITY_ORDER
+        +Map RARITY_RANK
+        +Map LEVEL_COLORS
+        +String STORAGE_KEY
+        +Object COVERFLOW
+        +Object ANIMATION
+    }
+
+    class CollectionStore {
+        -Set ownedIds
+        +load() void
+        +isOwned(cardId) bool
+        +toggle(cardId) void
+        +getOwnedCount(pack) int
+        +getTotalOwned() int
+        +exportData() Object
+        +importData(data) void
+    }
+
+    class App {
+        -DoraemonData data
+        -CollectionStore store
+        -int currentPackIndex
+        -string searchFilter
+        +init() void
+        +renderSidebar() void
+        +renderMobileTabs() void
+        +selectPack(idx) void
+        +renderPackView() void
+        +updateAllProgress() void
+        +onSearchInput(text) void
+        +openCardPreview(card) void
+        +onOwnedChanged(cardId) void
+        +exportOwned() void
+        +importOwned() void
+    }
+
+    class CoverflowCarousel {
+        -List~Card~ cards
+        -float virtualIndex
+        -bool isDragging
+        -float dragStartX
+        -float dragStartIndex
+        +open(card, allCards) void
+        +close() void
+        +render() void
+        +navigate(direction) void
+        +onDragStart(e) void
+        +onDragMove(e) void
+        +onDragEnd(e) void
+        +snapToNearest() void
+        +updateCenterContent() void
+        +toggleOwned() void
+    }
+
+    DoraemonData *-- Meta
+    DoraemonData *-- Pack
+    Pack *-- Card
+    App --> DoraemonData : reads
+    App --> CollectionStore : manages
+    App --> CoverflowCarousel : opens
+    CoverflowCarousel --> CollectionStore : syncs owned
+    AppConfig <-- App : references
+    AppConfig <-- CoverflowCarousel : references

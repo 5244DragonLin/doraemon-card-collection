@@ -1,0 +1,96 @@
+sequenceDiagram
+    participant User as 用户
+    participant HTML as index.html
+    participant DataJS as data.js
+    participant Config as config.js
+    participant App as app.js (App)
+    participant Carousel as carousel.js (Coverflow)
+    participant Store as CollectionStore
+    participant LS as localStorage
+
+    Note over User,LS: ========== 阶段1：页面加载 ==========
+    User->>HTML: 双击 index.html (file://)
+    HTML->>DataJS: <script src="data.js">
+    DataJS-->>HTML: window.DORAEMON_DATA 就绪
+    HTML->>Config: <script src="config.js">
+    Config-->>HTML: window.AppConfig 就绪
+    HTML->>App: <script src="app.js">
+    HTML->>Carousel: <script src="carousel.js">
+    App->>App: App.init()
+    App->>Store: CollectionStore.load()
+    Store->>LS: getItem('doraemon_collection_v2')
+    LS-->>Store: {"ownedIds": [...]}
+    Store-->>App: ownedIds Set 就绪
+
+    App->>App: renderSidebar() 渲染卡包列表
+    App->>App: renderMobileTabs() 渲染移动端标签
+    App->>App: updateAllProgress() 更新Header总进度
+    App->>App: selectPack(0) 选中第一个卡包
+    App->>App: renderPackView() 按级别分组渲染卡牌
+    Note over App: IntersectionObserver 触发卡牌入场动画
+    App-->>User: 显示首页（暖色调 + 卡包列表 + 卡牌网格）
+
+    Note over User,LS: ========== 阶段2：切换卡包 ==========
+    User->>App: 点击侧边栏卡包项
+    App->>App: selectPack(idx)
+    App->>App: renderPackView() 重新渲染
+    App-->>User: 切换卡包，显示新卡牌（入场动画）
+
+    Note over User,LS: ========== 阶段3：搜索过滤 ==========
+    User->>App: 搜索框输入文字
+    App->>App: onSearchInput(text)
+    App->>App: renderPackView(text) 过滤渲染
+    App-->>User: 实时显示匹配卡牌
+
+    Note over User,LS: ========== 阶段4：打开3D圆环预览 ==========
+    User->>App: 点击卡牌
+    App->>App: openCardPreview(card)
+    App->>Carousel: CoverflowCarousel.open(card, packCards)
+    Carousel->>Carousel: 设置 cards 数组，virtualIndex = cardIndex
+    Carousel->>Carousel: render() 3D Coverflow 排列
+    Note over Carousel: 每张卡牌按 offset 计算<br/>rotateY/translateZ/scale/opacity/blur
+    Carousel->>Carousel: updateCenterContent() 显示居中卡牌大图+信息
+    Carousel-->>User: 弹出3D圆环预览弹窗（缩放淡入动画）
+
+    Note over User,LS: ========== 阶段5：拖拽浏览 ==========
+    User->>Carousel: 鼠标按住横向拖拽
+    Carousel->>Carousel: onDragStart(e) 记录起点，禁用transition
+    User->>Carousel: 鼠标移动
+    Carousel->>Carousel: onDragMove(e) 更新virtualIndex（连续浮点）
+    Carousel->>Carousel: render() 实时重排（无过渡，跟手）
+    User->>Carousel: 松手
+    Carousel->>Carousel: onDragEnd() snapToNearest()
+    Carousel->>Carousel: Math.round(virtualIndex) 吸附
+    Carousel->>Carousel: 启用transition，render() 平滑过渡
+    Carousel->>Carousel: updateCenterContent() 更新居中卡牌
+    Carousel-->>User: 居中显示目标卡牌（3D过渡动画）
+
+    Note over User,LS: ========== 阶段6：键盘导航 ==========
+    User->>Carousel: 按 ← / → 键
+    Carousel->>Carousel: navigate(±1)
+    Carousel->>Carousel: virtualIndex ± 1，clamp边界
+    Carousel->>Carousel: render() + updateCenterContent()
+    Carousel-->>User: 切换卡牌
+
+    Note over User,LS: ========== 阶段7：标记拥有 ==========
+    User->>Carousel: 点击"标记拥有"按钮
+    Carousel->>Store: CollectionStore.toggle(cardId)
+    Store->>LS: setItem('doraemon_collection_v2', JSON.stringify)
+    Store-->>Carousel: 返回新状态
+    Carousel->>Carousel: 更新弹窗内按钮状态（弹跳星标动画）
+    Carousel->>App: App.onOwnedChanged(cardId)
+    App->>App: updateAllProgress() 更新Header+卡包进度
+    App->>App: renderPackView() 更新列表页卡牌样式
+    App-->>User: 列表页与弹窗状态同步
+
+    Note over User,LS: ========== 阶段8：导入导出 ==========
+    User->>App: 点击"导出"
+    App->>Store: CollectionStore.exportData()
+    Store-->>App: {ownedIds: [...], exportedAt: "..."}
+    App->>User: 下载 JSON 文件
+
+    User->>App: 点击"导入" → 选择 JSON 文件
+    App->>Store: CollectionStore.importData(data)
+    Store->>LS: 合并 ownedIds，setItem
+    App->>App: 全量重渲染（Sidebar + PackView + Progress）
+    App-->>User: 收藏数据恢复

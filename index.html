@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>哆啦A梦卡牌收藏站 · 3D Coverflow</title>
+<link rel="icon" type="image/svg+xml" href="favicons/favicon.svg">
+<link rel="icon" type="image/x-icon" href="favicons/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="24x24" href="favicons/favicon-24x24.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="48x48" href="favicons/favicon-48x48.png">
+<link rel="icon" type="image/png" sizes="256x256" href="favicons/favicon-256x256.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ========== 背景装饰 ========== -->
+<div class="bg-decoration" aria-hidden="true">
+  <div class="bg-element bg-el-1">🔔</div>
+  <div class="bg-element bg-el-2">⭐</div>
+  <div class="bg-element bg-el-3">🔔</div>
+  <div class="bg-element bg-el-4">✨</div>
+  <div class="bg-element bg-el-5">💫</div>
+  <div class="bg-element bg-el-6">⭐</div>
+  <div class="bg-element bg-el-7">🌟</div>
+  <div class="bg-element bg-el-8">🔔</div>
+</div>
+
+<!-- ========== Header ========== -->
+<header class="header">
+  <div class="header-left">
+    <div class="bell"></div>
+    <span class="header-title">哆啦A梦卡牌收藏站</span>
+  </div>
+  <div class="header-stats" id="headerStats">加载中...</div>
+</header>
+
+<!-- ========== App Container ========== -->
+<div class="app-container">
+
+  <!-- Sidebar（桌面端卡包列表） -->
+  <nav class="sidebar" id="sidebar"></nav>
+
+  <!-- Mobile Tabs（移动端横向标签） -->
+  <div class="mobile-tabs" id="mobileTabs"></div>
+
+  <!-- Main Content -->
+  <main class="main-content" id="mainContent">
+    <!-- 搜索栏 -->
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="搜索卡牌名称...">
+    </div>
+    <!-- 工具栏 -->
+    <div class="toolbar">
+      <button id="btnExport" class="toolbar-btn">📤 导出收藏</button>
+      <button id="btnImport" class="toolbar-btn">📥 导入收藏</button>
+      <button id="btnFilter" class="toolbar-btn">🏷️ 全部显示</button>
+    </div>
+    <!-- 卡牌视图 -->
+    <div id="packView">
+      <p class="loading-text">加载中...</p>
+    </div>
+  </main>
+
+</div>
+
+<!-- ========== 3D 圆环预览弹窗 ========== -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-content" id="modalContent">
+
+    <!-- 关闭按钮 -->
+    <button class="modal-close" id="modalClose" title="关闭 (Esc)">&times;</button>
+
+    <!-- 居中卡牌大图区 -->
+    <div class="modal-main-img" id="modalMainImg"></div>
+
+    <!-- 卡牌信息区 -->
+    <div class="modal-info" id="modalInfo"></div>
+
+    <!-- 3D Coverflow 圆环区 -->
+    <div class="coverflow-container" id="coverflowContainer">
+      <div class="coverflow-track" id="coverflowTrack"></div>
+      <button class="coverflow-arrow left" id="coverflowLeft" title="上一张">&#8249;</button>
+      <button class="coverflow-arrow right" id="coverflowRight" title="下一张">&#8250;</button>
+    </div>
+
+    <!-- 计数器 -->
+    <div class="coverflow-counter" id="coverflowCounter"></div>
+
+  </div>
+</div>
+
+<!-- ========== Footer ========== -->
+<div class="footer">
+  &copy; 2026 哆啦A梦卡牌收藏站 · 仅供个人收藏使用
+</div>
+
+<!-- ========== 全屏图片查看弹窗 ========== -->
+<div class="lightbox-overlay" id="lightboxOverlay">
+  <button class="lightbox-close" id="lightboxClose" title="关闭">&times;</button>
+  <img class="lightbox-img" id="lightboxImg" alt="">
+</div>
+
+<!-- ========== Scripts（按依赖顺序加载） ========== -->
+<!-- 1. 数据：全局变量 DORAEMON_DATA -->
+<script src="data.js"></script>
+<!-- 2. 配置：全局常量 AppConfig -->
+<script src="config.js"></script>
+<!-- 3. 核心逻辑：App 对象 + CollectionStore -->
+<script src="app.js"></script>
+<!-- 4. 3D圆环模块：CoverflowCarousel 对象 -->
+<script src="carousel.js"></script>
+
+</body>
+</html>

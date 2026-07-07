@@ -1,0 +1,8 @@
+config.yaml
+*.pyc
+__pycache__/
+
+# 构建 / 生成产物（本地日志、缩略图缓存等）
+build_log.txt
+*.log
+/thumbs/
