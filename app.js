@@ -32,11 +32,36 @@
     },
 
     /**
-     * 切换卡牌拥有状态
+     * 切换卡牌拥有状态（支持重复图片组联动）
      * @param {string} cardId - 卡牌 ID
      * @returns {boolean} 切换后的状态（true=已拥有）
      */
     toggle: function (cardId) {
+      // 检查是否属于重复图片组
+      var groupIndex = null;
+      if (typeof DUPLICATE_GROUPS !== 'undefined' && DUPLICATE_GROUPS.hasOwnProperty(cardId)) {
+        groupIndex = DUPLICATE_GROUPS[cardId];
+      }
+
+      if (groupIndex !== null) {
+        // 收集同组所有卡牌 ID
+        var groupCardIds = [];
+        for (var id in DUPLICATE_GROUPS) {
+          if (DUPLICATE_GROUPS.hasOwnProperty(id) && DUPLICATE_GROUPS[id] === groupIndex) {
+            groupCardIds.push(id);
+          }
+        }
+        // 根据当前卡牌状态决定标记还是取消（整组统一）
+        var currentlyOwned = this.ownedIds.has(cardId);
+        if (currentlyOwned) {
+          this.unmarkAll(groupCardIds);
+        } else {
+          this.markAll(groupCardIds);
+        }
+        return !currentlyOwned;
+      }
+
+      // 原逻辑：单张卡牌
       var owned = this.ownedIds.has(cardId);
       if (owned) {
         this.ownedIds.delete(cardId);
@@ -51,8 +76,38 @@
      * 批量标记多张卡牌为已拥有
      * @param {Array<string>} cardIds - 卡牌 ID 数组
      */
-    markAll: function (cardIds) {
+    /**
+     * 展开卡牌 ID 列表，将属于同一去重组的卡牌全部纳入
+     * @param {Array<string>} cardIds - 原始卡牌 ID 数组
+     * @returns {Array<string>} 展开后的卡牌 ID 数组
+     */
+    _expandDuplicateGroups: function (cardIds) {
+      if (typeof DUPLICATE_GROUPS === 'undefined') return cardIds;
+      var expanded = new Set();
+      var groupIds = new Set();
+      // 收集所有涉及的 groupIndex
       cardIds.forEach(function (id) {
+        if (DUPLICATE_GROUPS.hasOwnProperty(id)) {
+          groupIds.add(DUPLICATE_GROUPS[id]);
+        }
+      });
+      // 展开：包括原始 ID + 同组所有 ID
+      cardIds.forEach(function (id) {
+        expanded.add(id);
+      });
+      if (groupIds.size > 0) {
+        for (var id in DUPLICATE_GROUPS) {
+          if (DUPLICATE_GROUPS.hasOwnProperty(id) && groupIds.has(DUPLICATE_GROUPS[id])) {
+            expanded.add(id);
+          }
+        }
+      }
+      return Array.from(expanded);
+    },
+
+    markAll: function (cardIds) {
+      var expanded = this._expandDuplicateGroups(cardIds);
+      expanded.forEach(function (id) {
         this.ownedIds.add(id);
       }, this);
       this.save();
@@ -63,7 +118,8 @@
      * @param {Array<string>} cardIds - 卡牌 ID 数组
      */
     unmarkAll: function (cardIds) {
-      cardIds.forEach(function (id) {
+      var expanded = this._expandDuplicateGroups(cardIds);
+      expanded.forEach(function (id) {
         this.ownedIds.delete(id);
       }, this);
       this.save();
@@ -253,28 +309,18 @@
         self.importOwned();
       });
 
-      // 拥有状态过滤（全部 → 已拥有 → 未拥有 → 全部 循环）
-      document.getElementById('btnFilter').addEventListener('click', function () {
+      // 拥有状态过滤：三个平铺按钮（全部显示 / 只看已拥有 / 只看未拥有）
+      document.getElementById('btnFilterAll').addEventListener('click', function () {
         var self = global.App || window.App;
-        var btn = this;
-        // 三态循环
-        if (self.currentFilter === 'all') {
-          self.currentFilter = 'owned';
-          btn.textContent = '✅ 只看已拥有';
-          btn.classList.add('toolbar-btn--active-owned');
-          btn.classList.remove('toolbar-btn--active-unowned');
-        } else if (self.currentFilter === 'owned') {
-          self.currentFilter = 'unowned';
-          btn.textContent = '❌ 只看未拥有';
-          btn.classList.remove('toolbar-btn--active-owned');
-          btn.classList.add('toolbar-btn--active-unowned');
-        } else {
-          self.currentFilter = 'all';
-          btn.textContent = '🏷️ 全部显示';
-          btn.classList.remove('toolbar-btn--active-owned');
-          btn.classList.remove('toolbar-btn--active-unowned');
-        }
-        self.renderPackView();
+        self._applyFilter('all');
+      });
+      document.getElementById('btnFilterOwned').addEventListener('click', function () {
+        var self = global.App || window.App;
+        self._applyFilter('owned');
+      });
+      document.getElementById('btnFilterUnowned').addEventListener('click', function () {
+        var self = global.App || window.App;
+        self._applyFilter('unowned');
       });
 
       // 弹窗关闭（拖拽后不触发关闭）
@@ -312,6 +358,52 @@
           }
         }
       });
+
+      // 一键返回顶部悬浮按钮（主视图滚动容器为 window）
+      var btnBackTop = document.getElementById('btnBackTop');
+      if (btnBackTop) {
+        btnBackTop.addEventListener('click', function () {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        var toggleBackTop = function () {
+          var scrolled = window.scrollY || document.documentElement.scrollTop || 0;
+          if (scrolled > 300) {
+            btnBackTop.classList.add('back-to-top--visible');
+          } else {
+            btnBackTop.classList.remove('back-to-top--visible');
+          }
+        };
+        window.addEventListener('scroll', toggleBackTop, { passive: true });
+        toggleBackTop();
+      }
+    },
+
+    /**
+     * 设置拥有状态过滤，刷新视图并同步按钮高亮
+     * @param {'all'|'owned'|'unowned'} filter
+     */
+    _applyFilter: function (filter) {
+      this.currentFilter = filter;
+      this._updateFilterButtons();
+      this.renderPackView();
+    },
+
+    /**
+     * 根据当前 currentFilter 更新三个过滤按钮（全部显示 / 只看已拥有 / 只看未拥有）的高亮状态
+     */
+    _updateFilterButtons: function () {
+      var map = {
+        all:     { id: 'btnFilterAll',     cls: 'toolbar-btn--active-all' },
+        owned:   { id: 'btnFilterOwned',   cls: 'toolbar-btn--active-owned' },
+        unowned: { id: 'btnFilterUnowned', cls: 'toolbar-btn--active-unowned' }
+      };
+      ['btnFilterAll', 'btnFilterOwned', 'btnFilterUnowned'].forEach(function (id) {
+        var btn = document.getElementById(id);
+        if (btn) btn.classList.remove('toolbar-btn--active-all', 'toolbar-btn--active-owned', 'toolbar-btn--active-unowned');
+      });
+      var cur = map[this.currentFilter] || map.all;
+      var activeBtn = document.getElementById(cur.id);
+      if (activeBtn) activeBtn.classList.add(cur.cls);
     },
 
     /**
@@ -378,20 +470,14 @@
       if (idx < 0 || idx >= this.data.packs.length) return;
       this.currentPackIndex = idx;
       this.searchFilter = '';
-      this.currentFilter = 'all';
-      // 保留 rarityFilter，不重置，实现跨卡包保留筛选状态
+      // 保留 rarityFilter 与 currentFilter（拥有状态筛选），跨卡包不重置
 
       // 清空搜索框
       var searchInput = document.getElementById('searchInput');
       if (searchInput) searchInput.value = '';
 
-      // 重置拥有状态过滤按钮
-      var btnFilter = document.getElementById('btnFilter');
-      if (btnFilter) {
-        btnFilter.textContent = '🏷️ 全部显示';
-        btnFilter.classList.remove('toolbar-btn--active-owned');
-        btnFilter.classList.remove('toolbar-btn--active-unowned');
-      }
+      // 按保留下来的 currentFilter 高亮对应按钮
+      this._updateFilterButtons();
 
       // 更新 active 状态
       document.querySelectorAll('.pack-item').forEach(function (el, i) {
@@ -653,9 +739,21 @@
           e.stopPropagation();
           var cardId = this.dataset.cardId;
           var isNowOwned = CollectionStore.toggle(cardId);
-          // 更新卡牌样式
-          var cardEl = this.closest('.card');
-          cardEl.classList.toggle('owned', isNowOwned);
+
+          // 更新同组所有卡牌样式（重复图片组联动）
+          if (typeof DUPLICATE_GROUPS !== 'undefined' && DUPLICATE_GROUPS.hasOwnProperty(cardId)) {
+            var groupIdx = DUPLICATE_GROUPS[cardId];
+            view.querySelectorAll('.card').forEach(function (el) {
+              var cid = el.dataset.cardId;
+              if (DUPLICATE_GROUPS.hasOwnProperty(cid) && DUPLICATE_GROUPS[cid] === groupIdx) {
+                el.classList.toggle('owned', isNowOwned);
+              }
+            });
+          } else {
+            var cardEl = this.closest('.card');
+            cardEl.classList.toggle('owned', isNowOwned);
+          }
+
           // 重新触发 starPop 动画
           if (isNowOwned) {
             this.style.animation = 'none';
@@ -716,11 +814,22 @@
       this._updateCurrentPackProgress();
       // 更新级别进度
       this._updateRarityProgress();
-      // 同步列表页卡牌样式
+      // 同步卡牌样式（支持重复图片组联动）
       if (cardId) {
-        var cardEl = document.querySelector('.card[data-card-id="' + cardId + '"]');
-        if (cardEl) {
-          cardEl.classList.toggle('owned', CollectionStore.isOwned(cardId));
+        if (typeof DUPLICATE_GROUPS !== 'undefined' && DUPLICATE_GROUPS.hasOwnProperty(cardId)) {
+          var groupIdx = DUPLICATE_GROUPS[cardId];
+          var isOwned = CollectionStore.isOwned(cardId);
+          document.querySelectorAll('.card').forEach(function (el) {
+            var cid = el.dataset.cardId;
+            if (DUPLICATE_GROUPS.hasOwnProperty(cid) && DUPLICATE_GROUPS[cid] === groupIdx) {
+              el.classList.toggle('owned', isOwned);
+            }
+          });
+        } else {
+          var cardEl = document.querySelector('.card[data-card-id="' + cardId + '"]');
+          if (cardEl) {
+            cardEl.classList.toggle('owned', CollectionStore.isOwned(cardId));
+          }
         }
       }
     },

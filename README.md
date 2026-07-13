@@ -24,6 +24,7 @@
 - **分层浏览**：15 个卡包（卡牌类 + 周边类），卡牌按 30 级级别从低到高分组
 - **收藏管理**：一键标记拥有、localStorage 持久化、导入导出 JSON 备份
 - **检索筛选**：实时搜索 + 只看未拥有，快速定位缺口
+- **智能去重标记**：同一卡面在不同卡包中复用时，标记一张自动同步标记所有同图卡牌；基于文件名 + wHash 感知哈希双重验证，精确区分同名但不同设计的卡牌
 - **进度可视化**：总进度 + 卡包进度条 + 级别进度
 - **零依赖离线**：纯前端无构建，`file://` 直接打开，数据内联规避 CORS
 
@@ -41,11 +42,19 @@ git clone https://github.com/5244DragonLin/doraemon-card-collection.git
 cd doraemon-card-collection
 ```
 
-### 2. 准备数据
+### 2. 安装依赖
+
+Python 脚本依赖：
+
+```bash
+pip install -r requirements.txt
+```
+
+### 3. 准备数据
 
 卡牌图片数据来自上游采集工具 [kadong_cards_crawler](https://gitee.com/yhl5244/kadong_cards_crawler)（见「关联项目」）：它把哆啦A梦正版图鉴整理到本地目录，本项目的 `generate_data.py` 再扫描该目录生成 `data.js`。如需用自己重新采集的图鉴生成，先把它克隆下来，再按「⌨️CLI 模式」运行脚本（通过 `config.yaml` 指定 `source_dir`）。
 
-### 3. 打开网站
+### 4. 打开网站
 
 直接双击 `index.html`，浏览器以 `file://` 协议打开，无需 HTTP 服务器。
 
@@ -66,6 +75,16 @@ python generate_data.py
 - **三级正则解析**识别卡牌级别：纯 ASCII（`R`/`SSR`…）→ 中文+ASCII 混合（`特殊SSP`…）→ 纯中文（`金属卡`/`单人款`…），0 张未知级别
 - 卡牌 ID 取 `md5(packFullName + "/" + cardName)` 前 16 位，源目录移动不影响收藏数据
 - 输出 `data.js`（`var DORAEMON_DATA = {...};`，非纯 JSON）
+
+### 去重标记数据生成
+
+```bash
+python generate_duplicate_groups.py
+```
+
+数据流：`generate_duplicate_groups.py` 读取 `data.js` 中的卡牌数据 → 按文件名分组 → 对每组内图片计算 wHash 感知哈希 → 聚类同名且同图的卡牌 → 输出 `duplicate_groups.js`。前端加载后，标记一张卡牌时自动同步标记同组所有卡牌。
+
+> 依赖 `imagehash` 和 `Pillow`：`pip install imagehash Pillow`
 
 ## 配置文件
 
@@ -102,7 +121,10 @@ doraemon-card-collection/
 ├── carousel.js         # 3D 圆环模块（Coverflow 渲染/拖拽/吸附/键盘）
 ├── data.js             # 数据文件（var DORAEMON_DATA = {...}; 脚本生成）
 ├── generate_data.py    # 数据生成脚本（三级正则 + 扫 png/jpg + 输出 data.js）
+├── generate_duplicate_groups.py  # 去重组生成脚本（文件名+wHash聚类 → duplicate_groups.js）
 ├── config.example.yaml # 数据脚本配置参考模板
+├── requirements.txt    # Python 脚本依赖（PyYAML / Pillow / imagehash / numpy / scipy）
+├── duplicate_groups.js # 去重组映射数据（脚本生成，供前端去重标记使用）
 ├── docs/               # ARCHITECTURE.md / PRD.md / 图示
 ├── tests/              # verify_data.py 数据校验
 ├── README.md
@@ -152,9 +174,9 @@ Script 加载顺序：
 
 ## 📝已知问题 / 待改进点
 
-- [ ] 加入除正版授权外的哆啦A梦卡牌：扩展数据来源，支持非官方授权卡牌的收录与展示
-- [ ] 不同卡包的同级别卡牌有可能完全一致，暂不支持同样卡牌的一键标记
+- [x] 不同卡包的同级别卡牌有可能完全一致，暂不支持同样卡牌的一键标记（v0.3 已通过智能去重标记解决）
 - [x] 首页卡牌预览图片虚线 / 模糊已修复：删除 `image-rendering: crisp-edges` 硬边放大，并将 `object-fit: cover` 改为 `contain`（卡牌完整显示、边缘平滑）
+- [ ] 加入除正版授权外的哆啦A梦卡牌：扩展数据来源，支持非官方授权卡牌的收录与展示
 
 ## 🤝贡献
 
@@ -167,14 +189,21 @@ Script 加载顺序：
 
 ## 📋更新日志
 
+### v0.3
+
+- **新增：** 智能去重标记：新增 `generate_duplicate_groups.py`（去重组生成脚本）与 `duplicate_groups.js`（去重组映射数据），基于文件名 + wHash 感知哈希双重验证，精确识别同一卡面在不同卡包中的复用。前端标记一张卡牌时自动同步标记同组所有卡牌，区分同名但不同设计的情况
+- **新增：** 去重数据流：`generate_duplicate_groups.py` 读取 `data.js` → 按文件名分组 → wHash 聚类 → 输出 `duplicate_groups.js`
+- **新增：** 一键返回顶部按钮：右下角新增浮动圆形"返回顶部"按钮（↑），滚动超过 300px 时淡入显示，点击平滑滚动到页面顶部。铃铛金渐变圆形设计，与暖色主题统一
+- **新增：** 过滤按钮三合一拆分：将原"全部显示"按钮拆分为三个独立互斥按钮——「全部显示」（金色高亮）、「只看已拥有」（绿色高亮）、「只看未拥有」（红色高亮），点击切换时自动刷新卡牌视图，状态跨卡包保留
+
 ### v0.2
 
-- **站点图标整理**：7 个 favicon 收拢至 `favicons/` 目录，根目录结构更清爽，`index.html` 引用同步更新
-- **新增 MIT 许可证**（`LICENSE`），补齐开源合规
-- **启用配置文件**：`generate_data.py` 自动读取同目录 `config.yaml`（缺省回退内置默认值，缺 PyYAML 自动降级）；数据来源 / 扫描 / 排序均可配置
-- **新增「关联项目」章节**：说明卡牌数据来自上游采集工具 [kadong_cards_crawler](https://gitee.com/yhl5244/kadong_cards_crawler)（GitHub 镜像同步），并在快速开始 / CLI / FAQ 等处补充数据源说明
-- **修复侧边栏底部空隙**：`.sidebar` 高度由 `calc(100vh - 128px)` 修正为 `calc(100vh - 80px)`，左侧与页面底部齐平（移动端隐藏逻辑不变）
-- **修复首页预览图虚线 / 模糊**：删除 `image-rendering: crisp-edges` 硬边放大，`object-fit: cover` 改为 `contain`，卡牌完整显示、边缘平滑
+- **新增：** MIT 许可证（`LICENSE`），补齐开源合规
+- **新增：** 启用配置文件：`generate_data.py` 自动读取同目录 `config.yaml`（缺省回退内置默认值，缺 PyYAML 自动降级）；数据来源 / 扫描 / 排序均可配置
+- **新增：** 「关联项目」章节：说明卡牌数据来自上游采集工具 [kadong_cards_crawler](https://gitee.com/yhl5244/kadong_cards_crawler)（GitHub 镜像同步），并在快速开始 / CLI / FAQ 等处补充数据源说明
+- **优化：** 站点图标整理：7 个 favicon 收拢至 `favicons/` 目录，根目录结构更清爽，`index.html` 引用同步更新
+- **修复：** 侧边栏底部空隙：`.sidebar` 高度由 `calc(100vh - 128px)` 修正为 `calc(100vh - 80px)`，左侧与页面底部齐平（移动端隐藏逻辑不变）
+- **修复：** 首页预览图虚线 / 模糊：删除 `image-rendering: crisp-edges` 硬边放大，`object-fit: cover` 改为 `contain`，卡牌完整显示、边缘平滑
 
 ### v0.1
 

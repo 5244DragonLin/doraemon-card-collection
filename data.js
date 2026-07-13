@@ -1,10 +1,10 @@
 var DORAEMON_DATA = {
   "meta": {
-    "generatedAt": "2026-07-06T14:45:09",
+    "generatedAt": "2026-07-13T08:31:55",
     "sourceDir": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦",
     "totalPacks": 15,
     "totalCards": 1708,
-    "version": "2.0"
+    "version": "2.1"
   },
   "packs": [
     {
@@ -744,6 +744,87 @@ var DORAEMON_DATA = {
           "fileExt": ".png"
         },
         {
+          "id": "ce8c780e9014e353",
+          "name": "CP-亲密伙伴卡-01",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "01",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜经典版｜第1弹/CP-亲密伙伴卡-01.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "7d22d906f8280570",
+          "name": "CP-亲密伙伴卡-02",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "02",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜经典版｜第1弹/CP-亲密伙伴卡-02.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "9f704817c46a6ef2",
+          "name": "CP-亲密伙伴卡-03",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "03",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜经典版｜第1弹/CP-亲密伙伴卡-03.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "d670dddcd71c7eb3",
+          "name": "CP-亲密伙伴卡-04",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "04",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜经典版｜第1弹/CP-亲密伙伴卡-04.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "e4e6bc97e9e38512",
+          "name": "CP-亲密伙伴卡-05",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "05",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜经典版｜第1弹/CP-亲密伙伴卡-05.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "f1f948315f69d89f",
+          "name": "CP-亲密伙伴卡-06",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "06",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜经典版｜第1弹/CP-亲密伙伴卡-06.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "ccf5e6683a493668",
+          "name": "CP-亲密伙伴卡-07",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "07",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜经典版｜第1弹/CP-亲密伙伴卡-07.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "e6d0b0e868318c47",
+          "name": "CP-亲密伙伴卡-08",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "08",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜经典版｜第1弹/CP-亲密伙伴卡-08.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "c51342f7929ec3f8",
+          "name": "CP-亲密伙伴卡-09",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "09",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜经典版｜第1弹/CP-亲密伙伴卡-09.png",
+          "fileExt": ".png"
+        },
+        {
           "id": "bd398c4a5e292de3",
           "name": "DR-秘密道具卡-01",
           "rarity": "DR",
@@ -1038,87 +1119,6 @@ var DORAEMON_DATA = {
           "rarityName": "夏威夷风情精雕卡",
           "number": "03",
           "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜经典版｜第1弹/特殊SSP-夏威夷风情精雕卡-03.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "ce8c780e9014e353",
-          "name": "CP-亲密伙伴卡-01",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "01",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜经典版｜第1弹/CP-亲密伙伴卡-01.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "7d22d906f8280570",
-          "name": "CP-亲密伙伴卡-02",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "02",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜经典版｜第1弹/CP-亲密伙伴卡-02.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "9f704817c46a6ef2",
-          "name": "CP-亲密伙伴卡-03",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "03",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜经典版｜第1弹/CP-亲密伙伴卡-03.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "d670dddcd71c7eb3",
-          "name": "CP-亲密伙伴卡-04",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "04",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜经典版｜第1弹/CP-亲密伙伴卡-04.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "e4e6bc97e9e38512",
-          "name": "CP-亲密伙伴卡-05",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "05",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜经典版｜第1弹/CP-亲密伙伴卡-05.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "f1f948315f69d89f",
-          "name": "CP-亲密伙伴卡-06",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "06",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜经典版｜第1弹/CP-亲密伙伴卡-06.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "ccf5e6683a493668",
-          "name": "CP-亲密伙伴卡-07",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "07",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜经典版｜第1弹/CP-亲密伙伴卡-07.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "e6d0b0e868318c47",
-          "name": "CP-亲密伙伴卡-08",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "08",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜经典版｜第1弹/CP-亲密伙伴卡-08.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "c51342f7929ec3f8",
-          "name": "CP-亲密伙伴卡-09",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "09",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜经典版｜第1弹/CP-亲密伙伴卡-09.png",
           "fileExt": ".png"
         }
       ]
@@ -1941,6 +1941,87 @@ var DORAEMON_DATA = {
           "fileExt": ".png"
         },
         {
+          "id": "11759e327327b45b",
+          "name": "CP-亲密伙伴卡-01",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "01",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华版｜第1弹/CP-亲密伙伴卡-01.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "dd9cf51c17571e1f",
+          "name": "CP-亲密伙伴卡-02",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "02",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华版｜第1弹/CP-亲密伙伴卡-02.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "fb878869d23e8779",
+          "name": "CP-亲密伙伴卡-03",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "03",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华版｜第1弹/CP-亲密伙伴卡-03.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "267e9ae57ecac233",
+          "name": "CP-亲密伙伴卡-04",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "04",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华版｜第1弹/CP-亲密伙伴卡-04.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "e2997d71a76c01bc",
+          "name": "CP-亲密伙伴卡-05",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "05",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华版｜第1弹/CP-亲密伙伴卡-05.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "17b5b0481b98d5e3",
+          "name": "CP-亲密伙伴卡-06",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "06",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华版｜第1弹/CP-亲密伙伴卡-06.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "91444fbac1c34ddd",
+          "name": "CP-亲密伙伴卡-07",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "07",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华版｜第1弹/CP-亲密伙伴卡-07.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "29ed44e22c7a1410",
+          "name": "CP-亲密伙伴卡-08",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "08",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华版｜第1弹/CP-亲密伙伴卡-08.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "544ac85869e88bcb",
+          "name": "CP-亲密伙伴卡-09",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "09",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华版｜第1弹/CP-亲密伙伴卡-09.png",
+          "fileExt": ".png"
+        },
+        {
           "id": "f8eebc490e86d863",
           "name": "DR-秘密道具卡-01",
           "rarity": "DR",
@@ -2343,87 +2424,6 @@ var DORAEMON_DATA = {
           "rarityName": "夏威夷风情精雕卡",
           "number": "06",
           "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华版｜第1弹/特殊SSP-夏威夷风情精雕卡-06.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "11759e327327b45b",
-          "name": "CP-亲密伙伴卡-01",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "01",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华版｜第1弹/CP-亲密伙伴卡-01.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "dd9cf51c17571e1f",
-          "name": "CP-亲密伙伴卡-02",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "02",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华版｜第1弹/CP-亲密伙伴卡-02.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "fb878869d23e8779",
-          "name": "CP-亲密伙伴卡-03",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "03",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华版｜第1弹/CP-亲密伙伴卡-03.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "267e9ae57ecac233",
-          "name": "CP-亲密伙伴卡-04",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "04",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华版｜第1弹/CP-亲密伙伴卡-04.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "e2997d71a76c01bc",
-          "name": "CP-亲密伙伴卡-05",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "05",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华版｜第1弹/CP-亲密伙伴卡-05.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "17b5b0481b98d5e3",
-          "name": "CP-亲密伙伴卡-06",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "06",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华版｜第1弹/CP-亲密伙伴卡-06.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "91444fbac1c34ddd",
-          "name": "CP-亲密伙伴卡-07",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "07",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华版｜第1弹/CP-亲密伙伴卡-07.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "29ed44e22c7a1410",
-          "name": "CP-亲密伙伴卡-08",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "08",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华版｜第1弹/CP-亲密伙伴卡-08.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "544ac85869e88bcb",
-          "name": "CP-亲密伙伴卡-09",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "09",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华版｜第1弹/CP-亲密伙伴卡-09.png",
           "fileExt": ".png"
         }
       ]
@@ -3003,6 +3003,87 @@ var DORAEMON_DATA = {
           "fileExt": ".png"
         },
         {
+          "id": "0499b86b6693be6b",
+          "name": "CP-亲密伙伴卡-01",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "01",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜珍藏版｜第1弹/CP-亲密伙伴卡-01.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "9a66529a00830635",
+          "name": "CP-亲密伙伴卡-02",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "02",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜珍藏版｜第1弹/CP-亲密伙伴卡-02.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "7aebe0224884286d",
+          "name": "CP-亲密伙伴卡-03",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "03",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜珍藏版｜第1弹/CP-亲密伙伴卡-03.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "10ff205b4c3c2575",
+          "name": "CP-亲密伙伴卡-04",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "04",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜珍藏版｜第1弹/CP-亲密伙伴卡-04.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "fca31a31f3103f1e",
+          "name": "CP-亲密伙伴卡-05",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "05",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜珍藏版｜第1弹/CP-亲密伙伴卡-05.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "fb539c99aa6c3bdc",
+          "name": "CP-亲密伙伴卡-06",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "06",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜珍藏版｜第1弹/CP-亲密伙伴卡-06.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "80c45af3d2123aad",
+          "name": "CP-亲密伙伴卡-07",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "07",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜珍藏版｜第1弹/CP-亲密伙伴卡-07.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "157e1e0fc11468dd",
+          "name": "CP-亲密伙伴卡-08",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "08",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜珍藏版｜第1弹/CP-亲密伙伴卡-08.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "5a8d2516839ed01c",
+          "name": "CP-亲密伙伴卡-09",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "09",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜珍藏版｜第1弹/CP-亲密伙伴卡-09.png",
+          "fileExt": ".png"
+        },
+        {
           "id": "1aed5aeebbeafd5c",
           "name": "ZR-甜蜜美食特卡-01",
           "rarity": "ZR",
@@ -3504,87 +3585,6 @@ var DORAEMON_DATA = {
           "rarityName": "夏威夷风情精雕卡",
           "number": "06",
           "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜珍藏版｜第1弹/特殊SSP-夏威夷风情精雕卡-06.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "0499b86b6693be6b",
-          "name": "CP-亲密伙伴卡-01",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "01",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜珍藏版｜第1弹/CP-亲密伙伴卡-01.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "9a66529a00830635",
-          "name": "CP-亲密伙伴卡-02",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "02",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜珍藏版｜第1弹/CP-亲密伙伴卡-02.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "7aebe0224884286d",
-          "name": "CP-亲密伙伴卡-03",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "03",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜珍藏版｜第1弹/CP-亲密伙伴卡-03.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "10ff205b4c3c2575",
-          "name": "CP-亲密伙伴卡-04",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "04",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜珍藏版｜第1弹/CP-亲密伙伴卡-04.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "fca31a31f3103f1e",
-          "name": "CP-亲密伙伴卡-05",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "05",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜珍藏版｜第1弹/CP-亲密伙伴卡-05.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "fb539c99aa6c3bdc",
-          "name": "CP-亲密伙伴卡-06",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "06",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜珍藏版｜第1弹/CP-亲密伙伴卡-06.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "80c45af3d2123aad",
-          "name": "CP-亲密伙伴卡-07",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "07",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜珍藏版｜第1弹/CP-亲密伙伴卡-07.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "157e1e0fc11468dd",
-          "name": "CP-亲密伙伴卡-08",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "08",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜珍藏版｜第1弹/CP-亲密伙伴卡-08.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "5a8d2516839ed01c",
-          "name": "CP-亲密伙伴卡-09",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "09",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜珍藏版｜第1弹/CP-亲密伙伴卡-09.png",
           "fileExt": ".png"
         }
       ]
@@ -4161,6 +4161,87 @@ var DORAEMON_DATA = {
           "rarityName": "趣味九宫拼图卡",
           "number": "09",
           "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华珍藏版｜第1弹/TR-趣味九宫拼图卡-09.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "f860353e2de1eefa",
+          "name": "CP-亲密伙伴卡-01",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "01",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华珍藏版｜第1弹/CP-亲密伙伴卡-01.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "75834a9e2751395b",
+          "name": "CP-亲密伙伴卡-02",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "02",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华珍藏版｜第1弹/CP-亲密伙伴卡-02.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "433d1b8e8affa87d",
+          "name": "CP-亲密伙伴卡-03",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "03",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华珍藏版｜第1弹/CP-亲密伙伴卡-03.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "47ca7ac68f57cd94",
+          "name": "CP-亲密伙伴卡-04",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "04",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华珍藏版｜第1弹/CP-亲密伙伴卡-04.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "76121b953b44540f",
+          "name": "CP-亲密伙伴卡-05",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "05",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华珍藏版｜第1弹/CP-亲密伙伴卡-05.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "c7b598692470d243",
+          "name": "CP-亲密伙伴卡-06",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "06",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华珍藏版｜第1弹/CP-亲密伙伴卡-06.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "8f0dc1b0e1629163",
+          "name": "CP-亲密伙伴卡-07",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "07",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华珍藏版｜第1弹/CP-亲密伙伴卡-07.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "ba0ec88bdd158d5c",
+          "name": "CP-亲密伙伴卡-08",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "08",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华珍藏版｜第1弹/CP-亲密伙伴卡-08.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "cdfdffa0429333e2",
+          "name": "CP-亲密伙伴卡-09",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "09",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华珍藏版｜第1弹/CP-亲密伙伴卡-09.png",
           "fileExt": ".png"
         },
         {
@@ -4872,87 +4953,6 @@ var DORAEMON_DATA = {
           "rarityName": "道具小剧场胶片卡",
           "number": "06",
           "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华珍藏版｜第1弹/FP-道具小剧场胶片卡-06.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "f860353e2de1eefa",
-          "name": "CP-亲密伙伴卡-01",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "01",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华珍藏版｜第1弹/CP-亲密伙伴卡-01.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "75834a9e2751395b",
-          "name": "CP-亲密伙伴卡-02",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "02",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华珍藏版｜第1弹/CP-亲密伙伴卡-02.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "433d1b8e8affa87d",
-          "name": "CP-亲密伙伴卡-03",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "03",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华珍藏版｜第1弹/CP-亲密伙伴卡-03.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "47ca7ac68f57cd94",
-          "name": "CP-亲密伙伴卡-04",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "04",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华珍藏版｜第1弹/CP-亲密伙伴卡-04.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "76121b953b44540f",
-          "name": "CP-亲密伙伴卡-05",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "05",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华珍藏版｜第1弹/CP-亲密伙伴卡-05.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "c7b598692470d243",
-          "name": "CP-亲密伙伴卡-06",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "06",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华珍藏版｜第1弹/CP-亲密伙伴卡-06.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "8f0dc1b0e1629163",
-          "name": "CP-亲密伙伴卡-07",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "07",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华珍藏版｜第1弹/CP-亲密伙伴卡-07.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "ba0ec88bdd158d5c",
-          "name": "CP-亲密伙伴卡-08",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "08",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华珍藏版｜第1弹/CP-亲密伙伴卡-08.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "cdfdffa0429333e2",
-          "name": "CP-亲密伙伴卡-09",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "09",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华珍藏版｜第1弹/CP-亲密伙伴卡-09.png",
           "fileExt": ".png"
         },
         {
@@ -5919,6 +5919,87 @@ var DORAEMON_DATA = {
           "fileExt": ".png"
         },
         {
+          "id": "0ff54442bab938dc",
+          "name": "CP-亲密伙伴卡-01",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "01",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜寻梦卡百宝袋｜第1弹/CP-亲密伙伴卡-01.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "fca0ad5b5df0ef9f",
+          "name": "CP-亲密伙伴卡-02",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "02",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜寻梦卡百宝袋｜第1弹/CP-亲密伙伴卡-02.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "8c4ce577c3732a06",
+          "name": "CP-亲密伙伴卡-03",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "03",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜寻梦卡百宝袋｜第1弹/CP-亲密伙伴卡-03.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "6b85c3538097fa84",
+          "name": "CP-亲密伙伴卡-04",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "04",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜寻梦卡百宝袋｜第1弹/CP-亲密伙伴卡-04.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "1d9e64f836c298c5",
+          "name": "CP-亲密伙伴卡-05",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "05",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜寻梦卡百宝袋｜第1弹/CP-亲密伙伴卡-05.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "7a0c8a9c0098b5d0",
+          "name": "CP-亲密伙伴卡-06",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "06",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜寻梦卡百宝袋｜第1弹/CP-亲密伙伴卡-06.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "9c1a2eef643896b1",
+          "name": "CP-亲密伙伴卡-07",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "07",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜寻梦卡百宝袋｜第1弹/CP-亲密伙伴卡-07.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "b0a2618919ded3b6",
+          "name": "CP-亲密伙伴卡-08",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "08",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜寻梦卡百宝袋｜第1弹/CP-亲密伙伴卡-08.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "21c1aea65a97f4fd",
+          "name": "CP-亲密伙伴卡-09",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "09",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜寻梦卡百宝袋｜第1弹/CP-亲密伙伴卡-09.png",
+          "fileExt": ".png"
+        },
+        {
           "id": "448dba1c51da04a7",
           "name": "CR-珍藏手绘描金卡-01",
           "rarity": "CR",
@@ -6627,87 +6708,6 @@ var DORAEMON_DATA = {
           "rarityName": "道具小剧场胶片卡",
           "number": "06",
           "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜寻梦卡百宝袋｜第1弹/FP-道具小剧场胶片卡-06.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "0ff54442bab938dc",
-          "name": "CP-亲密伙伴卡-01",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "01",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜寻梦卡百宝袋｜第1弹/CP-亲密伙伴卡-01.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "fca0ad5b5df0ef9f",
-          "name": "CP-亲密伙伴卡-02",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "02",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜寻梦卡百宝袋｜第1弹/CP-亲密伙伴卡-02.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "8c4ce577c3732a06",
-          "name": "CP-亲密伙伴卡-03",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "03",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜寻梦卡百宝袋｜第1弹/CP-亲密伙伴卡-03.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "6b85c3538097fa84",
-          "name": "CP-亲密伙伴卡-04",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "04",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜寻梦卡百宝袋｜第1弹/CP-亲密伙伴卡-04.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "1d9e64f836c298c5",
-          "name": "CP-亲密伙伴卡-05",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "05",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜寻梦卡百宝袋｜第1弹/CP-亲密伙伴卡-05.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "7a0c8a9c0098b5d0",
-          "name": "CP-亲密伙伴卡-06",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "06",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜寻梦卡百宝袋｜第1弹/CP-亲密伙伴卡-06.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "9c1a2eef643896b1",
-          "name": "CP-亲密伙伴卡-07",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "07",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜寻梦卡百宝袋｜第1弹/CP-亲密伙伴卡-07.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "b0a2618919ded3b6",
-          "name": "CP-亲密伙伴卡-08",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "08",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜寻梦卡百宝袋｜第1弹/CP-亲密伙伴卡-08.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "21c1aea65a97f4fd",
-          "name": "CP-亲密伙伴卡-09",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "09",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜寻梦卡百宝袋｜第1弹/CP-亲密伙伴卡-09.png",
           "fileExt": ".png"
         },
         {
@@ -8871,6 +8871,87 @@ var DORAEMON_DATA = {
           "fileExt": ".jpg"
         },
         {
+          "id": "0de7d9e44c7d08ee",
+          "name": "CP-亲密角色组合卡-01",
+          "rarity": "CP",
+          "rarityName": "亲密角色组合卡",
+          "number": "01",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜经典版｜第2弹/CP-亲密角色组合卡-01.jpg",
+          "fileExt": ".jpg"
+        },
+        {
+          "id": "6ff890c65c597aaa",
+          "name": "CP-亲密角色组合卡-02",
+          "rarity": "CP",
+          "rarityName": "亲密角色组合卡",
+          "number": "02",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜经典版｜第2弹/CP-亲密角色组合卡-02.jpg",
+          "fileExt": ".jpg"
+        },
+        {
+          "id": "80870e80928b0de3",
+          "name": "CP-亲密角色组合卡-03",
+          "rarity": "CP",
+          "rarityName": "亲密角色组合卡",
+          "number": "03",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜经典版｜第2弹/CP-亲密角色组合卡-03.jpg",
+          "fileExt": ".jpg"
+        },
+        {
+          "id": "568cf9a17f87efee",
+          "name": "CP-亲密角色组合卡-04",
+          "rarity": "CP",
+          "rarityName": "亲密角色组合卡",
+          "number": "04",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜经典版｜第2弹/CP-亲密角色组合卡-04.jpg",
+          "fileExt": ".jpg"
+        },
+        {
+          "id": "258aa6672adcb89e",
+          "name": "CP-亲密角色组合卡-05",
+          "rarity": "CP",
+          "rarityName": "亲密角色组合卡",
+          "number": "05",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜经典版｜第2弹/CP-亲密角色组合卡-05.jpg",
+          "fileExt": ".jpg"
+        },
+        {
+          "id": "a2cea45ff22dc96a",
+          "name": "CP-亲密角色组合卡-06",
+          "rarity": "CP",
+          "rarityName": "亲密角色组合卡",
+          "number": "06",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜经典版｜第2弹/CP-亲密角色组合卡-06.jpg",
+          "fileExt": ".jpg"
+        },
+        {
+          "id": "c423a00f0f74ed82",
+          "name": "CP-亲密角色组合卡-07",
+          "rarity": "CP",
+          "rarityName": "亲密角色组合卡",
+          "number": "07",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜经典版｜第2弹/CP-亲密角色组合卡-07.jpg",
+          "fileExt": ".jpg"
+        },
+        {
+          "id": "d0208b1c832bdf8f",
+          "name": "CP-亲密角色组合卡-08",
+          "rarity": "CP",
+          "rarityName": "亲密角色组合卡",
+          "number": "08",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜经典版｜第2弹/CP-亲密角色组合卡-08.jpg",
+          "fileExt": ".jpg"
+        },
+        {
+          "id": "9378f9c968d2fda2",
+          "name": "CP-亲密角色组合卡-09",
+          "rarity": "CP",
+          "rarityName": "亲密角色组合卡",
+          "number": "09",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜经典版｜第2弹/CP-亲密角色组合卡-09.jpg",
+          "fileExt": ".jpg"
+        },
+        {
           "id": "1dd7e898f33a4dd7",
           "name": "DR-秘密道具卡-01",
           "rarity": "DR",
@@ -9165,87 +9246,6 @@ var DORAEMON_DATA = {
           "rarityName": "奇妙宇宙镂空卡",
           "number": "04",
           "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜经典版｜第2弹/SSP银版-奇妙宇宙镂空卡-04.jpg",
-          "fileExt": ".jpg"
-        },
-        {
-          "id": "0de7d9e44c7d08ee",
-          "name": "CP-亲密角色组合卡-01",
-          "rarity": "CP",
-          "rarityName": "亲密角色组合卡",
-          "number": "01",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜经典版｜第2弹/CP-亲密角色组合卡-01.jpg",
-          "fileExt": ".jpg"
-        },
-        {
-          "id": "6ff890c65c597aaa",
-          "name": "CP-亲密角色组合卡-02",
-          "rarity": "CP",
-          "rarityName": "亲密角色组合卡",
-          "number": "02",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜经典版｜第2弹/CP-亲密角色组合卡-02.jpg",
-          "fileExt": ".jpg"
-        },
-        {
-          "id": "80870e80928b0de3",
-          "name": "CP-亲密角色组合卡-03",
-          "rarity": "CP",
-          "rarityName": "亲密角色组合卡",
-          "number": "03",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜经典版｜第2弹/CP-亲密角色组合卡-03.jpg",
-          "fileExt": ".jpg"
-        },
-        {
-          "id": "568cf9a17f87efee",
-          "name": "CP-亲密角色组合卡-04",
-          "rarity": "CP",
-          "rarityName": "亲密角色组合卡",
-          "number": "04",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜经典版｜第2弹/CP-亲密角色组合卡-04.jpg",
-          "fileExt": ".jpg"
-        },
-        {
-          "id": "258aa6672adcb89e",
-          "name": "CP-亲密角色组合卡-05",
-          "rarity": "CP",
-          "rarityName": "亲密角色组合卡",
-          "number": "05",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜经典版｜第2弹/CP-亲密角色组合卡-05.jpg",
-          "fileExt": ".jpg"
-        },
-        {
-          "id": "a2cea45ff22dc96a",
-          "name": "CP-亲密角色组合卡-06",
-          "rarity": "CP",
-          "rarityName": "亲密角色组合卡",
-          "number": "06",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜经典版｜第2弹/CP-亲密角色组合卡-06.jpg",
-          "fileExt": ".jpg"
-        },
-        {
-          "id": "c423a00f0f74ed82",
-          "name": "CP-亲密角色组合卡-07",
-          "rarity": "CP",
-          "rarityName": "亲密角色组合卡",
-          "number": "07",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜经典版｜第2弹/CP-亲密角色组合卡-07.jpg",
-          "fileExt": ".jpg"
-        },
-        {
-          "id": "d0208b1c832bdf8f",
-          "name": "CP-亲密角色组合卡-08",
-          "rarity": "CP",
-          "rarityName": "亲密角色组合卡",
-          "number": "08",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜经典版｜第2弹/CP-亲密角色组合卡-08.jpg",
-          "fileExt": ".jpg"
-        },
-        {
-          "id": "9378f9c968d2fda2",
-          "name": "CP-亲密角色组合卡-09",
-          "rarity": "CP",
-          "rarityName": "亲密角色组合卡",
-          "number": "09",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜经典版｜第2弹/CP-亲密角色组合卡-09.jpg",
           "fileExt": ".jpg"
         }
       ]
@@ -10068,6 +10068,87 @@ var DORAEMON_DATA = {
           "fileExt": ".jpg"
         },
         {
+          "id": "ea8761c2e3eb3a88",
+          "name": "CP-亲密角色组合-01",
+          "rarity": "CP",
+          "rarityName": "亲密角色组合",
+          "number": "01",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华版｜第2弹/CP-亲密角色组合-01.jpg",
+          "fileExt": ".jpg"
+        },
+        {
+          "id": "b9eb5758aedf2206",
+          "name": "CP-亲密角色组合-02",
+          "rarity": "CP",
+          "rarityName": "亲密角色组合",
+          "number": "02",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华版｜第2弹/CP-亲密角色组合-02.jpg",
+          "fileExt": ".jpg"
+        },
+        {
+          "id": "8a0a47a4f31e1e6f",
+          "name": "CP-亲密角色组合-03",
+          "rarity": "CP",
+          "rarityName": "亲密角色组合",
+          "number": "03",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华版｜第2弹/CP-亲密角色组合-03.jpg",
+          "fileExt": ".jpg"
+        },
+        {
+          "id": "57033e6736231536",
+          "name": "CP-亲密角色组合-04",
+          "rarity": "CP",
+          "rarityName": "亲密角色组合",
+          "number": "04",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华版｜第2弹/CP-亲密角色组合-04.jpg",
+          "fileExt": ".jpg"
+        },
+        {
+          "id": "e8765a0ef7f6ef43",
+          "name": "CP-亲密角色组合-05",
+          "rarity": "CP",
+          "rarityName": "亲密角色组合",
+          "number": "05",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华版｜第2弹/CP-亲密角色组合-05.jpg",
+          "fileExt": ".jpg"
+        },
+        {
+          "id": "92dc0550001fffa7",
+          "name": "CP-亲密角色组合-06",
+          "rarity": "CP",
+          "rarityName": "亲密角色组合",
+          "number": "06",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华版｜第2弹/CP-亲密角色组合-06.jpg",
+          "fileExt": ".jpg"
+        },
+        {
+          "id": "44629fd8f637a0db",
+          "name": "CP-亲密角色组合-07",
+          "rarity": "CP",
+          "rarityName": "亲密角色组合",
+          "number": "07",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华版｜第2弹/CP-亲密角色组合-07.jpg",
+          "fileExt": ".jpg"
+        },
+        {
+          "id": "286e8b87125dcb01",
+          "name": "CP-亲密角色组合-08",
+          "rarity": "CP",
+          "rarityName": "亲密角色组合",
+          "number": "08",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华版｜第2弹/CP-亲密角色组合-08.jpg",
+          "fileExt": ".jpg"
+        },
+        {
+          "id": "5b0f4d4b2cc696b5",
+          "name": "CP-亲密角色组合-09",
+          "rarity": "CP",
+          "rarityName": "亲密角色组合",
+          "number": "09",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华版｜第2弹/CP-亲密角色组合-09.jpg",
+          "fileExt": ".jpg"
+        },
+        {
           "id": "a42cd6eaac8de21e",
           "name": "DR-秘密道具卡-01",
           "rarity": "DR",
@@ -10479,87 +10560,6 @@ var DORAEMON_DATA = {
           "rarityName": "奇妙宇宙镂空卡",
           "number": "07",
           "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华版｜第2弹/隐藏款SSP-奇妙宇宙镂空卡-07.jpg",
-          "fileExt": ".jpg"
-        },
-        {
-          "id": "ea8761c2e3eb3a88",
-          "name": "CP-亲密角色组合-01",
-          "rarity": "CP",
-          "rarityName": "亲密角色组合",
-          "number": "01",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华版｜第2弹/CP-亲密角色组合-01.jpg",
-          "fileExt": ".jpg"
-        },
-        {
-          "id": "b9eb5758aedf2206",
-          "name": "CP-亲密角色组合-02",
-          "rarity": "CP",
-          "rarityName": "亲密角色组合",
-          "number": "02",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华版｜第2弹/CP-亲密角色组合-02.jpg",
-          "fileExt": ".jpg"
-        },
-        {
-          "id": "8a0a47a4f31e1e6f",
-          "name": "CP-亲密角色组合-03",
-          "rarity": "CP",
-          "rarityName": "亲密角色组合",
-          "number": "03",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华版｜第2弹/CP-亲密角色组合-03.jpg",
-          "fileExt": ".jpg"
-        },
-        {
-          "id": "57033e6736231536",
-          "name": "CP-亲密角色组合-04",
-          "rarity": "CP",
-          "rarityName": "亲密角色组合",
-          "number": "04",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华版｜第2弹/CP-亲密角色组合-04.jpg",
-          "fileExt": ".jpg"
-        },
-        {
-          "id": "e8765a0ef7f6ef43",
-          "name": "CP-亲密角色组合-05",
-          "rarity": "CP",
-          "rarityName": "亲密角色组合",
-          "number": "05",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华版｜第2弹/CP-亲密角色组合-05.jpg",
-          "fileExt": ".jpg"
-        },
-        {
-          "id": "92dc0550001fffa7",
-          "name": "CP-亲密角色组合-06",
-          "rarity": "CP",
-          "rarityName": "亲密角色组合",
-          "number": "06",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华版｜第2弹/CP-亲密角色组合-06.jpg",
-          "fileExt": ".jpg"
-        },
-        {
-          "id": "44629fd8f637a0db",
-          "name": "CP-亲密角色组合-07",
-          "rarity": "CP",
-          "rarityName": "亲密角色组合",
-          "number": "07",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华版｜第2弹/CP-亲密角色组合-07.jpg",
-          "fileExt": ".jpg"
-        },
-        {
-          "id": "286e8b87125dcb01",
-          "name": "CP-亲密角色组合-08",
-          "rarity": "CP",
-          "rarityName": "亲密角色组合",
-          "number": "08",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华版｜第2弹/CP-亲密角色组合-08.jpg",
-          "fileExt": ".jpg"
-        },
-        {
-          "id": "5b0f4d4b2cc696b5",
-          "name": "CP-亲密角色组合-09",
-          "rarity": "CP",
-          "rarityName": "亲密角色组合",
-          "number": "09",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜豪华版｜第2弹/CP-亲密角色组合-09.jpg",
           "fileExt": ".jpg"
         }
       ]
@@ -11139,6 +11139,87 @@ var DORAEMON_DATA = {
           "fileExt": ".png"
         },
         {
+          "id": "13343384efa209cd",
+          "name": "CP-亲密角色组合卡-01",
+          "rarity": "CP",
+          "rarityName": "亲密角色组合卡",
+          "number": "01",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜珍藏版｜第2弹/CP-亲密角色组合卡-01.jpg",
+          "fileExt": ".jpg"
+        },
+        {
+          "id": "326806872932cd30",
+          "name": "CP-亲密角色组合卡-02",
+          "rarity": "CP",
+          "rarityName": "亲密角色组合卡",
+          "number": "02",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜珍藏版｜第2弹/CP-亲密角色组合卡-02.jpg",
+          "fileExt": ".jpg"
+        },
+        {
+          "id": "eaa973844986744b",
+          "name": "CP-亲密角色组合卡-03",
+          "rarity": "CP",
+          "rarityName": "亲密角色组合卡",
+          "number": "03",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜珍藏版｜第2弹/CP-亲密角色组合卡-03.jpg",
+          "fileExt": ".jpg"
+        },
+        {
+          "id": "6e047965963ccb89",
+          "name": "CP-亲密角色组合卡-04",
+          "rarity": "CP",
+          "rarityName": "亲密角色组合卡",
+          "number": "04",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜珍藏版｜第2弹/CP-亲密角色组合卡-04.jpg",
+          "fileExt": ".jpg"
+        },
+        {
+          "id": "6199007b15817dab",
+          "name": "CP-亲密角色组合卡-05",
+          "rarity": "CP",
+          "rarityName": "亲密角色组合卡",
+          "number": "05",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜珍藏版｜第2弹/CP-亲密角色组合卡-05.jpg",
+          "fileExt": ".jpg"
+        },
+        {
+          "id": "d8c70eeebc91f3c5",
+          "name": "CP-亲密角色组合卡-06",
+          "rarity": "CP",
+          "rarityName": "亲密角色组合卡",
+          "number": "06",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜珍藏版｜第2弹/CP-亲密角色组合卡-06.jpg",
+          "fileExt": ".jpg"
+        },
+        {
+          "id": "c859a7cd44e5dab1",
+          "name": "CP-亲密角色组合卡-07",
+          "rarity": "CP",
+          "rarityName": "亲密角色组合卡",
+          "number": "07",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜珍藏版｜第2弹/CP-亲密角色组合卡-07.jpg",
+          "fileExt": ".jpg"
+        },
+        {
+          "id": "34a0424dddfbeb3b",
+          "name": "CP-亲密角色组合卡-08",
+          "rarity": "CP",
+          "rarityName": "亲密角色组合卡",
+          "number": "08",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜珍藏版｜第2弹/CP-亲密角色组合卡-08.jpg",
+          "fileExt": ".jpg"
+        },
+        {
+          "id": "cc7d987ee40c59ec",
+          "name": "CP-亲密角色组合卡-09",
+          "rarity": "CP",
+          "rarityName": "亲密角色组合卡",
+          "number": "09",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜珍藏版｜第2弹/CP-亲密角色组合卡-09.jpg",
+          "fileExt": ".jpg"
+        },
+        {
           "id": "0da75865dd154f65",
           "name": "ZR-甜蜜点心时光卡-01",
           "rarity": "ZR",
@@ -11659,87 +11740,6 @@ var DORAEMON_DATA = {
           "number": "07",
           "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜珍藏版｜第2弹/隐藏款SSP金版-奇妙宇宙镂空卡-07.png",
           "fileExt": ".png"
-        },
-        {
-          "id": "13343384efa209cd",
-          "name": "CP-亲密角色组合卡-01",
-          "rarity": "CP",
-          "rarityName": "亲密角色组合卡",
-          "number": "01",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜珍藏版｜第2弹/CP-亲密角色组合卡-01.jpg",
-          "fileExt": ".jpg"
-        },
-        {
-          "id": "326806872932cd30",
-          "name": "CP-亲密角色组合卡-02",
-          "rarity": "CP",
-          "rarityName": "亲密角色组合卡",
-          "number": "02",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜珍藏版｜第2弹/CP-亲密角色组合卡-02.jpg",
-          "fileExt": ".jpg"
-        },
-        {
-          "id": "eaa973844986744b",
-          "name": "CP-亲密角色组合卡-03",
-          "rarity": "CP",
-          "rarityName": "亲密角色组合卡",
-          "number": "03",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜珍藏版｜第2弹/CP-亲密角色组合卡-03.jpg",
-          "fileExt": ".jpg"
-        },
-        {
-          "id": "6e047965963ccb89",
-          "name": "CP-亲密角色组合卡-04",
-          "rarity": "CP",
-          "rarityName": "亲密角色组合卡",
-          "number": "04",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜珍藏版｜第2弹/CP-亲密角色组合卡-04.jpg",
-          "fileExt": ".jpg"
-        },
-        {
-          "id": "6199007b15817dab",
-          "name": "CP-亲密角色组合卡-05",
-          "rarity": "CP",
-          "rarityName": "亲密角色组合卡",
-          "number": "05",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜珍藏版｜第2弹/CP-亲密角色组合卡-05.jpg",
-          "fileExt": ".jpg"
-        },
-        {
-          "id": "d8c70eeebc91f3c5",
-          "name": "CP-亲密角色组合卡-06",
-          "rarity": "CP",
-          "rarityName": "亲密角色组合卡",
-          "number": "06",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜珍藏版｜第2弹/CP-亲密角色组合卡-06.jpg",
-          "fileExt": ".jpg"
-        },
-        {
-          "id": "c859a7cd44e5dab1",
-          "name": "CP-亲密角色组合卡-07",
-          "rarity": "CP",
-          "rarityName": "亲密角色组合卡",
-          "number": "07",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜珍藏版｜第2弹/CP-亲密角色组合卡-07.jpg",
-          "fileExt": ".jpg"
-        },
-        {
-          "id": "34a0424dddfbeb3b",
-          "name": "CP-亲密角色组合卡-08",
-          "rarity": "CP",
-          "rarityName": "亲密角色组合卡",
-          "number": "08",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜珍藏版｜第2弹/CP-亲密角色组合卡-08.jpg",
-          "fileExt": ".jpg"
-        },
-        {
-          "id": "cc7d987ee40c59ec",
-          "name": "CP-亲密角色组合卡-09",
-          "rarity": "CP",
-          "rarityName": "亲密角色组合卡",
-          "number": "09",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜珍藏版｜第2弹/CP-亲密角色组合卡-09.jpg",
-          "fileExt": ".jpg"
         }
       ]
     },
@@ -12315,6 +12315,87 @@ var DORAEMON_DATA = {
           "rarityName": "九宫场景卡-01",
           "number": "09",
           "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜奇妙珍藏版｜第2弹/TR-九宫场景卡-01-09.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "4f9df7678bbc11b0",
+          "name": "CP-亲密伙伴卡-01",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "01",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜奇妙珍藏版｜第2弹/CP-亲密伙伴卡-01.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "70add0d0afd3cf9b",
+          "name": "CP-亲密伙伴卡-02",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "02",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜奇妙珍藏版｜第2弹/CP-亲密伙伴卡-02.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "589f67cbed54034c",
+          "name": "CP-亲密伙伴卡-03",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "03",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜奇妙珍藏版｜第2弹/CP-亲密伙伴卡-03.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "ad6bbb6514e4fa8d",
+          "name": "CP-亲密伙伴卡-04",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "04",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜奇妙珍藏版｜第2弹/CP-亲密伙伴卡-04.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "cf4b278188b9a7fb",
+          "name": "CP-亲密伙伴卡-05",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "05",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜奇妙珍藏版｜第2弹/CP-亲密伙伴卡-05.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "0259d1725eead97f",
+          "name": "CP-亲密伙伴卡-06",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "06",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜奇妙珍藏版｜第2弹/CP-亲密伙伴卡-06.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "f6464fe26316393d",
+          "name": "CP-亲密伙伴卡-07",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "07",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜奇妙珍藏版｜第2弹/CP-亲密伙伴卡-07.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "a1db02468c182a2c",
+          "name": "CP-亲密伙伴卡-08",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "08",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜奇妙珍藏版｜第2弹/CP-亲密伙伴卡-08.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "1e4a13a577cc3bd9",
+          "name": "CP-亲密伙伴卡-09",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "09",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜奇妙珍藏版｜第2弹/CP-亲密伙伴卡-09.png",
           "fileExt": ".png"
         },
         {
@@ -13164,87 +13245,6 @@ var DORAEMON_DATA = {
           "fileExt": ".png"
         },
         {
-          "id": "4f9df7678bbc11b0",
-          "name": "CP-亲密伙伴卡-01",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "01",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜奇妙珍藏版｜第2弹/CP-亲密伙伴卡-01.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "70add0d0afd3cf9b",
-          "name": "CP-亲密伙伴卡-02",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "02",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜奇妙珍藏版｜第2弹/CP-亲密伙伴卡-02.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "589f67cbed54034c",
-          "name": "CP-亲密伙伴卡-03",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "03",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜奇妙珍藏版｜第2弹/CP-亲密伙伴卡-03.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "ad6bbb6514e4fa8d",
-          "name": "CP-亲密伙伴卡-04",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "04",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜奇妙珍藏版｜第2弹/CP-亲密伙伴卡-04.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "cf4b278188b9a7fb",
-          "name": "CP-亲密伙伴卡-05",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "05",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜奇妙珍藏版｜第2弹/CP-亲密伙伴卡-05.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "0259d1725eead97f",
-          "name": "CP-亲密伙伴卡-06",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "06",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜奇妙珍藏版｜第2弹/CP-亲密伙伴卡-06.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "f6464fe26316393d",
-          "name": "CP-亲密伙伴卡-07",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "07",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜奇妙珍藏版｜第2弹/CP-亲密伙伴卡-07.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "a1db02468c182a2c",
-          "name": "CP-亲密伙伴卡-08",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "08",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜奇妙珍藏版｜第2弹/CP-亲密伙伴卡-08.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "1e4a13a577cc3bd9",
-          "name": "CP-亲密伙伴卡-09",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "09",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜奇妙珍藏版｜第2弹/CP-亲密伙伴卡-09.png",
-          "fileExt": ".png"
-        },
-        {
           "id": "844650fefee52b6c",
           "name": "PR-01_03_05卡背",
           "rarity": "PR",
@@ -14019,6 +14019,87 @@ var DORAEMON_DATA = {
           "fileExt": ".png"
         },
         {
+          "id": "bfed27e4201ecf6d",
+          "name": "CP-亲密伙伴卡-01",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "01",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜奇妙珍藏卡｜第3弹/CP-亲密伙伴卡-01.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "1437d934f9177adb",
+          "name": "CP-亲密伙伴卡-02",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "02",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜奇妙珍藏卡｜第3弹/CP-亲密伙伴卡-02.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "787031df12993139",
+          "name": "CP-亲密伙伴卡-03",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "03",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜奇妙珍藏卡｜第3弹/CP-亲密伙伴卡-03.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "7421f805c1574c8a",
+          "name": "CP-亲密伙伴卡-04",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "04",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜奇妙珍藏卡｜第3弹/CP-亲密伙伴卡-04.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "b8153585bc4e2882",
+          "name": "CP-亲密伙伴卡-05",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "05",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜奇妙珍藏卡｜第3弹/CP-亲密伙伴卡-05.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "012fcd21aadc2005",
+          "name": "CP-亲密伙伴卡-06",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "06",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜奇妙珍藏卡｜第3弹/CP-亲密伙伴卡-06.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "f99c96c9c26bcfdb",
+          "name": "CP-亲密伙伴卡-07",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "07",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜奇妙珍藏卡｜第3弹/CP-亲密伙伴卡-07.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "981901a4efbfa1c7",
+          "name": "CP-亲密伙伴卡-08",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "08",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜奇妙珍藏卡｜第3弹/CP-亲密伙伴卡-08.png",
+          "fileExt": ".png"
+        },
+        {
+          "id": "200a5c99e90368e3",
+          "name": "CP-亲密伙伴卡-09",
+          "rarity": "CP",
+          "rarityName": "亲密伙伴卡",
+          "number": "09",
+          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜奇妙珍藏卡｜第3弹/CP-亲密伙伴卡-09.png",
+          "fileExt": ".png"
+        },
+        {
           "id": "866ff672a8b709e6",
           "name": "DR-百宝袋道具卡-01",
           "rarity": "DR",
@@ -14520,87 +14601,6 @@ var DORAEMON_DATA = {
           "rarityName": "四季拼拼乐·夏",
           "number": "07",
           "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜奇妙珍藏卡｜第3弹/FR-四季拼拼乐·夏-07.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "bfed27e4201ecf6d",
-          "name": "CP-亲密伙伴卡-01",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "01",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜奇妙珍藏卡｜第3弹/CP-亲密伙伴卡-01.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "1437d934f9177adb",
-          "name": "CP-亲密伙伴卡-02",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "02",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜奇妙珍藏卡｜第3弹/CP-亲密伙伴卡-02.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "787031df12993139",
-          "name": "CP-亲密伙伴卡-03",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "03",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜奇妙珍藏卡｜第3弹/CP-亲密伙伴卡-03.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "7421f805c1574c8a",
-          "name": "CP-亲密伙伴卡-04",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "04",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜奇妙珍藏卡｜第3弹/CP-亲密伙伴卡-04.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "b8153585bc4e2882",
-          "name": "CP-亲密伙伴卡-05",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "05",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜奇妙珍藏卡｜第3弹/CP-亲密伙伴卡-05.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "012fcd21aadc2005",
-          "name": "CP-亲密伙伴卡-06",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "06",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜奇妙珍藏卡｜第3弹/CP-亲密伙伴卡-06.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "f99c96c9c26bcfdb",
-          "name": "CP-亲密伙伴卡-07",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "07",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜奇妙珍藏卡｜第3弹/CP-亲密伙伴卡-07.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "981901a4efbfa1c7",
-          "name": "CP-亲密伙伴卡-08",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "08",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜奇妙珍藏卡｜第3弹/CP-亲密伙伴卡-08.png",
-          "fileExt": ".png"
-        },
-        {
-          "id": "200a5c99e90368e3",
-          "name": "CP-亲密伙伴卡-09",
-          "rarity": "CP",
-          "rarityName": "亲密伙伴卡",
-          "number": "09",
-          "path": "E:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜奇妙珍藏卡｜第3弹/CP-亲密伙伴卡-09.png",
           "fileExt": ".png"
         },
         {

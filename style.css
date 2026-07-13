@@ -1081,7 +1081,50 @@ body::-webkit-scrollbar-thumb,
 }
 
 /* ================================================================
- * 13. 响应式
+ * 13. 一键返回顶部悬浮按钮 (Back to Top FAB)
+ * ================================================================ */
+.back-to-top {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: #fff;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 150;
+  box-shadow: 0 4px 16px rgba(243, 156, 18, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(14px) scale(0.9);
+  transition: opacity var(--transition), transform var(--transition),
+    visibility var(--transition), box-shadow var(--transition), background var(--transition);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.back-to-top:hover {
+  background: linear-gradient(135deg, var(--primary-light), var(--primary));
+  transform: translateY(0) scale(1.06);
+  box-shadow: 0 8px 24px rgba(243, 156, 18, 0.45);
+}
+.back-to-top:active {
+  transform: translateY(0) scale(0.94);
+}
+.back-to-top--visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+/* ================================================================
+ * 14. 响应式
  * ================================================================ */
 @media (max-width: 768px) {
   .sidebar { display: none; }
@@ -1111,6 +1154,13 @@ body::-webkit-scrollbar-thumb,
   }
   .coverflow-arrow { width: 38px; height: 38px; font-size: 1.2rem; }
   .app-container { flex-direction: column; }
+  .back-to-top {
+    right: 14px;
+    bottom: 14px;
+    width: 44px;
+    height: 44px;
+    font-size: 1.35rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -1182,6 +1232,11 @@ body::-webkit-scrollbar-thumb,
 }
 
 /* 过滤按钮激活状态 */
+.toolbar-btn--active-all {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light)) !important;
+  color: #fff !important;
+  border-color: var(--primary) !important;
+}
 .toolbar-btn--active-owned {
   background: linear-gradient(135deg, #27ae60, #2ecc71) !important;
   color: #fff !important;

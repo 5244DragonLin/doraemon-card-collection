@@ -27,7 +27,7 @@ except ImportError:
     yaml = None  # 未安装 PyYAML 时回退到脚本内置默认值
 
 # ========== 路径配置 ==========
-SOURCE_DIR = r"E:\BaiduSyncdisk\其他\卡动文创图鉴\哆啦A梦"
+SOURCE_DIR = r"D:\BaiduSyncdisk\其他\卡动文创图鉴\哆啦A梦"
 OUTPUT_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data.js")
 
 # ========== 图片扩展名 ==========
@@ -328,6 +328,18 @@ def main():
         print(f"\n⚠ 警告：仍有 {unknown_count} 张卡牌级别未识别，请检查文件名格式！")
     else:
         print(f"\n✓ 所有卡牌级别均成功识别！")
+
+    # 运行重复图片检测
+    import subprocess
+    dup_script = os.path.join(os.path.dirname(os.path.abspath(__file__)), "generate_duplicate_groups.py")
+    if os.path.exists(dup_script):
+        print(f"\n[INFO] 运行重复图片检测: generate_duplicate_groups.py")
+        result = subprocess.run(["python", dup_script], capture_output=True, text=True)
+        print(result.stdout)
+        if result.returncode != 0:
+            print(f"[ERROR] 重复检测脚本执行失败:\n{result.stderr}")
+    else:
+        print(f"\n[WARN] 未找到 generate_duplicate_groups.py，跳过重复检测。")
 
 
 if __name__ == "__main__":

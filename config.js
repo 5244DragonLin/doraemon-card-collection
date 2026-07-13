@@ -16,8 +16,8 @@
    * 与 generate_data.py 中 RARITY_ORDER 保持一致
    */
   var RARITY_ORDER = [
-    "R", "SR", "SSR", "UR", "TR", "ZR", "CR", "DR", "SP", "SSP", "SSS",
-    "EX", "IM", "LP", "FR", "FP", "CP", "PR", "TB", "PL", "OC", "SJ",
+    "R", "SR", "SSR", "UR", "TR", "CP", "ZR", "CR", "DR", "SP", "SSP", "SSS",
+    "EX", "IM", "LP", "FR", "FP", "PR", "TB", "PL", "OC", "SJ",
     "SS", "S", "MAX", "MZ", "CGF", "DM", "GF", "金属卡"
   ];
 

@@ -55,7 +55,9 @@
     <div class="toolbar">
       <button id="btnExport" class="toolbar-btn">📤 导出收藏</button>
       <button id="btnImport" class="toolbar-btn">📥 导入收藏</button>
-      <button id="btnFilter" class="toolbar-btn">🏷️ 全部显示</button>
+      <button id="btnFilterAll" class="toolbar-btn">🏷️ 全部显示</button>
+      <button id="btnFilterOwned" class="toolbar-btn">✅ 只看已拥有</button>
+      <button id="btnFilterUnowned" class="toolbar-btn">❌ 只看未拥有</button>
     </div>
     <!-- 卡牌视图 -->
     <div id="packView">
@@ -102,9 +104,14 @@
   <img class="lightbox-img" id="lightboxImg" alt="">
 </div>
 
+<!-- ========== 一键返回顶部悬浮按钮 ========== -->
+<button id="btnBackTop" class="back-to-top" title="返回顶部" aria-label="返回顶部">↑</button>
+
 <!-- ========== Scripts（按依赖顺序加载） ========== -->
 <!-- 1. 数据：全局变量 DORAEMON_DATA -->
 <script src="data.js"></script>
+<!-- 1.5. 重复图片分组：全局变量 DUPLICATE_GROUPS -->
+<script src="duplicate_groups.js"></script>
 <!-- 2. 配置：全局常量 AppConfig -->
 <script src="config.js"></script>
 <!-- 3. 核心逻辑：App 对象 + CollectionStore -->
