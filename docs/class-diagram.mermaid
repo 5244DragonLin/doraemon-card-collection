@@ -1,5 +1,5 @@
 classDiagram
-    class DoraemonData {
+    class CardCollections {
         +Meta meta
         +List~Pack~ packs
     }
@@ -52,7 +52,7 @@ classDiagram
     }
 
     class App {
-        -DoraemonData data
+        -CardCollections data
         -CollectionStore store
         -int currentPackIndex
         -string searchFilter
@@ -87,10 +87,10 @@ classDiagram
         +toggleOwned() void
     }
 
-    DoraemonData *-- Meta
-    DoraemonData *-- Pack
+    CardCollections *-- Meta
+    CardCollections *-- Pack
     Pack *-- Card
-    App --> DoraemonData : reads
+    App --> CardCollections : reads
     App --> CollectionStore : manages
     App --> CoverflowCarousel : opens
     CoverflowCarousel --> CollectionStore : syncs owned

@@ -1,7 +1,7 @@
-# 哆啦A梦卡牌收藏站 — 系统架构设计 + 任务分解
+# 卡动文创图鉴 — 系统架构设计 + 任务分解
 
 > 架构师：高见远（Bob）  
-> 项目：哆啦A梦卡牌收藏站升级重做  
+> 项目：卡动文创图鉴升级重做  
 > 日期：2025-07  
 
 ---
@@ -33,7 +33,7 @@
 | 决策点 | 选择 | 理由 |
 |--------|------|------|
 | 框架 | 无框架，原生 HTML/CSS/JS | 用户习惯双击 `index.html` 以 `file://` 打开，React/Vue 需构建步骤且 `file://` 下 ES Module 受限 |
-| 数据加载 | `<script>` 标签内联 `data.js`（全局变量 `DORAEMON_DATA`） | `fetch()` 在 `file://` 协议下触发 CORS 限制，`<script>` 标签无此问题 |
+| 数据加载 | `<script>` 标签内联 `data.js`（全局变量 `CARD_COLLECTIONS`） | `fetch()` 在 `file://` 协议下触发 CORS 限制，`<script>` 标签无此问题 |
 | 图片加载 | `file:///` 绝对路径 | 用户图片在本地，通过绝对路径直接引用 |
 | 3D 圆环 | 纯 CSS 3D（`perspective` + `rotateY` + `translateZ`） | 无需 Three.js 等重量级库，CSS 3D Transform 足以实现 Coverflow 效果，性能好（GPU 加速） |
 | 动画 | CSS `transition` / `@keyframes` | 原生支持，GPU 加速，60fps 流畅 |
@@ -130,7 +130,7 @@ onDragEnd():
 
 **难点**：`fetch()` 在 `file://` 下被浏览器 CORS 策略阻止。
 
-**方案**：数据内联为 `data.js`，通过 `<script>` 标签加载为全局变量 `DORAEMON_DATA`，无需 `fetch`。
+**方案**：数据内联为 `data.js`，通过 `<script>` 标签加载为全局变量 `CARD_COLLECTIONS`，无需 `fetch`。
 
 ### 1.3 架构模式
 
@@ -144,8 +144,8 @@ onDragEnd():
 ├──────────┬──────────┬──────────┬─────────────────┤
 │ data.js  │config.js │  app.js  │  carousel.js    │
 │          │          │          │                 │
-│ DORAEMON │ 常量配置  │ 核心交互  │ 3D圆环预览模块   │
-│ _DATA    │ 级别表    │ 数据加载  │ Coverflow渲染   │
+│ CARD     │ 常量配置  │ 核心交互  │ 3D圆环预览模块   │
+│ COLLECT  │ 级别表    │ 数据加载  │ Coverflow渲染   │
 │ (全局)   │ 颜色映射  │ 卡包浏览  │ 拖拽/触摸       │
 │          │          │ 收藏/搜索 │ 吸附/键盘导航    │
 │          │          │ 进度/导入 │ 拥有标记同步     │
@@ -155,7 +155,7 @@ onDragEnd():
 │  (暖色调主题 + 布局 + 3D圆环 + 动画 + 响应式)      │
 ├──────────────────────────────────────────────────┤
 │                localStorage                       │
-│  key: doraemon_collection_v2                     │
+│  key: kadong_collection_v1_<IP>                     │
 │  value: {"ownedIds": ["id1","id2",...]}          │
 └──────────────────────────────────────────────────┘
 ```
@@ -166,17 +166,17 @@ onDragEnd():
 
 ## 2. 文件列表及相对路径
 
-项目根目录：`doraemon-card-collection/`
+项目根目录：`kadong-card-collection/`
 
 ```
-doraemon-card-collection/
+kadong-card-collection/
 ├── index.html              # 新版主页面（HTML 结构 + 引用外部 CSS/JS）
 ├── index-v1.html           # 旧版备份（从原 index.html 重命名）
 ├── style.css               # 全部样式（暖色调 + 3D圆环 + 动画 + 响应式）
 ├── config.js               # 常量配置（RARITY_ORDER / LEVEL_COLORS / 拖拽参数等）
 ├── app.js                  # 核心交互（数据加载/卡包/收藏/搜索/进度/导入导出）
 ├── carousel.js             # 3D 圆环预览模块（Coverflow渲染/拖拽/吸附/键盘）
-├── data.js                 # 数据内联（var DORAEMON_DATA = {...};  由脚本生成）
+├── data.js                 # 数据内联（var CARD_COLLECTIONS = {...};  由脚本生成）
 ├── generate_data.py        # 数据生成脚本（修复正则 + 扫 .png/.jpg + 输出 data.js）
 ├── README.md               # 项目说明（更新使用方法）
 └── docs/
@@ -195,13 +195,13 @@ doraemon-card-collection/
 | `config.js` | 常量定义：RARITY_ORDER、RARITY_RANK、LEVEL_COLORS、COVERFLOW 参数、STORAGE_KEY | ~120 行 |
 | `app.js` | 核心逻辑：数据加载、状态管理、卡包列表渲染、级别分组、收藏标记、进度统计、搜索过滤、导入导出 | ~500 行 |
 | `carousel.js` | 3D 圆环：Coverflow 渲染、鼠标/触摸拖拽、松手吸附、键盘导航、拥有标记同步 | ~350 行 |
-| `data.js` | 数据文件（脚本生成），`var DORAEMON_DATA = {...};` | ~数万行（自动生成） |
+| `data.js` | 数据文件（脚本生成），`var CARD_COLLECTIONS = {...};` | ~数万行（自动生成） |
 | `generate_data.py` | 数据生成：扫描源目录、解析文件名、排序、输出 data.js | ~150 行 |
 
 **`index.html` 中 `<script>` 加载顺序**（关键！依赖顺序）：
 
 ```html
-<script src="data.js"></script>     <!-- 1. 先加载数据 → 全局变量 DORAEMON_DATA -->
+<script src="data.js"></script>     <!-- 1. 先加载数据 → 全局变量 CARD_COLLECTIONS -->
 <script src="config.js"></script>   <!-- 2. 加载配置 → 全局常量 RARITY_ORDER 等 -->
 <script src="app.js"></script>      <!-- 3. 加载核心逻辑 → 定义 App 对象 -->
 <script src="carousel.js"></script> <!-- 4. 加载圆环模块 → 定义 CoverflowCarousel 对象 -->
@@ -214,20 +214,21 @@ doraemon-card-collection/
 
 ## 3. 数据结构
 
-### 3.1 DORAEMON_DATA JSON Schema
+### 3.1 CARD_COLLECTIONS JSON Schema
 
-`data.js` 文件内容为 `var DORAEMON_DATA = { ... };`，结构如下：
+`data.js` 文件内容为 `var CARD_COLLECTIONS = { "<IP>": Collection, ... };`，**按 IP 分桶**，每个 IP 是一个独立的 `Collection` 对象（含 `meta` + `packs`）。结构如下：
 
 ```json
 {
-  "meta": {
-    "generatedAt": "2025-07-05T21:40:00",
-    "sourceDir": "D:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦",
-    "totalPacks": 15,
-    "totalCards": 1234,
-    "version": "2.0"
-  },
-  "packs": [
+  "哆啦A梦": {
+    "meta": {
+      "generatedAt": "2025-07-05T21:40:00",
+      "sourceDir": "D:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦",
+      "totalPacks": 15,
+      "totalCards": 1708,
+      "version": "2.0"
+    },
+    "packs": [
     {
       "id": "p00",
       "type": "卡牌",
@@ -246,9 +247,15 @@ doraemon-card-collection/
         }
       ]
     }
-  ]
+  ],
+  "三国志8 REMAKE": { "meta": { ... }, "packs": [ ... ] },
+  "CF穿越火线": { "meta": { ... }, "packs": [ ... ] }
 }
 ```
+
+> **去重组**：`duplicate_groups.js` 导出 `var DUPLICATE_GROUPS = { "<IP>": { "<cardId>": <groupIndex>, ... }, ... }`，用于跨卡包同名卡牌的"重复"聚合展示。
+
+> **收藏持久化**：每个 IP 的收藏状态独立存储在 `localStorage`，key 为 `kadong_collection_v1_<IP>`。
 
 ### 3.2 字段定义
 
@@ -287,8 +294,10 @@ doraemon-card-collection/
 
 ### 3.3 卡包 ID 生成规则
 
+> **注意**：卡包 `id` 在每个 IP 内部独立从 `p00` 编号；不同 IP 之间 `id` 可能重复，需结合所属 IP 区分。
+
 ```python
-# 按排序顺序：卡牌类在前（Unicode 卡 < 周），周边类在后
+# 每个 IP 内部：卡牌类在前（Unicode 卡 < 周），周边类在后
 # p00 = 卡牌｜地球交响乐｜第1弹
 # p01 = 卡牌｜奇妙珍藏卡｜第3弹
 # ...
@@ -314,7 +323,7 @@ card_id = hashlib.md5(raw.encode('utf-8')).hexdigest()[:16]
 
 ```mermaid
 classDiagram
-    class DoraemonData {
+    class CardCollections {
         +Meta meta
         +List~Pack~ packs
     }
@@ -369,7 +378,7 @@ classDiagram
     }
 
     class App {
-        -DoraemonData data
+        -CardCollections data
         -CollectionStore store
         -int currentPackIndex
         -string searchFilter
@@ -404,10 +413,10 @@ classDiagram
         +toggleOwned() void
     }
 
-    DoraemonData *-- Meta
-    DoraemonData *-- Pack
+    CardCollections *-- Meta
+    CardCollections *-- Pack
     Pack *-- Card
-    App --> DoraemonData : reads
+    App --> CardCollections : reads
     App --> CollectionStore : manages
     App --> CoverflowCarousel : opens
     CoverflowCarousel --> CollectionStore : syncs owned
@@ -435,14 +444,14 @@ sequenceDiagram
     Note over User,LS: ========== 阶段1：页面加载 ==========
     User->>HTML: 双击 index.html (file://)
     HTML->>DataJS: <script src="data.js">
-    DataJS-->>HTML: window.DORAEMON_DATA 就绪
+    DataJS-->>HTML: window.CARD_COLLECTIONS 就绪
     HTML->>Config: <script src="config.js">
     Config-->>HTML: window.AppConfig 就绪
     HTML->>App: <script src="app.js">
     HTML->>Carousel: <script src="carousel.js">
     App->>App: App.init()
     App->>Store: CollectionStore.load()
-    Store->>LS: getItem('doraemon_collection_v2')
+    Store->>LS: getItem('kadong_collection_v1_<IP>')
     LS-->>Store: {"ownedIds": [...]}
     Store-->>App: ownedIds Set 就绪
 
@@ -499,7 +508,7 @@ sequenceDiagram
     Note over User,LS: ========== 阶段7：标记拥有 ==========
     User->>Carousel: 点击"标记拥有"按钮
     Carousel->>Store: CollectionStore.toggle(cardId)
-    Store->>LS: setItem('doraemon_collection_v2', JSON.stringify)
+    Store->>LS: setItem('kadong_collection_v1_<IP>', JSON.stringify)
     Store-->>Carousel: 返回新状态
     Carousel->>Carousel: 更新弹窗内按钮状态（弹跳星标动画）
     Carousel->>App: App.onOwnedChanged(cardId)
@@ -552,7 +561,7 @@ sequenceDiagram
     participant Carousel as CoverflowCarousel
 
     Source->>Store: toggle(cardId)
-    Store->>LS: 更新 doraemon_collection_v2
+    Store->>LS: 更新 kadong_collection_v1_<IP>
     Store-->>Source: 返回新 isOwned 状态
 
     alt 触发源是列表页
@@ -632,7 +641,7 @@ sequenceDiagram
 1. **`generate_data.py` 重写**：
    - 修复正则：采用三级解析策略（纯ASCII / 混合中文+ASCII提取 / 纯中文直接用），详见 [8.4 节](#84-generate_datapy-正则方案)
    - 扫描 `.png` **和** `.jpg`（`filename.lower().endswith(('.png', '.jpg', '.jpeg'))`）
-   - 输出 `data.js`（`var DORAEMON_DATA = {...};` 格式），不再输出 `data.json`
+   - 输出 `data.js`（`var CARD_COLLECTIONS = {...};` 格式），不再输出 `data.json`
    - 生成完整 Card 对象（id, name, rarity, rarityName, number, path, fileExt）
    - 生成 Meta 对象（generatedAt, sourceDir, totalPacks, totalCards, version）
    - 卡牌按级别排序（`RARITY_ORDER` rank），同级别按文件名排序
@@ -686,7 +695,7 @@ sequenceDiagram
    - `RARITY_ORDER`：30 种级别排序表（29 个 ASCII 级别 + 金属卡），详见 [8.1 节](#81-rarity_order-级别排序表)
    - `RARITY_RANK`：`{level: rank}` 映射，`?` → -1，未知 → 99999
    - `LEVEL_COLORS`：每个级别的渐变色映射 `{level: {bg: "linear-gradient(...)", text: "#fff"}}`，详见 [8.2 节](#82-level_colors-级别颜色映射表)
-   - `STORAGE_KEY`：`'doraemon_collection_v2'`
+   - `STORAGE_KEY`：`'kadong_collection_v1_<IP>'`
    - `COVERFLOW` 参数对象：`{ANGLE_STEP: 28, SPACING: 130, DEPTH: 100, MIN_SCALE: 0.4, MIN_OPACITY: 0.15, MAX_BLUR: 6, MAX_VISIBLE: 4}`
    - 全局暴露：`window.AppConfig = { RARITY_ORDER, RARITY_RANK, LEVEL_COLORS, STORAGE_KEY, COVERFLOW }`
 
@@ -770,15 +779,15 @@ sequenceDiagram
 |------|------|
 | **Task ID** | T04 |
 | **Task Name** | JS 核心交互（数据/卡包/收藏/搜索/进度/导入导出） |
-| **源文件** | `app.js`（新建）、`config.js`（引用常量）、`data.js`（引用 DORAEMON_DATA） |
+| **源文件** | `app.js`（新建）、`config.js`（引用常量）、`data.js`（引用 CARD_COLLECTIONS） |
 | **依赖** | T01, T02 |
 | **优先级** | P0 |
 
 **详细说明**：
 
 1. **`app.js` — 数据加载与初始化**：
-   - `App.init()`：读取 `window.DORAEMON_DATA`，调用 `CollectionStore.load()`，渲染侧边栏/移动端标签/进度，选中第一个卡包
-   - 数据校验：检查 `DORAEMON_DATA` 是否存在、`packs` 数组是否非空
+   - `App.init()`：读取 `window.CARD_COLLECTIONS`，调用 `CollectionStore.load()`，渲染侧边栏/移动端标签/进度，选中第一个卡包
+   - 数据校验：检查 `CARD_COLLECTIONS` 是否存在、`packs` 数组是否非空
 
 2. **`app.js` — CollectionStore 模块**（收藏状态管理）：
    - `CollectionStore.load()`：从 `localStorage[STORAGE_KEY]` 读取 `ownedIds` 数组，转为 `Set`
@@ -790,7 +799,7 @@ sequenceDiagram
    - `CollectionStore.importData(data)`：合并导入（并集模式），写回 localStorage
 
 3. **`app.js` — 卡包列表渲染**：
-   - `App.renderSidebar()`：遍历 `DORAEMON_DATA.packs`，生成侧边栏 HTML（卡包名 + 类型 + 计数 `owned/total`）
+   - `App.renderSidebar()`：遍历 `CARD_COLLECTIONS.packs`，生成侧边栏 HTML（卡包名 + 类型 + 计数 `owned/total`）
    - `App.renderMobileTabs()`：生成移动端横向标签
    - 卡包按 `type` 分组显示（卡牌类 / 周边类，有小标题分隔）
 
@@ -832,7 +841,7 @@ sequenceDiagram
     - 卡牌图片 `onerror`：替换为友好占位图（CSS 绘制的占位 div 或默认 SVG）
 
 11. **`config.js` 引用**：使用 `AppConfig.RARITY_ORDER`、`AppConfig.RARITY_RANK`、`AppConfig.STORAGE_KEY` 等常量
-12. **`data.js` 引用**：使用 `window.DORAEMON_DATA` 全局变量
+12. **`data.js` 引用**：使用 `window.CARD_COLLECTIONS` 全局变量
 
 ---
 
@@ -1217,7 +1226,7 @@ for filename in os.listdir(pack_path):
 OUTPUT_FILE = os.path.join(os.path.dirname(__file__), "data.js")
 
 with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-    f.write("var DORAEMON_DATA = ")
+    f.write("var CARD_COLLECTIONS = ")
     json.dump(data, f, ensure_ascii=False, indent=2)
     f.write(";\n")
 ```
@@ -1226,7 +1235,7 @@ with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
 
 | 全局变量/对象 | 定义位置 | 说明 |
 |---------------|----------|------|
-| `DORAEMON_DATA` | `data.js` | 卡牌数据对象 `{meta, packs}` |
+| `CARD_COLLECTIONS` | `data.js` | 卡牌数据对象 `{meta, packs}` |
 | `AppConfig` | `config.js` | 配置常量 `{RARITY_ORDER, RARITY_RANK, LEVEL_COLORS, STORAGE_KEY, COVERFLOW, ANIMATION}` |
 | `App` | `app.js` | 核心应用对象，包含 `init()`, `renderSidebar()`, `renderPackView()` 等方法 |
 | `CollectionStore` | `app.js` | 收藏状态管理对象，包含 `load()`, `toggle()`, `isOwned()` 等方法 |
@@ -1236,7 +1245,7 @@ with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
 
 ```javascript
 // Key
-const STORAGE_KEY = 'doraemon_collection_v2';
+const STORAGE_KEY = 'kadong_collection_v1_<IP>';
 
 // Value (JSON string)
 {

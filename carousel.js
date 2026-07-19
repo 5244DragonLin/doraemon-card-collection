@@ -1,5 +1,5 @@
 /**
- * 哆啦A梦卡牌收藏站 - 3D Coverflow 圆环预览模块 (carousel.js)
+ * 卡动文创图鉴 - 3D Coverflow 圆环预览模块 (carousel.js)
  *
  * 实现：
  *   - 真 3D Coverflow 渲染（perspective + rotateY + translateZ + scale + opacity + blur）
@@ -28,6 +28,8 @@
     isDragging: false,
     /** 刚刚完成拖拽（用于阻止后续 click 事件关闭弹窗） */
     _justDragged: false,
+    /** 本次拖拽是否发生了实际移动（超过阈值才算拖拽，否则视为点击） */
+    _dragMoved: false,
     /** 拖拽起始 X 坐标 */
     dragStartX: 0,
     /** 拖拽起始时的虚拟索引 */
@@ -397,9 +399,10 @@
      */
     onDragStart: function (clientX) {
       this.isDragging = true;
+      this._dragMoved = false;
       this.dragStartX = clientX;
       this.dragStartIndex = this.virtualIndex;
-      this._disableTransition();
+      // 延迟禁用 transition，仅在检测到真正拖拽移动时才禁用
     },
 
     /**
@@ -415,6 +418,12 @@
       var cardDelta = deltaX / C.SPACING;
       // 向右拖 → 看上一张（virtualIndex 减小）
       this.virtualIndex = this.dragStartIndex - cardDelta;
+
+      // 检测是否发生实际移动（超过 5px 才算拖拽）
+      if (!this._dragMoved && Math.abs(deltaX) > 5) {
+        this._dragMoved = true;
+        this._disableTransition();
+      }
 
       // 边界约束
       if (this.virtualIndex < 0) this.virtualIndex = 0;
@@ -432,7 +441,16 @@
     onDragEnd: function () {
       if (!this.isDragging) return;
       this.isDragging = false;
+
+      // 如果没有实际拖拽移动（纯点击），用点击坐标反算目标卡牌并导航
+      if (!this._dragMoved) {
+        this._justDragged = false;
+        this._navigateByClickPosition(this.dragStartX);
+        return;
+      }
+
       this._justDragged = true;
+      this._dragMoved = false;
 
       // 启用 transition，平滑吸附
       this._enableTransition();
@@ -443,6 +461,38 @@
       if (snapIndex > this.cards.length - 1) snapIndex = this.cards.length - 1;
       this.virtualIndex = snapIndex;
 
+      this.render();
+      this.updateCenterContent();
+    },
+
+    /**
+     * 根据点击的屏幕 X 坐标反算用户想点击的卡牌并导航过去。
+     * 用于解决 3D preserve-3d 环境下居中卡牌遮挡相邻卡牌导致 DOM 事件目标错误的问题。
+     * @param {number} clientX - 点击时的鼠标/触摸 X 坐标
+     */
+    _navigateByClickPosition: function (clientX) {
+      var container = document.getElementById('coverflowContainer');
+      if (!container) return;
+
+      var C = AppConfig.COVERFLOW;
+      var rect = container.getBoundingClientRect();
+      // 点击位置相对于容器中心的 X 偏移
+      var clickCenterX = clientX - rect.left - rect.width / 2;
+
+      // 根据视觉间距反算卡牌偏移量（SPACING 是物理间距，经透视投影后略有缩小，
+      // 但 Math.round 的容差足以覆盖这个差异）
+      var nearestOffset = Math.round(clickCenterX / C.SPACING);
+
+      // 限制在可见范围且非居中卡牌
+      if (nearestOffset === 0 || Math.abs(nearestOffset) > C.MAX_VISIBLE) return;
+
+      var centerIdx = Math.round(this.virtualIndex);
+      var targetIdx = centerIdx + nearestOffset;
+      if (targetIdx < 0 || targetIdx >= this.cards.length) return;
+
+      // 平滑过渡到目标卡牌
+      this._enableTransition();
+      this.virtualIndex = targetIdx;
       this.render();
       this.updateCenterContent();
     },

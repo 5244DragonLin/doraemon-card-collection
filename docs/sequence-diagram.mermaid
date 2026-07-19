@@ -11,14 +11,14 @@ sequenceDiagram
     Note over User,LS: ========== 阶段1：页面加载 ==========
     User->>HTML: 双击 index.html (file://)
     HTML->>DataJS: <script src="data.js">
-    DataJS-->>HTML: window.DORAEMON_DATA 就绪
+    DataJS-->>HTML: window.CARD_COLLECTIONS 就绪
     HTML->>Config: <script src="config.js">
     Config-->>HTML: window.AppConfig 就绪
     HTML->>App: <script src="app.js">
     HTML->>Carousel: <script src="carousel.js">
     App->>App: App.init()
     App->>Store: CollectionStore.load()
-    Store->>LS: getItem('doraemon_collection_v2')
+    Store->>LS: getItem('kadong_collection_v1_<IP>')
     LS-->>Store: {"ownedIds": [...]}
     Store-->>App: ownedIds Set 就绪
 
@@ -75,7 +75,7 @@ sequenceDiagram
     Note over User,LS: ========== 阶段7：标记拥有 ==========
     User->>Carousel: 点击"标记拥有"按钮
     Carousel->>Store: CollectionStore.toggle(cardId)
-    Store->>LS: setItem('doraemon_collection_v2', JSON.stringify)
+    Store->>LS: setItem('kadong_collection_v1_<IP>', JSON.stringify)
     Store-->>Carousel: 返回新状态
     Carousel->>Carousel: 更新弹窗内按钮状态（弹跳星标动画）
     Carousel->>App: App.onOwnedChanged(cardId)

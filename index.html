@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>哆啦A梦卡牌收藏站 · 3D Coverflow</title>
+<title>卡动文创图鉴 · 多 IP 卡牌收藏</title>
 <link rel="icon" type="image/svg+xml" href="favicons/favicon.svg">
 <link rel="icon" type="image/x-icon" href="favicons/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
@@ -31,8 +31,9 @@
 <header class="header">
   <div class="header-left">
     <div class="bell"></div>
-    <span class="header-title">哆啦A梦卡牌收藏站</span>
+    <span class="header-title" id="headerTitle">卡动文创图鉴 · 哆啦A梦</span>
   </div>
+  <div class="ip-switcher" id="ipSwitcher"></div>
   <div class="header-stats" id="headerStats">加载中...</div>
 </header>
 
@@ -95,7 +96,7 @@
 
 <!-- ========== Footer ========== -->
 <div class="footer">
-  &copy; 2026 哆啦A梦卡牌收藏站 · 仅供个人收藏使用
+  &copy; 2026 卡动文创图鉴 · 仅供个人收藏使用
 </div>
 
 <!-- ========== 全屏图片查看弹窗 ========== -->
@@ -108,9 +109,9 @@
 <button id="btnBackTop" class="back-to-top" title="返回顶部" aria-label="返回顶部">↑</button>
 
 <!-- ========== Scripts（按依赖顺序加载） ========== -->
-<!-- 1. 数据：全局变量 DORAEMON_DATA -->
+<!-- 1. 数据：全局变量 CARD_COLLECTIONS（按 IP 分桶） -->
 <script src="data.js"></script>
-<!-- 1.5. 重复图片分组：全局变量 DUPLICATE_GROUPS -->
+<!-- 1.5. 重复图片分组：全局变量 DUPLICATE_GROUPS（按 IP 分桶） -->
 <script src="duplicate_groups.js"></script>
 <!-- 2. 配置：全局常量 AppConfig -->
 <script src="config.js"></script>

@@ -1,5 +1,5 @@
 /**
- * 哆啦A梦卡牌收藏站 - 全局样式表 (style.css)
+ * 卡动文创图鉴 - 全局样式表 (style.css)
  *
  * 内容：
  *   1. CSS 变量定义（暖色调主题）
@@ -37,6 +37,14 @@
   --accent-gold: #F39C12;
   --gold: #FFD700;
 
+  /* 多 IP 动态主题色（由 JS 按当前 IP 设置；此处为 哆啦A梦默认） */
+  --accent: #F39C12;
+  --accent-2: #FFD700;
+  --header-bg: linear-gradient(135deg, #F39C12 0%, #FFD700 50%, #F39C12 100%);
+  /* 主题色 RGB 通道（辉光用，由 JS 按当前 IP 同步设置；此处为 哆啦A梦金默认值） */
+  --accent-rgb: 243, 156, 18;
+  --accent-2-rgb: 255, 215, 0;
+
   /* 背景色：温暖渐变 */
   --bg-base: #FFF8F0;
   --bg-mid: #FFF3E6;
@@ -71,7 +79,7 @@
   margin: 0;
   padding: 0;
 }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-anchor: none; }
 body {
   font-family: "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", sans-serif;
   background: linear-gradient(135deg, #FFF8F0 0%, #FFF3E6 30%, #FDEBD0 60%, #FFF8F0 100%);
@@ -136,15 +144,14 @@ body {
  * 4. Header（暖金渐变 + 铃铛动画）
  * ================================================================ */
 .header {
-  background: linear-gradient(135deg, #F39C12 0%, #FFD700 50%, #F39C12 100%);
+  background: var(--header-bg, linear-gradient(135deg, #F39C12 0%, #FFD700 50%, #F39C12 100%));
   background-size: 200% 100%;
   animation: headerGradient 8s ease-in-out infinite;
   color: #fff;
   padding: 18px 24px;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1.12fr auto 0.88fr;
   align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
   gap: 12px;
   box-shadow: 0 4px 20px rgba(243, 156, 18, 0.3);
   position: sticky;
@@ -159,6 +166,7 @@ body {
   display: flex;
   align-items: center;
   gap: 14px;
+  justify-self: start;
 }
 .header-title {
   font-size: 1.5rem;
@@ -175,12 +183,12 @@ body {
   display: inline-block;
   width: 32px;
   height: 32px;
-  background: radial-gradient(circle at 50% 30%, #FFD700, #F39C12);
+  background: radial-gradient(circle at 50% 30%, var(--accent-2), var(--accent));
   border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
   position: relative;
   animation: bellSwing 2s ease-in-out infinite;
   transform-origin: top center;
-  box-shadow: 0 2px 8px rgba(255, 215, 0, 0.4);
+  box-shadow: 0 2px 8px rgba(var(--accent-rgb), 0.4);
 }
 .bell::after {
   content: '';
@@ -190,7 +198,7 @@ body {
   transform: translateX(-50%);
   width: 8px;
   height: 8px;
-  background: #F39C12;
+  background: var(--accent);
   border-radius: 50%;
 }
 @keyframes bellSwing {
@@ -204,10 +212,47 @@ body {
   opacity: 0.95;
   text-align: right;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  justify-self: end;
 }
 .header-stats strong {
   font-size: 1.3rem;
   color: #fff;
+}
+
+/* IP 切换器 */
+.ip-switcher {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-self: center;
+}
+.ip-switcher-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  opacity: 0.9;
+  letter-spacing: 1px;
+}
+.ip-tab {
+  padding: 6px 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.82rem;
+  transition: all var(--transition);
+  white-space: nowrap;
+}
+.ip-tab:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+.ip-tab.active {
+  background: #fff;
+  color: var(--accent, #F39C12);
+  font-weight: 700;
+  border-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 /* ================================================================
@@ -285,6 +330,17 @@ body::-webkit-scrollbar-thumb,
   color: var(--text-light);
   display: block;
   margin-bottom: 2px;
+}
+/* 卡包名单行不换行 + 省略号：切换 active 时加粗不再改变 item 高度，
+   避免侧边栏内容高度变化导致左侧滚动条滑块比例跳动。
+   用 inline-block 与右侧 float 的计数徽章保持同一行 */
+.pack-item .pack-name {
+  display: inline-block;
+  vertical-align: middle;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .pack-item .pack-count {
   font-size: 0.75rem;
@@ -435,10 +491,11 @@ body::-webkit-scrollbar-thumb,
 }
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #F39C12, #FFD700, #E67E22, #FFD700);
+  background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent), var(--accent-2));
   background-size: 200% 100%;
   border-radius: 10px;
-  transition: width 0.5s ease-out;
+  /* 标记拥有后填充宽度过渡：0.5s 偏快，放慢到 0.8s 让进度条更平滑 */
+  transition: width 0.8s ease-out;
   animation: progressShimmer 3s linear infinite;
   position: relative;
 }
@@ -1091,13 +1148,13 @@ body::-webkit-scrollbar-thumb,
   height: 48px;
   border: none;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
   color: #fff;
   font-size: 1.5rem;
   line-height: 1;
   cursor: pointer;
   z-index: 150;
-  box-shadow: 0 4px 16px rgba(243, 156, 18, 0.35);
+  box-shadow: 0 4px 16px rgba(var(--accent-rgb), 0.35);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1110,9 +1167,9 @@ body::-webkit-scrollbar-thumb,
   -webkit-tap-highlight-color: transparent;
 }
 .back-to-top:hover {
-  background: linear-gradient(135deg, var(--primary-light), var(--primary));
+  background: linear-gradient(135deg, var(--accent-2), var(--accent));
   transform: translateY(0) scale(1.06);
-  box-shadow: 0 8px 24px rgba(243, 156, 18, 0.45);
+  box-shadow: 0 8px 24px rgba(var(--accent-rgb), 0.45);
 }
 .back-to-top:active {
   transform: translateY(0) scale(0.94);
@@ -1129,7 +1186,18 @@ body::-webkit-scrollbar-thumb,
 @media (max-width: 768px) {
   .sidebar { display: none; }
   .mobile-tabs { display: flex; }
-  .header { padding: 12px 16px; }
+  .header {
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .header-left,
+  .header-stats,
+  .ip-switcher {
+    justify-self: center;
+  }
   .header-title { font-size: 1.1rem; }
   .bell { width: 24px; height: 24px; }
   .header-stats { font-size: 0.8rem; }
@@ -1233,9 +1301,9 @@ body::-webkit-scrollbar-thumb,
 
 /* 过滤按钮激活状态 */
 .toolbar-btn--active-all {
-  background: linear-gradient(135deg, var(--primary), var(--primary-light)) !important;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2)) !important;
   color: #fff !important;
-  border-color: var(--primary) !important;
+  border-color: var(--accent) !important;
 }
 .toolbar-btn--active-owned {
   background: linear-gradient(135deg, #27ae60, #2ecc71) !important;

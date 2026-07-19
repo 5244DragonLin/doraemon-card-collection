@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-哆啦A梦卡牌收藏站 - 重复图片检测脚本
+卡动文创图鉴 - 重复图片检测脚本（多 IP 版）
 
 功能：
-1. 读取 data.js 中所有卡牌数据
-2. 按文件名（card.name 字段）分组
+1. 读取 data.js 中所有 IP 的卡牌数据
+2. 每个 IP 内按文件名（card.name 字段）分组
 3. 对每组 ≥2 张卡，用 Pillow + imagehash 计算 wHash
 4. 按 wHash 距离 ≤5 聚类为同一组
-5. 输出 duplicate_groups.js：var DUPLICATE_GROUPS = { cardId: groupIndex, ... };
+5. 输出 duplicate_groups.js：var DUPLICATE_GROUPS = { "<IP>": {cardId: groupIndex}, ... };
 
 依赖：pip install pillow imagehash
 """
@@ -26,26 +26,27 @@ except ImportError:
 
 
 def read_data_js(filepath):
-    """读取 data.js，提取所有卡牌数据"""
+    """读取 data.js，提取所有 IP 的卡牌数据（多 IP 结构）"""
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    json_str = content.strip()
-    if json_str.startswith('var DORAEMON_DATA = '):
-        json_str = json_str[len('var DORAEMON_DATA = '):]
+    prefix = 'var CARD_COLLECTIONS = '
+    if content.startswith(prefix):
+        json_str = content[len(prefix):]
+    elif content.startswith('var DORAEMON_DATA = '):
+        # 兼容旧格式（单 IP）
+        json_str = content[len('var DORAEMON_DATA = '):]
+    else:
+        raise ValueError("data.js 开头不符合预期")
+    json_str = json_str.rstrip()
     if json_str.endswith(';'):
         json_str = json_str[:-1]
 
     data = json.loads(json_str)
-    cards = []
-    for pack in data.get('packs', []):
-        for card in pack.get('cards', []):
-            cards.append({
-                'id': card['id'],
-                'name': card['name'],
-                'path': card['path']
-            })
-    return cards
+    # 兼容：单 IP 旧格式（直接含 packs）包裹为虚拟 IP
+    if 'packs' in data:
+        return {"__legacy__": data}
+    return data
 
 
 def compute_whash(image_path):
@@ -61,16 +62,12 @@ def compute_whash(image_path):
 def cluster_by_distance(hashes, threshold=5):
     """
     基于哈希距离聚类（无向图连通分量）。
-
-    返回：
-      groups: 每个元素所属的局部 group_index（≥0 表示分组号，-1 表示未分配到任一组）
-      group_members: list of list，每个子列表是该组成员的 hashes 索引
+    返回局部 group_index 列表与成员列表。
     """
     n = len(hashes)
     if n == 0:
         return [-1] * n, []
 
-    # 构建邻接表
     adj = [[] for _ in range(n)]
     for i in range(n):
         if hashes[i] is None:
@@ -94,7 +91,6 @@ def cluster_by_distance(hashes, threshold=5):
     for i in range(n):
         if visited[i] or hashes[i] is None:
             continue
-        # BFS/DFS 收集连通分量
         stack = [i]
         visited[i] = True
         members = []
@@ -106,7 +102,6 @@ def cluster_by_distance(hashes, threshold=5):
                 if not visited[neighbor]:
                     visited[neighbor] = True
                     stack.append(neighbor)
-        # 只有 ≥2 个成员的组才算有效去重组
         if len(members) >= 2:
             group_members.append(members)
             local_group_idx += 1
@@ -124,50 +119,58 @@ def main():
         exit(1)
 
     print("读取 data.js ...")
-    cards = read_data_js(data_js_path)
-    print(f"共 {len(cards)} 张卡牌")
+    collections = read_data_js(data_js_path)
+    print(f"共 {len(collections)} 个 IP")
 
-    # 按卡牌名分组（card.name 字段即文件名去扩展名）
-    name_groups = defaultdict(list)
-    for i, card in enumerate(cards):
-        name_groups[card['name']].append(i)
+    duplicate_groups = {}  # { ip: { cardId: groupIndex } }
 
-    # 筛选出 ≥2 张卡的同名组
-    multi_name_groups = {
-        name: indices
-        for name, indices in name_groups.items()
-        if len(indices) >= 2
-    }
-    total_multi = sum(len(v) for v in multi_name_groups.values())
-    print(f"同名卡组（≥2张）: {len(multi_name_groups)} 组，共 {total_multi} 张卡牌")
+    for ip, ip_data in collections.items():
+        cards = []
+        for pack in ip_data.get('packs', []):
+            for card in pack.get('cards', []):
+                cards.append({
+                    'id': card['id'],
+                    'name': card['name'],
+                    'path': card['path']
+                })
+        print(f"\n[IP] {ip} — 共 {len(cards)} 张卡牌")
 
-    # 全局 group index，输出到 duplicate_groups.js
-    global_group_idx = 0
-    duplicate_groups = {}  # cardId -> globalGroupIndex
+        # 按卡牌名分组
+        name_groups = defaultdict(list)
+        for i, card in enumerate(cards):
+            name_groups[card['name']].append(i)
 
-    for name, indices in multi_name_groups.items():
-        print(f"\n处理: {name} ({len(indices)} 张)")
+        multi_name_groups = {
+            name: indices
+            for name, indices in name_groups.items()
+            if len(indices) >= 2
+        }
+        total_multi = sum(len(v) for v in multi_name_groups.values())
+        print(f"  同名卡组（≥2张）: {len(multi_name_groups)} 组，共 {total_multi} 张卡牌")
 
-        # 计算每张图片的 wHash
-        hashes = []
-        for idx in indices:
-            card = cards[idx]
-            # 转换路径分隔符为 Windows 格式
-            img_path = card['path'].replace('/', '\\')
-            h = compute_whash(img_path)
-            hashes.append(h)
-            status = "OK" if h is not None else "FAIL"
-            print(f"  [{status}] {os.path.basename(img_path)}")
+        ip_group_idx = 0
+        ip_dup = {}
 
-        # 聚类（wHash 距离 ≤5）
-        local_groups, members_list = cluster_by_distance(hashes, threshold=5)
+        for name, indices in multi_name_groups.items():
+            print(f"  处理: {name} ({len(indices)} 张)")
+            hashes = []
+            for idx in indices:
+                card = cards[idx]
+                img_path = card['path'].replace('/', '\\')
+                h = compute_whash(img_path)
+                hashes.append(h)
+                status = "OK" if h is not None else "FAIL"
+                print(f"    [{status}] {os.path.basename(img_path)}")
 
-        # 将有效组成员映射到全局 group index
-        for members in members_list:
-            for m in members:
-                card_id = cards[indices[m]]['id']
-                duplicate_groups[card_id] = global_group_idx
-            global_group_idx += 1
+            local_groups, members_list = cluster_by_distance(hashes, threshold=5)
+            for members in members_list:
+                for m in members:
+                    card_id = cards[indices[m]]['id']
+                    ip_dup[card_id] = ip_group_idx
+                ip_group_idx += 1
+
+        duplicate_groups[ip] = ip_dup
+        print(f"  → {ip} 分组数: {ip_group_idx}，涉及卡牌: {len(ip_dup)}")
 
     # 输出 duplicate_groups.js
     json_str = json.dumps(duplicate_groups, ensure_ascii=False)
@@ -176,9 +179,12 @@ def main():
     with open(output_path, 'w', encoding='utf-8') as f:
         f.write(output_content)
 
+    total_groups = sum(len(set(v.values())) for v in duplicate_groups.values())
+    total_cards = sum(len(v) for v in duplicate_groups.values())
     print(f"\n========== 去重分组完成 ==========")
-    print(f"总分组数: {global_group_idx}")
-    print(f"涉及卡牌数: {len(duplicate_groups)}")
+    print(f"总 IP 数: {len(duplicate_groups)}")
+    print(f"总分组数: {total_groups}")
+    print(f"涉及卡牌数: {total_cards}")
     print(f"输出文件: {output_path}")
 
 

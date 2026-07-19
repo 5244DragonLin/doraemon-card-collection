@@ -1,12 +1,12 @@
 /**
- * 哆啦A梦卡牌收藏站 - 核心交互逻辑 (app.js)
+ * 卡动文创图鉴 - 核心交互逻辑 (app.js)
  *
  * 包含：
  *   - CollectionStore：收藏状态管理（localStorage 持久化）
  *   - App：核心应用对象（数据加载/卡包浏览/收藏/搜索/进度/导入导出）
  *
  * 全局对象：window.App, window.CollectionStore
- * 依赖：window.DORAEMON_DATA (data.js), window.AppConfig (config.js)
+ * 依赖：window.CARD_COLLECTIONS (data.js), window.DUPLICATE_GROUPS (duplicate_groups.js), window.AppConfig (config.js)
  *
  * 作者：工程师 寇豆码（Kou）
  */
@@ -18,9 +18,20 @@
    * CollectionStore — 收藏状态管理
    * ================================================================ */
 
+  /** 当前 IP 的去重组（按当前 IP 取值） */
+  function dupGroups() {
+    if (typeof DUPLICATE_GROUPS === 'undefined' || !CollectionStore.currentIp) return {};
+    var g = DUPLICATE_GROUPS[CollectionStore.currentIp];
+    return g || {};
+  }
+
   var CollectionStore = {
     /** 已拥有卡牌 ID 集合 */
     ownedIds: null,
+    /** 当前 IP 名称（切换 IP 时更新） */
+    currentIp: null,
+    /** 当前 IP 的 localStorage 存储键 */
+    storageKey: null,
 
     /**
      * 判断卡牌是否已拥有
@@ -37,17 +48,18 @@
      * @returns {boolean} 切换后的状态（true=已拥有）
      */
     toggle: function (cardId) {
-      // 检查是否属于重复图片组
+      // 检查是否属于重复图片组（按当前 IP 取值）
       var groupIndex = null;
-      if (typeof DUPLICATE_GROUPS !== 'undefined' && DUPLICATE_GROUPS.hasOwnProperty(cardId)) {
-        groupIndex = DUPLICATE_GROUPS[cardId];
+      var dups = dupGroups();
+      if (dups.hasOwnProperty(cardId)) {
+        groupIndex = dups[cardId];
       }
 
       if (groupIndex !== null) {
         // 收集同组所有卡牌 ID
         var groupCardIds = [];
-        for (var id in DUPLICATE_GROUPS) {
-          if (DUPLICATE_GROUPS.hasOwnProperty(id) && DUPLICATE_GROUPS[id] === groupIndex) {
+        for (var id in dups) {
+          if (dups.hasOwnProperty(id) && dups[id] === groupIndex) {
             groupCardIds.push(id);
           }
         }
@@ -82,13 +94,14 @@
      * @returns {Array<string>} 展开后的卡牌 ID 数组
      */
     _expandDuplicateGroups: function (cardIds) {
-      if (typeof DUPLICATE_GROUPS === 'undefined') return cardIds;
+      var dups = dupGroups();
+      if (!dups || Object.keys(dups).length === 0) return cardIds;
       var expanded = new Set();
       var groupIds = new Set();
       // 收集所有涉及的 groupIndex
       cardIds.forEach(function (id) {
-        if (DUPLICATE_GROUPS.hasOwnProperty(id)) {
-          groupIds.add(DUPLICATE_GROUPS[id]);
+        if (dups.hasOwnProperty(id)) {
+          groupIds.add(dups[id]);
         }
       });
       // 展开：包括原始 ID + 同组所有 ID
@@ -96,8 +109,8 @@
         expanded.add(id);
       });
       if (groupIds.size > 0) {
-        for (var id in DUPLICATE_GROUPS) {
-          if (DUPLICATE_GROUPS.hasOwnProperty(id) && groupIds.has(DUPLICATE_GROUPS[id])) {
+        for (var id in dups) {
+          if (dups.hasOwnProperty(id) && groupIds.has(dups[id])) {
             expanded.add(id);
           }
         }
@@ -128,10 +141,12 @@
     /**
      * 从 localStorage 加载收藏数据
      */
-    load: function () {
+    /** 从指定存储键加载收藏数据 */
+    _loadFrom: function (key) {
       this.ownedIds = new Set();
+      if (!key) return;
       try {
-        var raw = localStorage.getItem(AppConfig.STORAGE_KEY);
+        var raw = localStorage.getItem(key);
         if (raw) {
           var data = JSON.parse(raw);
           if (data && Array.isArray(data.ownedIds)) {
@@ -146,15 +161,30 @@
     },
 
     /**
+     * 切换当前 IP（重新加载该 IP 的收藏数据，与收藏互相隔离）
+     * @param {string} ip - IP 名称
+     */
+    useIp: function (ip) {
+      this.currentIp = ip;
+      this.storageKey = AppConfig.storageKeyFor(ip);
+      this._loadFrom(this.storageKey);
+    },
+
+    load: function () {
+      if (this.storageKey) this._loadFrom(this.storageKey);
+    },
+
+    /**
      * 保存收藏数据到 localStorage
      */
     save: function () {
+      if (!this.storageKey) return;
       try {
         var data = {
           ownedIds: Array.from(this.ownedIds),
           savedAt: new Date().toISOString()
         };
-        localStorage.setItem(AppConfig.STORAGE_KEY, JSON.stringify(data));
+        localStorage.setItem(this.storageKey, JSON.stringify(data));
       } catch (e) {
         console.warn('CollectionStore.save: 保存收藏数据失败', e);
       }
@@ -188,8 +218,9 @@
      */
     exportData: function () {
       var totalCards = 0;
-      if (global.DORAEMON_DATA && global.DORAEMON_DATA.packs) {
-        global.DORAEMON_DATA.packs.forEach(function (p) {
+      var ipData = global.CARD_COLLECTIONS && App.currentIp ? global.CARD_COLLECTIONS[App.currentIp] : null;
+      if (ipData && ipData.packs) {
+        ipData.packs.forEach(function (p) {
           totalCards += p.cardCount || (p.cards ? p.cards.length : 0);
         });
       }
@@ -226,7 +257,9 @@
    * ================================================================ */
 
   var App = {
-    /** 卡牌数据 */
+    /** 当前 IP 名称 */
+    currentIp: null,
+    /** 卡牌数据（当前 IP 的数据对象） */
     data: null,
     /** 当前选中的卡包索引 */
     currentPackIndex: 0,
@@ -243,16 +276,28 @@
      * 初始化应用
      */
     init: function () {
-      // 数据校验
-      if (!global.DORAEMON_DATA || !global.DORAEMON_DATA.packs || global.DORAEMON_DATA.packs.length === 0) {
+      // 数据校验（多 IP：CARD_COLLECTIONS 为 { ip: {meta, packs} }）
+      if (!global.CARD_COLLECTIONS || typeof global.CARD_COLLECTIONS !== 'object') {
         document.getElementById('packView').innerHTML =
           '<p class="no-result"><span class="no-result-icon">⚠️</span>数据加载失败，请确认 data.js 文件存在且格式正确。</p>';
         return;
       }
-      this.data = global.DORAEMON_DATA;
+      // 选定默认 IP（优先 AppConfig.IP_LIST 中存在且有卡牌的）
+      var defaultIp = null;
+      for (var li = 0; li < AppConfig.IP_LIST.length; li++) {
+        var ipc = global.CARD_COLLECTIONS[AppConfig.IP_LIST[li]];
+        if (ipc && ipc.packs && ipc.packs.length > 0) {
+          defaultIp = AppConfig.IP_LIST[li];
+          break;
+        }
+      }
+      if (!defaultIp) defaultIp = Object.keys(global.CARD_COLLECTIONS)[0];
+      this.currentIp = defaultIp;
+      AppConfig.setCurrentIp(defaultIp);
+      this.data = global.CARD_COLLECTIONS[defaultIp];
 
-      // 加载收藏数据
-      CollectionStore.load();
+      // 加载收藏数据（按 IP 隔离）
+      CollectionStore.useIp(defaultIp);
 
       // 初始化 IntersectionObserver
       this.cardObserver = new IntersectionObserver(this._onCardIntersect.bind(this), {
@@ -263,6 +308,9 @@
       // 注入级别筛选标签的动态颜色 CSS（与下方徽章颜色一致）
       this._injectRarityFilterStyles();
 
+      // 渲染 IP 切换器
+      this.renderIpSwitcher();
+
       // 渲染界面
       this.renderSidebar();
       this.renderMobileTabs();
@@ -272,7 +320,8 @@
       // 绑定事件
       this._bindEvents();
 
-      console.log('哆啦A梦卡牌收藏站 v2.0 初始化完成 · 卡包 ' + this.data.meta.totalPacks +
+      console.log('卡动文创图鉴 v2.0 初始化完成 · 当前 IP：' + this.currentIp +
+        ' · 卡包 ' + this.data.meta.totalPacks +
         ' 个 · 卡牌 ' + this.data.meta.totalCards + ' 张');
     },
 
@@ -424,7 +473,7 @@
         var owned = CollectionStore.getOwnedCount(pack);
         html += '<a class="pack-item" data-pack-idx="' + i + '">' +
           '<span class="pack-type-tag">' + pack.type + '</span>' +
-          self._escapeHtml(pack.name) +
+          '<span class="pack-name">' + self._escapeHtml(pack.name) + '</span>' +
           '<span class="pack-count">' + owned + '/' + pack.cardCount + '</span>' +
           '</a>';
       });
@@ -488,6 +537,53 @@
       });
 
       this.renderPackView();
+    },
+
+    /**
+     * 渲染顶部 IP 切换器
+     */
+    renderIpSwitcher: function () {
+      var el = document.getElementById('ipSwitcher');
+      if (!el) return;
+      var self = this;
+      var html = '<span class="ip-switcher-label">IP</span>';
+      AppConfig.IP_LIST.forEach(function (ip) {
+        var active = (ip === self.currentIp) ? ' active' : '';
+        html += '<button class="ip-tab' + active + '" data-ip="' + self._escapeHtml(ip) + '">' +
+          self._escapeHtml(ip) + '</button>';
+      });
+      el.innerHTML = html;
+      el.querySelectorAll('.ip-tab').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          self.selectIp(this.dataset.ip);
+        });
+      });
+    },
+
+    /**
+     * 切换当前 IP（重新加载该 IP 数据与收藏，并切换主题色）
+     * @param {string} ip - IP 名称
+     */
+    selectIp: function (ip) {
+      if (!global.CARD_COLLECTIONS || !global.CARD_COLLECTIONS[ip]) return;
+      if (ip === this.currentIp) return;
+      this.currentIp = ip;
+      AppConfig.setCurrentIp(ip);
+      CollectionStore.useIp(ip);
+      this.data = global.CARD_COLLECTIONS[ip];
+      this.currentPackIndex = 0;
+      this.searchFilter = '';
+      this.rarityFilter = '';
+      var searchInput = document.getElementById('searchInput');
+      if (searchInput) searchInput.value = '';
+      this.renderIpSwitcher();
+      this.renderSidebar();
+      this.renderMobileTabs();
+      this.updateAllProgress();
+      this.selectPack(0);
+      // 更新标题中的当前 IP
+      var titleEl = document.getElementById('headerTitle');
+      if (titleEl) titleEl.textContent = '卡动文创图鉴 · ' + ip;
     },
 
     /**
@@ -570,8 +666,9 @@
           var batchBtnCls = allOwned ? ' owned' : '';
 
           html += '<div class="rarity-group" data-rarity="' + self._escapeHtml(rarity) + '">';
+          var badgeColor = self._getLevelColor(rarity);
           html += '<div class="rarity-group-header">' +
-            '<span class="rarity-badge">' + self._escapeHtml(rarity) + '</span>' +
+            '<span class="rarity-badge" data-rarity="' + self._escapeHtml(rarity) + '" style="background:' + badgeColor.bg + ';color:' + badgeColor.text + ';">' + self._escapeHtml(rarity) + '</span>' +
             '<span class="rarity-group-count">· ' + cards.length + ' 张</span>' +
             '<span class="rarity-group-progress">' + groupOwned + '/' + cards.length + '</span>' +
             '<button class="rarity-batch-btn' + batchBtnCls + '" ' +
@@ -602,7 +699,14 @@
      */
     filterByRarity: function (rarity) {
       this.rarityFilter = (this.rarityFilter === rarity) ? '' : rarity;
+      // 切换级别时保持当前滚动位置，避免重新渲染导致滚动条跳动
+      var scrollY = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
       this.renderPackView();
+      // behavior:'instant' 绕过 html 的 scroll-behavior:smooth，避免还原时滑一下
+      if (window.scrollTo) {
+        try { window.scrollTo({ top: scrollY, behavior: 'instant' }); }
+        catch (e) { (document.documentElement || document.body).scrollTop = scrollY; }
+      }
     },
 
     /**
@@ -701,7 +805,7 @@
 
       return '<div class="card' + ownedCls + '" data-card-id="' + safeId + '">' +
         '<div class="card-img-wrap">' +
-        '<img src="' + imgSrc + '" alt="' + safeName + '"' + ' loading="lazy" ' +
+        '<img src="' + imgSrc + '" alt="' + safeName + '"' + ' ' +
         'onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">' +
         '<div class="card-placeholder">' +
         '<span class="placeholder-icon">🃏</span>' +
@@ -741,11 +845,12 @@
           var isNowOwned = CollectionStore.toggle(cardId);
 
           // 更新同组所有卡牌样式（重复图片组联动）
-          if (typeof DUPLICATE_GROUPS !== 'undefined' && DUPLICATE_GROUPS.hasOwnProperty(cardId)) {
-            var groupIdx = DUPLICATE_GROUPS[cardId];
+          var dupsC = dupGroups();
+          if (dupsC.hasOwnProperty(cardId)) {
+            var groupIdx = dupsC[cardId];
             view.querySelectorAll('.card').forEach(function (el) {
               var cid = el.dataset.cardId;
-              if (DUPLICATE_GROUPS.hasOwnProperty(cid) && DUPLICATE_GROUPS[cid] === groupIdx) {
+              if (dupsC.hasOwnProperty(cid) && dupsC[cid] === groupIdx) {
                 el.classList.toggle('owned', isNowOwned);
               }
             });
@@ -816,12 +921,13 @@
       this._updateRarityProgress();
       // 同步卡牌样式（支持重复图片组联动）
       if (cardId) {
-        if (typeof DUPLICATE_GROUPS !== 'undefined' && DUPLICATE_GROUPS.hasOwnProperty(cardId)) {
-          var groupIdx = DUPLICATE_GROUPS[cardId];
+        var dupsO = dupGroups();
+        if (dupsO.hasOwnProperty(cardId)) {
+          var groupIdx = dupsO[cardId];
           var isOwned = CollectionStore.isOwned(cardId);
           document.querySelectorAll('.card').forEach(function (el) {
             var cid = el.dataset.cardId;
-            if (DUPLICATE_GROUPS.hasOwnProperty(cid) && DUPLICATE_GROUPS[cid] === groupIdx) {
+            if (dupsO.hasOwnProperty(cid) && dupsO[cid] === groupIdx) {
               el.classList.toggle('owned', isOwned);
             }
           });
@@ -913,7 +1019,7 @@
       var url = URL.createObjectURL(blob);
       var a = document.createElement('a');
       a.href = url;
-      a.download = 'doraemon-collection-backup-' +
+      a.download = 'kadong-collection-' + (App.currentIp || 'all') + '-backup-' +
         new Date().toISOString().slice(0, 10) + '.json';
       document.body.appendChild(a);
       a.click();
@@ -974,7 +1080,10 @@
       var colors = AppConfig.LEVEL_COLORS;
       Object.keys(colors).forEach(function (r) {
         var c = colors[r];
+        // 筛选标签（未选中 / 未悬停时显示级别色）
         css += '.rarity-filter-tag[data-rarity="' + r + '"]:not(.active):not(:hover){background:' + c.bg + ';color:' + c.text + ';}\n';
+        // 卡包视图中的级别徽章（按当前级别色显示）
+        css += '.rarity-badge[data-rarity="' + r + '"]{background:' + c.bg + ';color:' + c.text + ';}\n';
       });
       var style = document.createElement('style');
       style.textContent = css;

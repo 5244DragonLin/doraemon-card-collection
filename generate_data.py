@@ -1,21 +1,23 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-哆啦A梦卡牌收藏站 - 数据生成脚本（升级重做版 v2.0）
+卡动文创图鉴 - 数据生成脚本（多 IP 版 v2.0）
 
 功能：
-1. 扫描源目录下所有卡包子目录（卡牌类 + 周边类）
-2. 同时扫描 .png / .jpg / .jpeg 图片文件
-3. 三级正则解析策略识别卡牌级别（纯ASCII / 中文+ASCII混合 / 纯中文）
-4. 生成 data.js：var DORAEMON_DATA = {...};
-5. 卡牌ID基于 md5(packFullName + "/" + cardName) 前16位，路径变化不影响收藏数据
-6. 支持读取同目录 config.yaml 覆盖内置默认值（需 PyYAML；pip install pyyaml）
+1. 遍历根目录（卡动文创图鉴）下的各个 IP 子目录（哆啦A梦 / 三国志8 REMAKE / CF穿越火线）
+2. 每个 IP 内扫描各卡包子目录（卡牌类 + 周边类）
+3. 同时扫描 .png / .jpg / .jpeg 图片文件
+4. 三级正则解析策略识别卡牌级别（纯ASCII / 中文+ASCII混合 / 纯中文）
+5. 生成 data.js：var CARD_COLLECTIONS = { "<IP>": {meta, packs[]}, ... };
+6. 卡牌ID基于 md5(packFullName + "/" + cardName) 前16位，路径变化不影响收藏数据
+7. 支持读取同目录 config.yaml 覆盖内置默认值（需 PyYAML；pip install pyyaml）
 
 作者：工程师 寇豆码（Kou）
-日期：2025-07
+日期：2026-07
 """
 
 import os
+import sys
 import json
 import re
 import hashlib
@@ -27,38 +29,54 @@ except ImportError:
     yaml = None  # 未安装 PyYAML 时回退到脚本内置默认值
 
 # ========== 路径配置 ==========
-SOURCE_DIR = r"D:\BaiduSyncdisk\其他\卡动文创图鉴\哆啦A梦"
+# 根目录：包含各个 IP 子目录（每个 IP 内有各自的卡包子目录）
+ROOT_DIR = r"D:\BaiduSyncdisk\其他\卡动文创图鉴"
 OUTPUT_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data.js")
 
 # ========== 图片扩展名 ==========
 IMAGE_EXTENSIONS = ('.png', '.jpg', '.jpeg')
 
-# ========== 卡包排序表（自定义顺序）==========
-PACK_ORDER = [
-    "卡牌｜经典版｜第1弹",
-    "卡牌｜豪华版｜第1弹",
-    "卡牌｜珍藏版｜第1弹",
-    "卡牌｜豪华珍藏版｜第1弹",
-    "卡牌｜寻梦卡百宝袋｜第1弹",
-    "卡牌｜地球交响乐｜第1弹",
-    "卡牌｜经典版｜第2弹",
-    "卡牌｜豪华版｜第2弹",
-    "卡牌｜珍藏版｜第2弹",
-    "卡牌｜奇妙珍藏版｜第2弹",
-    "卡牌｜奇妙珍藏卡｜第3弹",
-    "周边｜奇妙世界色纸｜第1弹",
-    "周边｜珍藏版徽章｜第1弹",
-    "周边｜梦想摇摇乐｜第1弹",
-    "周边｜妙趣版立牌｜第1弹",
+# ========== IP 列表（数据生成数据源；前端运行时从 data.js 派生，不再写死）==========
+IP_LIST = [
+    "哆啦A梦",
+    "三国志8 REMAKE",
+    "CF穿越火线"
 ]
-PACK_RANK = {name: i for i, name in enumerate(PACK_ORDER)}
 
-# ========== 级别排序表（从低到高，30项）==========
+# ========== 各 IP 卡包排序表（自定义顺序，未列出的排最后）==========
+# 仅哆啦A梦有完整手写顺序；其余 IP 留空 → 按文件夹名排序
+IP_PACK_ORDERS = {
+    "哆啦A梦": [
+        "卡牌｜经典版｜第1弹",
+        "卡牌｜豪华版｜第1弹",
+        "卡牌｜珍藏版｜第1弹",
+        "卡牌｜豪华珍藏版｜第1弹",
+        "卡牌｜寻梦卡百宝袋｜第1弹",
+        "卡牌｜地球交响乐｜第1弹",
+        "卡牌｜经典版｜第2弹",
+        "卡牌｜豪华版｜第2弹",
+        "卡牌｜珍藏版｜第2弹",
+        "卡牌｜奇妙珍藏版｜第2弹",
+        "卡牌｜奇妙珍藏卡｜第3弹",
+        "周边｜奇妙世界色纸｜第1弹",
+        "周边｜珍藏版徽章｜第1弹",
+        "周边｜梦想摇摇乐｜第1弹",
+        "周边｜妙趣版立牌｜第1弹",
+    ],
+    "三国志8 REMAKE": None,
+    "CF穿越火线": None,
+}
+
+# ========== 全局级别排序表（从低到高，覆盖 3 个 IP）==========
 # 与 config.js 中 RARITY_ORDER 保持一致
 RARITY_ORDER = [
-    "R", "SR", "SSR", "UR", "TR", "ZR", "CR", "DR", "SP", "SSP", "SSS",
-    "EX", "IM", "LP", "FR", "FP", "CP", "PR", "TB", "PL", "OC", "SJ",
-    "SS", "S", "MAX", "MZ", "CGF", "DM", "GF", "金属卡"
+    "R", "SR", "SSR", "UR", "SP", "SSP", "SSS", "EX", "IM", "LP",
+    "FR", "FP", "PR", "TB", "PL", "OC", "SJ", "SS", "S", "MAX",
+    "MZ", "CGF", "DM", "GF", "TR", "ZR", "CR", "DR", "CP", "WR",
+    "MR", "GR", "GP", "QR", "MP", "WRP", "GSP", "EXP",
+    "金属卡", "特殊SSP", "隐藏款SSP金版", "隐藏款SSP", "SSP银版",
+    "隐藏款", "隐藏版", "奇妙世界", "梦想摇摇乐", "流光云彩",
+    "趣味拼图", "双人款", "单人款", "梦幻花边", "EX内页", "EX封面"
 ]
 RARITY_RANK = {r: i for i, r in enumerate(RARITY_ORDER)}
 
@@ -77,7 +95,7 @@ def parse_card_filename(filename):
     三级解析策略：
       第一级：纯 ASCII 级别代码（R, SR, SSR, UR, CP, EX, MAX 等）→ 直接用作级别
       第二级：中文+ASCII 混合前缀（特殊SSP, 隐藏款SSP, 隐藏款SSP金版, SSP银版, EX内页, EX封面）
-              → re.findall 提取 ASCII 字母，优先匹配已知级别
+              → re.findall 提取 ASCII 字母，优先匹配最长的已知级别
       第三级：纯中文前缀（金属卡, 单人款, 双人款, 隐藏款, 梦幻花边, 流光云彩, 趣味拼图, 奇妙世界, 梦想摇摇乐）
               → 直接用作级别
 
@@ -100,8 +118,6 @@ def parse_card_filename(filename):
         level = prefix
 
     # === 第二级：中文+ASCII 混合前缀 ===
-    # 如: 特殊SSP, 隐藏款SSP, 隐藏款SSP金版, SSP银版, EX内页, EX封面
-    # 策略: 提取所有 ASCII 字母序列，优先匹配最长的已知级别
     elif re.search(r'[A-Za-z]', prefix):
         ascii_codes = re.findall(r'[A-Za-z]+', prefix)
         level = "?"
@@ -115,18 +131,15 @@ def parse_card_filename(filename):
             level = max(ascii_codes, key=len)
 
     # === 第三级：纯中文前缀（金属卡、周边类级别）===
-    # 如: 金属卡, 单人款, 双人款, 隐藏款, 梦幻花边, 流光云彩, 趣味拼图, 奇妙世界, 梦想摇摇乐
     else:
         level = prefix  # 直接使用中文前缀作为级别
 
     # === 提取级别名和编号 ===
     all_parts = name_no_ext.split("-")
     if len(all_parts) >= 3 and all_parts[-1].isdigit():
-        # 最后一段是纯数字编号: {级别}-{级别名}-{编号}
         number = all_parts[-1]
         rarity_name = "-".join(all_parts[1:-1])
     elif len(all_parts) >= 2:
-        # 最后一段不是数字: {级别}-{级别名} 或 {级别}-{级别名}-{非数字后缀}
         number = ""
         rarity_name = "-".join(all_parts[1:])
     else:
@@ -160,10 +173,11 @@ def generate_card_id(pack_full_name, card_name):
 def _default_cfg():
     """脚本内置默认配置。"""
     return {
-        "source_dir": SOURCE_DIR,
+        "root_dir": ROOT_DIR,
         "output_file": OUTPUT_FILE,
         "image_extensions": IMAGE_EXTENSIONS,
-        "pack_order": PACK_ORDER,
+        "ips": IP_LIST,
+        "ip_pack_orders": IP_PACK_ORDERS,
         "rarity_order": RARITY_ORDER,
     }
 
@@ -172,14 +186,13 @@ def load_config():
     """加载同目录 config.yaml（可选）覆盖脚本内置默认值。
 
     优先级：本地 config.yaml > config.example.yaml > 内置默认值。
-    返回 (cfg, loaded)。cfg 含 source_dir / output_file / image_extensions /
-    pack_order / rarity_order。未提供配置文件或缺少 PyYAML 时回退到内置默认值。
+    返回 (cfg, loaded)。cfg 含 root_dir / output_file / image_extensions /
+    ips / ip_pack_orders / rarity_order。
     """
     script_dir = os.path.dirname(os.path.abspath(__file__))
     local_path = os.path.join(script_dir, "config.yaml")
     example_path = os.path.join(script_dir, "config.example.yaml")
 
-    # 优先本地 config.yaml，读不到回退 config.example.yaml
     if os.path.exists(local_path):
         used_path = local_path
     elif os.path.exists(example_path):
@@ -203,15 +216,21 @@ def load_config():
     paths = user_cfg.get("paths", {}) or {}
     scan = user_cfg.get("scan", {}) or {}
 
-    if paths.get("source_dir"):
-        cfg["source_dir"] = paths["source_dir"]
+    if paths.get("root_dir"):
+        cfg["root_dir"] = paths["root_dir"]
     if paths.get("output_file"):
         out = paths["output_file"]
         cfg["output_file"] = out if os.path.isabs(out) else os.path.join(script_dir, out)
     if scan.get("image_extensions"):
         cfg["image_extensions"] = tuple(scan["image_extensions"])
-    if user_cfg.get("pack_order"):
-        cfg["pack_order"] = list(user_cfg["pack_order"])
+    if user_cfg.get("ips"):
+        cfg["ips"] = list(user_cfg["ips"])
+    if user_cfg.get("ip_pack_orders"):
+        # 与内置合并：用户提供的优先，未提供的 IP 回退内置
+        merged = dict(IP_PACK_ORDERS)
+        for ip, order in user_cfg["ip_pack_orders"].items():
+            merged[ip] = list(order) if order else None
+        cfg["ip_pack_orders"] = merged
     if user_cfg.get("rarity_order"):
         cfg["rarity_order"] = list(user_cfg["rarity_order"])
 
@@ -219,34 +238,22 @@ def load_config():
     return cfg, True
 
 
-def main():
-    """主函数：加载配置，扫描源目录，解析卡牌，生成 data.js"""
-    cfg, loaded = load_config()
-    source_dir = cfg["source_dir"]
-    output_file = cfg["output_file"]
-    image_extensions = cfg["image_extensions"]
-    pack_order = cfg["pack_order"]
-    rarity_order = cfg["rarity_order"]
-
-    global PACK_RANK, RARITY_RANK
-    PACK_RANK = {name: i for i, name in enumerate(pack_order)}
+def build_ip_data(ip_name, ip_dir, image_extensions, pack_order, rarity_order):
+    """扫描单个 IP 目录，生成该 IP 的 {meta, packs[]} 数据。"""
+    global RARITY_RANK
     RARITY_RANK = {r: i for i, r in enumerate(rarity_order)}
-
-    if not os.path.isdir(source_dir):
-        print(f"错误：源目录不存在: {source_dir}")
-        return
 
     packs = []
     total_cards = 0
-    unknown_count = 0  # 记录 ? 未知级别数量
+    unknown_count = 0
 
-    # 遍历顶层卡包目录（按 pack_order 自定义顺序排列）
-    pack_dirs = sorted(
-        [d for d in os.listdir(source_dir) if os.path.isdir(os.path.join(source_dir, d))],
-        key=lambda d: PACK_RANK.get(d, 99999)
-    )
+    # 遍历 IP 内各卡包目录
+    pack_dirs = [d for d in os.listdir(ip_dir) if os.path.isdir(os.path.join(ip_dir, d))]
+    pack_rank = {name: i for i, name in enumerate(pack_order)} if pack_order else None
+    pack_dirs.sort(key=lambda d: (pack_rank.get(d, 99999) if pack_rank else d))
+
     for pack_idx, pack_dirname in enumerate(pack_dirs):
-        pack_path = os.path.join(source_dir, pack_dirname)
+        pack_path = os.path.join(ip_dir, pack_dirname)
         if not os.path.isdir(pack_path):
             continue
 
@@ -254,7 +261,6 @@ def main():
 
         cards = []
         for filename in os.listdir(pack_path):
-            # 同时扫描 .png / .jpg / .jpeg
             if not filename.lower().endswith(image_extensions):
                 continue
 
@@ -264,9 +270,7 @@ def main():
             if level == "?":
                 unknown_count += 1
 
-            # 图片绝对路径（正斜杠格式，前端加 file:/// 前缀加载）
             file_path = os.path.join(pack_path, filename).replace("\\", "/")
-
             card_id = generate_card_id(pack_full_name, card_name)
 
             cards.append({
@@ -279,11 +283,9 @@ def main():
                 "fileExt": file_ext
             })
 
-        # 按级别排序（从低到高），同级别按文件名排序
         cards.sort(key=lambda c: (get_rarity_sort_key(c["rarity"]), c["name"]))
 
         pack_id = f"p{pack_idx:02d}"
-
         packs.append({
             "id": pack_id,
             "type": pack_type,
@@ -294,38 +296,68 @@ def main():
         })
 
         total_cards += len(cards)
-        print(f"  {pack_id} [{pack_type}] {pack_name}: {len(cards)} 张")
+        print(f"  [{ip_name}] {pack_id} [{pack_type}] {pack_name}: {len(cards)} 张")
 
-    # 生成 meta 信息
     meta = {
         "generatedAt": datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
-        "sourceDir": source_dir.replace("\\", "/"),
+        "sourceDir": ip_dir.replace("\\", "/"),
         "totalPacks": len(packs),
         "totalCards": total_cards,
         "version": "2.1"
     }
+    return {"meta": meta, "packs": packs}, unknown_count
 
-    # 组装完整数据
-    data = {
-        "meta": meta,
-        "packs": packs
-    }
 
-    # 输出 data.js（var DORAEMON_DATA = {...}; 格式，不是纯 JSON）
+def main():
+    """主函数：加载配置，遍历各 IP 扫描目录，生成 data.js"""
+    cfg, loaded = load_config()
+    root_dir = cfg["root_dir"]
+    output_file = cfg["output_file"]
+    image_extensions = cfg["image_extensions"]
+    ips = cfg["ips"]
+    ip_pack_orders = cfg["ip_pack_orders"]
+    rarity_order = cfg["rarity_order"]
+
+    if not os.path.isdir(root_dir):
+        print(f"错误：根目录不存在: {root_dir}")
+        return
+
+    collections = {}
+    total_unknown = 0
+    total_cards_all = 0
+
+    for ip in ips:
+        ip_dir = os.path.join(root_dir, ip)
+        if not os.path.isdir(ip_dir):
+            print(f"[WARN] 跳过不存在的 IP 目录: {ip_dir}")
+            continue
+        print(f"\n========== 处理 IP：{ip} ==========")
+        pack_order = ip_pack_orders.get(ip)
+        ip_data, unknown = build_ip_data(ip, ip_dir, image_extensions, pack_order, rarity_order)
+        collections[ip] = ip_data
+        total_unknown += unknown
+        total_cards_all += ip_data["meta"]["totalCards"]
+
+    if not collections:
+        print("错误：没有任何 IP 数据生成。")
+        return
+
+    # 输出 data.js（var CARD_COLLECTIONS = {...}; 格式，不是纯 JSON）
     with open(output_file, "w", encoding="utf-8") as f:
-        f.write("var DORAEMON_DATA = ")
-        json.dump(data, f, ensure_ascii=False, indent=2)
+        f.write("var CARD_COLLECTIONS = ")
+        json.dump(collections, f, ensure_ascii=False, indent=2)
         f.write(";\n")
 
-    # 统计输出
     print(f"\n========== 数据生成完成 ==========")
-    print(f"卡包总数: {len(packs)}")
-    print(f"卡牌总数: {total_cards}")
-    print(f"? 未知级别卡牌: {unknown_count} 张")
+    print(f"IP 数量: {len(collections)}")
+    for ip, data in collections.items():
+        print(f"  {ip}: {data['meta']['totalPacks']} 卡包 / {data['meta']['totalCards']} 张")
+    print(f"全部卡牌: {total_cards_all} 张")
+    print(f"? 未知级别卡牌: {total_unknown} 张")
     print(f"输出文件: {output_file}")
 
-    if unknown_count > 0:
-        print(f"\n⚠ 警告：仍有 {unknown_count} 张卡牌级别未识别，请检查文件名格式！")
+    if total_unknown > 0:
+        print(f"\n⚠ 警告：仍有 {total_unknown} 张卡牌级别未识别，请检查文件名格式！")
     else:
         print(f"\n✓ 所有卡牌级别均成功识别！")
 
@@ -334,7 +366,7 @@ def main():
     dup_script = os.path.join(os.path.dirname(os.path.abspath(__file__)), "generate_duplicate_groups.py")
     if os.path.exists(dup_script):
         print(f"\n[INFO] 运行重复图片检测: generate_duplicate_groups.py")
-        result = subprocess.run(["python", dup_script], capture_output=True, text=True)
+        result = subprocess.run([sys.executable, dup_script], capture_output=True, text=True)
         print(result.stdout)
         if result.returncode != 0:
             print(f"[ERROR] 重复检测脚本执行失败:\n{result.stderr}")
