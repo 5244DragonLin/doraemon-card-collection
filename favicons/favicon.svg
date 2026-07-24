@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <defs>
-    <!-- 金色渐变：卡牌边框 + 铃铛 -->
+    <!-- 暖金渐变：集卡册的主色调 -->
     <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#FFD700"/>
       <stop offset="50%" stop-color="#F39C12"/>
@@ -12,106 +12,90 @@
       <stop offset="0%" stop-color="#FFFFFF"/>
       <stop offset="100%" stop-color="#FFF8F0"/>
     </linearGradient>
-    <!-- 铃铛渐变（带高光） -->
-    <linearGradient id="bellGrad" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#FFE082"/>
-      <stop offset="35%" stop-color="#FFD700"/>
+    <!-- 收藏册封面 -->
+    <linearGradient id="bookCover" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F39C12"/>
+      <stop offset="50%" stop-color="#E67E22"/>
+      <stop offset="100%" stop-color="#D35400"/>
+    </linearGradient>
+    <!-- 书脊 -->
+    <linearGradient id="spine" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#D35400"/>
       <stop offset="100%" stop-color="#E67E22"/>
     </linearGradient>
-    <!-- 蓝色渐变：蝴蝶结 -->
-    <linearGradient id="blueGrad" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#4FC3F7"/>
-      <stop offset="100%" stop-color="#009FE3"/>
-    </linearGradient>
-    <!-- 高光层 -->
-    <linearGradient id="hl" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.4"/>
-      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    <!-- 星芒 -->
+    <linearGradient id="starGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFF8E1"/>
+      <stop offset="100%" stop-color="#FFD700"/>
     </linearGradient>
     <!-- 温暖光晕 -->
-    <radialGradient id="glow" cx="0.5" cy="0.4" r="0.62">
-      <stop offset="0%" stop-color="#FFF8E1" stop-opacity="0.85"/>
-      <stop offset="55%" stop-color="#FFE0B2" stop-opacity="0.22"/>
+    <radialGradient id="glow" cx="0.5" cy="0.42" r="0.55">
+      <stop offset="0%" stop-color="#FFF8E1" stop-opacity="0.8"/>
+      <stop offset="50%" stop-color="#FFE0B2" stop-opacity="0.2"/>
       <stop offset="100%" stop-color="#FFD700" stop-opacity="0"/>
     </radialGradient>
+    <!-- 卡牌阴影 -->
+    <filter id="cardShadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.15"/>
+    </filter>
   </defs>
 
   <!-- 温暖光晕背景 -->
-  <circle cx="256" cy="210" r="200" fill="url(#glow)"/>
+  <circle cx="256" cy="220" r="200" fill="url(#glow)"/>
 
-  <!-- 装饰星点（收藏/稀有感） -->
-  <g fill="#F39C12">
-    <path d="M 108 148 L 113 161 L 126 166 L 113 171 L 108 184 L 103 171 L 90 166 L 103 161 Z" opacity="0.55"/>
-    <path d="M 408 172 L 412 182 L 422 186 L 412 190 L 408 200 L 404 190 L 394 186 L 404 182 Z" opacity="0.45"/>
-    <path d="M 92 340 L 95 348 L 103 351 L 95 354 L 92 362 L 89 354 L 81 351 L 89 348 Z" opacity="0.4"/>
+  <!-- 装饰星点 -->
+  <g fill="#F39C12" opacity="0.4">
+    <path d="M 120 160 L 123 170 L 133 173 L 123 176 L 120 186 L 117 176 L 107 173 L 117 170 Z"/>
+    <path d="M 400 190 L 403 198 L 411 201 L 403 204 L 400 212 L 397 204 L 389 201 L 397 198 Z"/>
+    <path d="M 100 330 L 102 336 L 108 338 L 102 340 L 100 346 L 98 340 L 92 338 L 98 336 Z" opacity="0.3"/>
   </g>
 
-  <!-- ===== 卡牌扇形展开（呼应 3D Coverflow 圆环） ===== -->
-  <!-- 旋转支点 (256, 440) -->
-
-  <!-- 左侧卡牌 -->
-  <g transform="rotate(-26 256 440)">
-    <rect x="176" y="108" width="160" height="288" rx="16" fill="url(#cardFace)" stroke="url(#goldGrad)" stroke-width="5" opacity="0.9"/>
-    <rect x="185" y="117" width="142" height="270" rx="11" fill="none" stroke="#F39C12" stroke-width="1.5" opacity="0.2"/>
-  </g>
-
-  <!-- 右侧卡牌 -->
-  <g transform="rotate(26 256 440)">
-    <rect x="176" y="108" width="160" height="288" rx="16" fill="url(#cardFace)" stroke="url(#goldGrad)" stroke-width="5" opacity="0.9"/>
-    <rect x="185" y="117" width="142" height="270" rx="11" fill="none" stroke="#F39C12" stroke-width="1.5" opacity="0.2"/>
-  </g>
-
-  <!-- 前方主卡牌 -->
+  <!-- ===== 收藏册 ===== -->
   <g>
-    <rect x="166" y="98" width="180" height="312" rx="18" fill="url(#cardFace)" stroke="url(#goldGrad)" stroke-width="6"/>
-    <!-- 内框 -->
-    <rect x="176" y="108" width="160" height="292" rx="12" fill="none" stroke="#F39C12" stroke-width="1.5" opacity="0.25"/>
+    <!-- 书脊 -->
+    <rect x="152" y="140" width="32" height="260" rx="4" fill="url(#spine)" stroke="#BA4A00" stroke-width="2"/>
+    <!-- 书脊上的装饰线 -->
+    <line x1="168" y1="160" x2="168" y2="380" stroke="#BA4A00" stroke-width="1" opacity="0.3"/>
 
-    <!-- ===== 铃铛徽章（哆啦A梦身份标识） ===== -->
+    <!-- 封面 -->
+    <rect x="182" y="136" width="200" height="268" rx="6" fill="url(#bookCover)" stroke="#BA4A00" stroke-width="2.5" filter="url(#cardShadow)"/>
+    <!-- 封面装饰边框 -->
+    <rect x="192" y="146" width="180" height="248" rx="4" fill="none" stroke="#FFF" stroke-width="1.5" opacity="0.2"/>
 
-    <!-- 铃铛顶部挂环 -->
-    <circle cx="256" cy="168" r="12" fill="none" stroke="url(#bellGrad)" stroke-width="8"/>
+    <!-- 封面上的"集卡册"文字装饰条 -->
+    <rect x="210" y="170" width="144" height="36" rx="18" fill="#FFF" opacity="0.15"/>
+    <rect x="210" y="170" width="144" height="36" rx="18" fill="none" stroke="#FFF" stroke-width="1" opacity="0.25"/>
 
-    <!-- 铃铛主体 -->
-    <path d="M 256 183 C 206 183, 190 220, 190 262 L 190 278 L 322 278 L 322 262 C 322 220, 306 183, 256 183 Z"
-          fill="url(#bellGrad)" stroke="#D68910" stroke-width="2.5"/>
-
-    <!-- 铃铛高光 -->
-    <path d="M 256 183 C 206 183, 190 220, 190 262 L 190 278 L 322 278 L 322 262 C 322 220, 306 183, 256 183 Z"
-          fill="url(#hl)"/>
-
-    <!-- 铃铛底部横条 -->
-    <rect x="190" y="276" width="132" height="15" rx="4" fill="#D68910"/>
-    <rect x="190" y="276" width="132" height="7" rx="4" fill="#E67E22" opacity="0.5"/>
-
-    <!-- 铃铛开口缝隙 -->
-    <line x1="222" y1="283" x2="222" y2="297" stroke="#B9770E" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="290" y1="283" x2="290" y2="297" stroke="#B9770E" stroke-width="2.5" stroke-linecap="round"/>
-
-    <!-- 铃舌 -->
-    <circle cx="256" cy="294" r="9" fill="#D68910" stroke="#B9770E" stroke-width="1.5"/>
-    <circle cx="253" cy="291" r="3" fill="#FFF" opacity="0.4"/>
-
-    <!-- 蓝色蝴蝶结（哆啦A梦标志性元素） -->
-    <g transform="translate(256, 220)">
-      <ellipse cx="-30" cy="0" rx="26" ry="16" fill="url(#blueGrad)" stroke="#0288D1" stroke-width="1.5" transform="rotate(-15)"/>
-      <ellipse cx="30" cy="0" rx="26" ry="16" fill="url(#blueGrad)" stroke="#0288D1" stroke-width="1.5" transform="rotate(15)"/>
-      <circle cx="0" cy="0" r="11" fill="#E74C3C" stroke="#C0392B" stroke-width="1.5"/>
-      <circle cx="-3.5" cy="-3.5" r="4" fill="#FFF" opacity="0.5"/>
-    </g>
-
-    <!-- 稀有度星章 -->
-    <g transform="translate(256, 345)">
-      <path d="M 0 -20 L 6 -6 L 21 -6 L 9 4 L 13 19 L 0 10 L -13 19 L -9 4 L -21 -6 L -6 -6 Z"
+    <!-- 封面上的卡牌图标 -->
+    <g transform="translate(282, 260)">
+      <!-- 卡牌 -->
+      <rect x="-40" y="-52" width="80" height="104" rx="8" fill="url(#cardFace)" stroke="#FFF" stroke-width="3"/>
+      <!-- 卡牌上的星星 -->
+      <path d="M 0 -30 L 5 -18 L 18 -18 L 8 -9 L 11 4 L 0 -4 L -11 4 L -8 -9 L -18 -18 L -5 -18 Z"
             fill="url(#goldGrad)" stroke="#D68910" stroke-width="1.5"/>
-      <path d="M 0 -14 L 4 -5 L 14 -5 L 6 2 L 9 12 L 0 6 L -9 12 L -6 2 L -14 -5 L -4 -5 Z"
-            fill="#FFF8E1" opacity="0.3"/>
+      <!-- 卡牌底部装饰线 -->
+      <line x1="-28" y1="30" x2="28" y2="30" stroke="#F39C12" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
+      <line x1="-20" y1="40" x2="20" y2="40" stroke="#F39C12" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
     </g>
   </g>
 
-  <!-- 已收藏角标 -->
-  <g transform="translate(332, 116)">
-    <circle r="24" fill="#E74C3C" stroke="#FFFFFF" stroke-width="3.5"/>
-    <path d="M -10 1 L -3 8 L 11 -7" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- ===== 前面漂浮的卡牌（立体感） ===== -->
+  <g transform="translate(256, 340)">
+    <!-- 卡牌 -->
+    <rect x="-44" y="-58" width="88" height="116" rx="10" fill="url(#cardFace)" stroke="url(#goldGrad)" stroke-width="4" filter="url(#cardShadow)"/>
+    <!-- 内框 -->
+    <rect x="-34" y="-48" width="68" height="96" rx="6" fill="none" stroke="#F39C12" stroke-width="1.5" opacity="0.2"/>
+    <!-- 收藏星标 -->
+    <path d="M 0 -28 L 5 -16 L 18 -16 L 8 -7 L 11 5 L 0 -3 L -11 5 L -8 -7 L -18 -16 L -5 -16 Z"
+          fill="url(#starGrad)" stroke="#D68910" stroke-width="1.5"/>
+    <!-- 底部装订线 -->
+    <line x1="-24" y1="32" x2="24" y2="32" stroke="#F39C12" stroke-width="2.5" stroke-linecap="round" opacity="0.5"/>
+    <line x1="-16" y1="42" x2="16" y2="42" stroke="#F39C12" stroke-width="2.5" stroke-linecap="round" opacity="0.5"/>
+  </g>
+
+  <!-- ===== 右上角"已收藏"角标 ===== -->
+  <g transform="translate(370, 150)">
+    <circle r="22" fill="#E74C3C" stroke="#FFFFFF" stroke-width="3.5"/>
+    <path d="M -9 1 L -3 7 L 10 -6" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
   </g>
 </svg>
