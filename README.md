@@ -1,6 +1,6 @@
-# kadong-card-collection
+# card-collection-book
 
-基于纯前端（原生 HTML/CSS/JS，零构建）的卡动文创多 IP 卡牌收藏管理网站，支持真 3D Coverflow 圆环预览、卡包/级别分层浏览、收藏进度与本地持久化；当前内置哆啦A梦、三国志8 REMAKE、CF穿越火线三个 IP，可在顶部一键切换。
+基于纯前端（原生 HTML/CSS/JS，零构建）的集卡册多 IP 卡牌收藏管理网站，支持真 3D Coverflow 圆环预览、卡包/级别分层浏览、收藏进度与本地持久化；当前内置哆啦A梦、三国志8 REMAKE、CF穿越火线、龙族四个 IP，可在顶部一键切换。
 
 ## 📸项目预览
 
@@ -15,11 +15,11 @@
 - 收藏进度靠记忆，无法量化"还差哪些"
 - 同一个收藏站要同时管理多个 IP（哆啦A梦 / 三国志 / CF穿越火线），而非各建一套
 
-**kadong-card-collection 解决这些问题**：一个零依赖、可离线打开的本地收藏站，把卡动文创图鉴目录变成可检索、可标记、按 IP 隔离的多合一收藏册。
+**card-collection-book 解决这些问题**：一个零依赖、可离线打开的本地收藏站，把各商家图鉴目录变成可检索、可标记、按 IP 隔离的多合一收藏册。
 
 ## ⭐亮点
 
-- **多 IP 合一**：内置哆啦A梦、三国志8 REMAKE、CF穿越火线三个 IP，顶部一键切换，数据与收藏彼此隔离
+- **多 IP 合一**：内置哆啦A梦、三国志8 REMAKE、CF穿越火线、龙族四个 IP，顶部一键切换，数据与收藏彼此隔离
 - **真 3D Coverflow**：基于 CSS `perspective + rotateY + translateZ` 的弧形圆环预览，卡牌沿弧排列、左右渐退消失
 - **流畅拖拽**：鼠标/触摸横向拖拽，浮点 `virtualIndex` 连续更新，松手平滑吸附
 - **分层浏览**：各 IP 按卡包（卡牌类 + 周边类）与级别从低到高分组
@@ -36,12 +36,12 @@
 
 ```bash
 # Gitee 镜像（国内访问快）
-git clone https://gitee.com/yhl5244/kadong-card-collection.git
+git clone https://gitee.com/yhl5244/card-collection-book.git
 
 # GitHub 原仓库
-git clone https://github.com/5244DragonLin/kadong-card-collection.git
+git clone https://github.com/5244DragonLin/card-collection-book.git
 
-cd kadong-card-collection
+cd card-collection-book
 ```
 
 ### 2. 安装 Python 依赖
@@ -52,11 +52,17 @@ Python 脚本（数据生成/去重检测）依赖：
 pip install -r requirements.txt
 ```
 
-> 如果仅浏览收藏（不重新生成数据），此步可跳过。
+> 如果仅浏览收藏（不重新生成数据），Python 依赖和配置文件均可跳过。
 
-### 3. 配置文件（可选）
+### 3. 配置文件（必选）
 
-数据脚本默认已指向本地图鉴根目录，一般无需修改。如需自定义，复制 `config.example.yaml` 为 `config.yaml` 后按需调整（见「配置文件」章节）。
+数据脚本**强制依赖** `config.yaml`，所有配置（路径、IP 列表、排序等）均从此文件读取，不再保留硬编码默认值。
+
+```bash
+cp config.example.yaml config.yaml
+```
+
+然后按需编辑 `config.yaml`（见「配置文件」章节）。
 
 ### 4. 打开网站 / 重新生成数据
 
@@ -69,11 +75,13 @@ python generate_data.py
 ```
 
 > 数据已内联为 `data.js`（`var CARD_COLLECTIONS = {...};`），通过 `<script>` 标签加载，绕过了 `file://` 下的 `fetch` CORS 限制。仓库出厂已内置前端所需的全部数据文件，开箱即用。
+>
+> 若图鉴目录有变动，运行 `python generate_data.py` 重新生成数据即可。
 
 ## 🗄️项目结构
 
 ```text
-kadong-card-collection/
+card-collection-book/
 ├── index.html                  # 主页面（HTML 骨架，引用外部 CSS/JS）
 ├── style.css                   # 全部样式（多 IP 主题 + 3D 圆环 + 动画 + 响应式）
 ├── app.js                     # 核心交互（数据加载 / IP 切换 / 卡包 / 收藏 / 搜索 / 进度 / 导入导出）
@@ -83,9 +91,10 @@ kadong-card-collection/
 ├── duplicate_groups.js         # 去重图片组映射数据（脚本生成，按 IP 分桶）
 ├── favicons/                   # 站点图标
 ├── assets/                     # README 截图与捐赠收款码
-├── generate_data.py           # 数据生成脚本（按根目录遍历各 IP）
-├── generate_duplicate_groups.py # 去重图片检测脚本（按 IP 分桶）
-├── config.example.yaml        # 数据脚本配置参考模板
+├── generate_data.py           # 数据生成脚本（从 config.yaml 读取配置，遍历各 IP 根目录）
+├── generate_duplicate_groups.py # 去重图片检测脚本（由 config.yaml 中 run_duplicate_detection 控制）
+├── config.yaml                # 数据脚本配置文件（必选，所有配置的唯一来源）
+├── config.example.yaml        # 配置文件模板
 ├── docs/                       # ARCHITECTURE.md / PRD.md / 图示
 ├── tests/                      # verify_data.py 数据校验
 ├── requirements.txt            # Python 依赖（PyYAML / Pillow / imagehash / numpy / scipy）
@@ -111,16 +120,19 @@ Script 加载顺序：
 cp config.example.yaml config.yaml
 ```
 
-| 配置项 | 说明 | 默认值 |
+| 配置项 | 说明 | 是否必填 |
 |--------|------|--------|
-| `paths.root_dir` | 卡牌图片**根目录**（含各 IP 子目录：哆啦A梦 / 三国志8 REMAKE / CF穿越火线） | 内置默认值 |
-| `paths.output_file` | `data.js` 输出路径 | 脚本同目录 `data.js` |
-| `scan.image_extensions` | 扫描的图片扩展名 | `.png`, `.jpg`, `.jpeg` |
-| `ips` | IP 顺序（与 `config.js` 中 `IP_LIST` 一致，决定切换器顺序与默认进入的 IP） | 内置 3 个 IP |
-| `ip_pack_orders` | 各 IP 的卡包自定义排序（未列出的 IP 按文件夹名排序） | 哆啦A梦 15 项手写顺序；其余 IP 留空 |
-| `rarity_order` | 全局级别排序表（从低到高，覆盖 3 个 IP 的全部级别） | 内置统一排序 |
+| `paths.root_dirs` | 卡牌图片**根目录列表**（支持多个路径，不存在的路径自动跳过）。每个目录下含各 IP 子目录 | **必填** |
+| `paths.output_file` | `data.js` 输出路径 | 可选，默认脚本同目录 `data.js` |
+| `scan.image_extensions` | 扫描的图片扩展名 | 可选，默认 `.png`, `.jpg`, `.jpeg` |
+| `ips` | IP 列表（前端运行时从 `data.js` 派生，此处决定数据生成哪些 IP） | **必填** |
+| `ip_pack_orders` | 各 IP 的卡包自定义排序（未列出的 IP 按文件夹名排序） | 可选 |
+| `rarity_order` | 全局级别排序表（从低到高） | 可选，有内置默认值 |
+| `card_secondary_sort` | 卡牌二级排序方式（per-IP 字典配置）。可选值：`"number"`（按稀有度→编号）或 `"name"`（按稀有度→名称），未配置的 IP 默认 `"name"`。示例：`"龙族": "number"` | 可选 |
+| `pack_type_overrides` | 卡包类型强制覆盖（如龙族目录名无「｜」分隔符，归为「卡牌」类） | 可选 |
+| `run_duplicate_detection` | 是否在数据生成后自动运行重复图片检测（依赖 Pillow + imagehash） | 可选，默认 `false` |
 
-> 若未提供 `config.yaml`，脚本回退到内置默认值。
+> 若缺少 `config.yaml` 或必填项，脚本会报错退出，不会回退到硬编码默认值。
 
 ## ❓️FAQ
 
@@ -128,13 +140,13 @@ cp config.example.yaml config.yaml
 
 不需要。项目是纯前端零依赖，直接双击 `index.html` 即可，无需任何构建或本地服务器。
 
-**三个 IP 的收藏数据会互相串扰吗？**
+**四个 IP 的收藏数据会互相串扰吗？**
 
-不会。收藏标记按 IP 隔离存储于 localStorage（键为 `kadong_collection_v1_<IP>`），切换 IP 时自动加载对应收藏，导出备份文件名也带 IP 名。
+不会。收藏标记按 IP 隔离存储于 localStorage（键为 `ccb_collection_v1_<IP>`），切换 IP 时自动加载对应收藏，导出备份文件名也带 IP 名。
 
 **为什么卡牌图片显示不出来？**
 
-图片来自卡动文创图鉴整理到本地的目录，由 `generate_data.py` 以 `file:///` 加载。请确保 `config.yaml` 中 `paths.root_dir`（或脚本内置默认值）指向的图鉴根目录保持原位；若移动或重新采集，重新运行脚本生成 `data.js` 即可（卡牌 ID 基于名称，收藏数据不丢失）。
+图片来自集卡册整理到本地的目录，由 `generate_data.py` 以 `file:///` 路径加载。请确保 `config.yaml` 中 `paths.root_dirs` 指向的目录保持原位；若移动或重新采集，重新运行脚本生成 `data.js` 即可（卡牌 ID 基于名称，收藏数据不丢失）。
 
 **收藏数据存在哪里？会丢失吗？**
 
@@ -150,12 +162,7 @@ cp config.example.yaml config.yaml
 
 ## 📝已知问题 / 待改进点
 
-- [x] 多 IP 支持：v1.0 新增 IP 切换器、每 IP 主题色与收藏隔离，数据脚本改为按根目录遍历各 IP
-- [x] 不同卡包的同级别卡牌完全一致时的去重标记：v0.3 已通过智能去重标记（文件名 + wHash 感知哈希聚类）解决
-- [x] 卡牌预览图边缘模糊：删除 `image-rendering: crisp-edges` 硬边放大，`object-fit: cover` 改为 `contain`
-- [x] 切换卡包后图片加载延迟：移除 `loading="lazy"`，改后所有图片立即并行加载
-- [ ] 各 IP 的级别（rarity）中文/英文语义排序仍按通用规则，可按手感在 `config.yaml` 的 `rarity_order` 中微调
-- [ ] 新增第四个 IP 时，只需将其子目录放入图鉴根目录并在 `config.yaml` 的 `ips` 中登记即可
+- [ ] 低清晰度卡牌实现超分辨率重置
 
 ## 🤝贡献
 
@@ -168,6 +175,19 @@ cp config.example.yaml config.yaml
 
 ## 📋更新日志
 
+### v2.0
+
+- **新增：** 龙族（集卡社图鉴）IP——多根目录 `root_dirs` 支持，不存在的路径自动跳过
+- **新增：** 龙族排序特殊处理——按 `稀有度 → 后缀编号` 排序；其他 IP 按 `稀有度 → 名称`
+- **变更：** `sort_by_number_ips` 列表配置项已替换为 `card_secondary_sort` 字典配置项，支持 per-IP 显式指定二级排序方式（`"number"` / `"name"`），未配置的 IP 默认走 `"name"`
+- **新增：** config.yaml 强制使用——所有配置（路径、IP、排序等）均从 yaml 读取，不再保留硬编码默认值
+- **新增：** `run_duplicate_detection` 配置项——默认关闭，需要时在 yaml 中开启
+- **新增：** 弹窗入场动画——渐进放大 + 弹性 overshoot 曲线
+- **新增：** 全屏预览入场动画——同风格渐进放大
+- **优化：** 稀有度徽章与名称水平居中
+- **优化：** 滚动条颜色跟随 IP 主题色
+- **优化：** 切换卡包时级别筛选自动重置（若新卡包无该级别）
+
 ### v1.0
 
 - **新增：** 多 IP 合一——内置哆啦A梦、三国志8 REMAKE、CF穿越火线三个 IP，顶部一键切换，数据与收藏按 IP 隔离
@@ -175,7 +195,7 @@ cp config.example.yaml config.yaml
 - **优化：** 切换卡包 / 卡级别时滚动跳动修复（关闭滚动锚定并切换后还原滚动位置）
 - **优化：** 级别排序可配置（DR/CP 紧接 SSR、TR 置于 UR 之前），仅改 config 即生效、无需重跑脚本
 - **优化：** IP 列表去写死——前端运行时从 `data.js` 派生 IP 列表，已知 IP 精选配色、未知 IP 哈希自动配色，新增 IP 零代码改动
-- **优化：** 仓库由 `doraemon-card-collection` 更名为 `kadong-card-collection`（GitHub / Gitee 同步）
+- **优化：** 仓库由 `doraemon-card-collection` 更名为 `card-collection-book`（GitHub / Gitee 同步）
 
 ### v0.3
 
@@ -201,11 +221,11 @@ cp config.example.yaml config.yaml
 
 本项目自身只做展示与收藏管理，卡牌数据来自上游采集工具：
 
-- **[kadong_cards_crawler](https://github.com/5244DragonLin/kadong_cards_crawler)** — 卡动文创（kadong）正版卡牌图鉴爬取/整理工具，本项目的 `data.js` 数据源（覆盖哆啦A梦 / 三国志8 REMAKE / CF穿越火线等多个 IP）
+- **[kadong_cards_crawler](https://github.com/5244DragonLin/kadong_cards_crawler)** — 各商家正版卡牌图鉴爬取/整理工具，本项目的 `data.js` 数据源（覆盖哆啦A梦 / 三国志8 REMAKE / CF穿越火线等多个 IP）
   - GitHub：https://github.com/5244DragonLin/kadong_cards_crawler
   - Gitee：https://gitee.com/yhl5244/kadong_cards_crawler
 
-> 使用前请先克隆并运行 kadong_cards_crawler 获取图鉴根目录（各 IP 子目录），再在 `config.yaml` 中将 `paths.root_dir` 指向它的根目录，最后运行 `python generate_data.py`。
+> 使用前请先克隆并运行 kadong_cards_crawler 获取图鉴根目录（各 IP 子目录），再在 `config.yaml` 中将 `paths.root_dirs` 指向它的根目录，最后运行 `python generate_data.py`。
 
 ## ☕捐赠
 
@@ -224,3 +244,4 @@ cp config.example.yaml config.yaml
 ## 📃许可证
 
 本项目基于 [MIT](LICENSE) 协议开源。
+*（内容由AI生成，仅供参考）*

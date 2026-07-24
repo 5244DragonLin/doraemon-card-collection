@@ -1,7 +1,7 @@
-# 卡动文创图鉴 — 系统架构设计 + 任务分解
+# 集卡册 — 系统架构设计 + 任务分解
 
 > 架构师：高见远（Bob）  
-> 项目：卡动文创图鉴升级重做  
+> 项目：集卡册升级重做  
 > 日期：2025-07  
 
 ---
@@ -155,7 +155,7 @@ onDragEnd():
 │  (暖色调主题 + 布局 + 3D圆环 + 动画 + 响应式)      │
 ├──────────────────────────────────────────────────┤
 │                localStorage                       │
-│  key: kadong_collection_v1_<IP>                     │
+│  key: ccb_collection_v1_<IP>                     │
 │  value: {"ownedIds": ["id1","id2",...]}          │
 └──────────────────────────────────────────────────┘
 ```
@@ -166,10 +166,10 @@ onDragEnd():
 
 ## 2. 文件列表及相对路径
 
-项目根目录：`kadong-card-collection/`
+项目根目录：`card-collection-book/`
 
 ```
-kadong-card-collection/
+card-collection-book/
 ├── index.html              # 新版主页面（HTML 结构 + 引用外部 CSS/JS）
 ├── index-v1.html           # 旧版备份（从原 index.html 重命名）
 ├── style.css               # 全部样式（暖色调 + 3D圆环 + 动画 + 响应式）
@@ -223,7 +223,7 @@ kadong-card-collection/
   "哆啦A梦": {
     "meta": {
       "generatedAt": "2025-07-05T21:40:00",
-      "sourceDir": "D:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦",
+      "sourceDir": "E:/BaiduSyncdisk/其他/集卡册/哆啦A梦",
       "totalPacks": 15,
       "totalCards": 1708,
       "version": "2.0"
@@ -242,7 +242,7 @@ kadong-card-collection/
           "rarity": "R",
           "rarityName": "经典角色卡",
           "number": "01",
-          "path": "D:/BaiduSyncdisk/其他/卡动文创图鉴/哆啦A梦/卡牌｜地球交响乐｜第1弹/R-经典角色卡-01.png",
+          "path": "E:/BaiduSyncdisk/其他/集卡册/哆啦A梦/卡牌｜地球交响乐｜第1弹/R-经典角色卡-01.png",
           "fileExt": ".png"
         }
       ]
@@ -255,7 +255,7 @@ kadong-card-collection/
 
 > **去重组**：`duplicate_groups.js` 导出 `var DUPLICATE_GROUPS = { "<IP>": { "<cardId>": <groupIndex>, ... }, ... }`，用于跨卡包同名卡牌的"重复"聚合展示。
 
-> **收藏持久化**：每个 IP 的收藏状态独立存储在 `localStorage`，key 为 `kadong_collection_v1_<IP>`。
+> **收藏持久化**：每个 IP 的收藏状态独立存储在 `localStorage`，key 为 `ccb_collection_v1_<IP>`。
 
 ### 3.2 字段定义
 
@@ -451,7 +451,7 @@ sequenceDiagram
     HTML->>Carousel: <script src="carousel.js">
     App->>App: App.init()
     App->>Store: CollectionStore.load()
-    Store->>LS: getItem('kadong_collection_v1_<IP>')
+    Store->>LS: getItem('ccb_collection_v1_<IP>')
     LS-->>Store: {"ownedIds": [...]}
     Store-->>App: ownedIds Set 就绪
 
@@ -508,7 +508,7 @@ sequenceDiagram
     Note over User,LS: ========== 阶段7：标记拥有 ==========
     User->>Carousel: 点击"标记拥有"按钮
     Carousel->>Store: CollectionStore.toggle(cardId)
-    Store->>LS: setItem('kadong_collection_v1_<IP>', JSON.stringify)
+    Store->>LS: setItem('ccb_collection_v1_<IP>', JSON.stringify)
     Store-->>Carousel: 返回新状态
     Carousel->>Carousel: 更新弹窗内按钮状态（弹跳星标动画）
     Carousel->>App: App.onOwnedChanged(cardId)
@@ -561,7 +561,7 @@ sequenceDiagram
     participant Carousel as CoverflowCarousel
 
     Source->>Store: toggle(cardId)
-    Store->>LS: 更新 kadong_collection_v1_<IP>
+    Store->>LS: 更新 ccb_collection_v1_<IP>
     Store-->>Source: 返回新 isOwned 状态
 
     alt 触发源是列表页
@@ -595,7 +595,7 @@ sequenceDiagram
 
 ### 5.2 架构假设
 
-1. **图片路径稳定**：假设源目录 `D:\BaiduSyncdisk\其他\卡动文创图鉴\哆啦A梦` 不会移动。若移动，需重新运行 `generate_data.py`。卡牌 ID 基于 `packFullName + cardName` 哈希，不依赖路径，所以收藏数据不受路径变化影响。
+1. **图片路径稳定**：假设源目录 `E:\BaiduSyncdisk\其他\集卡册\哆啦A梦` 不会移动。若移动，需重新运行 `generate_data.py`。卡牌 ID 基于 `packFullName + cardName` 哈希，不依赖路径，所以收藏数据不受路径变化影响。
 2. **浏览器兼容性**：假设用户使用现代浏览器（Chrome 90+ / Edge 90+ / Firefox 88+），支持 CSS 3D Transform、IntersectionObserver、CSS Custom Properties。
 3. **localStorage 容量**：卡牌总量约 1000+，收藏 ID 列表占用空间极小（< 100KB），远低于 localStorage 5MB 限制。
 4. **图片尺寸**：假设所有卡牌图片纵横比接近 3:4，CSS 使用 `aspect-ratio: 3/4` 统一显示。若有异常比例图片，`object-fit: cover` 裁切处理。
@@ -695,7 +695,7 @@ sequenceDiagram
    - `RARITY_ORDER`：30 种级别排序表（29 个 ASCII 级别 + 金属卡），详见 [8.1 节](#81-rarity_order-级别排序表)
    - `RARITY_RANK`：`{level: rank}` 映射，`?` → -1，未知 → 99999
    - `LEVEL_COLORS`：每个级别的渐变色映射 `{level: {bg: "linear-gradient(...)", text: "#fff"}}`，详见 [8.2 节](#82-level_colors-级别颜色映射表)
-   - `STORAGE_KEY`：`'kadong_collection_v1_<IP>'`
+   - `STORAGE_KEY`：`'ccb_collection_v1_<IP>'`
    - `COVERFLOW` 参数对象：`{ANGLE_STEP: 28, SPACING: 130, DEPTH: 100, MIN_SCALE: 0.4, MIN_OPACITY: 0.15, MAX_BLUR: 6, MAX_VISIBLE: 4}`
    - 全局暴露：`window.AppConfig = { RARITY_ORDER, RARITY_RANK, LEVEL_COLORS, STORAGE_KEY, COVERFLOW }`
 
@@ -1245,7 +1245,7 @@ with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
 
 ```javascript
 // Key
-const STORAGE_KEY = 'kadong_collection_v1_<IP>';
+const STORAGE_KEY = 'ccb_collection_v1_<IP>';
 
 // Value (JSON string)
 {

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-卡动文创图鉴 - 数据验证脚本（多 IP 版）
+集卡册 - 数据验证脚本（多 IP 版）
 
 验证 data.js 中每个 IP 的数据完整性：
 1. 每个 IP 卡包数 > 0
@@ -74,7 +74,7 @@ def load_data_js(filepath):
 
 def main():
     print("=" * 60)
-    print("卡动文创图鉴 - 数据验证脚本（多 IP）")
+    print("集卡册 - 数据验证脚本（多 IP）")
     print("=" * 60)
 
     # 加载数据

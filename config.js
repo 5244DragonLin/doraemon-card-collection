@@ -1,5 +1,5 @@
 /**
- * 卡动文创图鉴 - 全局配置常量（多 IP 版）
+ * 集卡册 - 全局配置常量（多 IP 版）
  *
  * 定义 IP 列表 / 每 IP 主题色 / 级别排序表 / 级别颜色映射 /
  * Coverflow 3D 参数 / localStorage key / 动画时长等。
@@ -21,7 +21,8 @@
   var IP_LIST_FALLBACK = [
     "哆啦A梦",
     "三国志8 REMAKE",
-    "CF穿越火线"
+    "CF穿越火线",
+    "龙族"
   ];
   function ipList() {
     var keys = Object.keys(global.CARD_COLLECTIONS || {});
@@ -48,6 +49,11 @@
       accent:   "#E74C3C",
       accent2:  "#34495E",
       headerBg: "linear-gradient(135deg, #1B2631 0%, #34495E 55%, #E74C3C 100%)"
+    },
+    "龙族": {
+      accent:   "#16A085",
+      accent2:  "#1ABC9C",
+      headerBg: "linear-gradient(135deg, #0E6655 0%, #16A085 50%, #0E6655 100%)"
     }
   };
 
@@ -65,7 +71,9 @@
     /* 中文 / 特殊级别（统一排最后，按展示需要微调） */
     "金属卡", "特殊SSP", "隐藏款SSP金版", "隐藏款SSP", "SSP银版",
     "隐藏款", "隐藏版", "奇妙世界", "梦想摇摇乐", "流光云彩",
-    "趣味拼图", "双人款", "单人款", "梦幻花边", "EX内页", "EX封面"
+    "趣味拼图", "双人款", "单人款", "梦幻花边", "EX内页", "EX封面",
+    /* 龙族（集卡社图鉴）专属级别 */
+    "SEC", "LGP", "USP", "XP", "MSP", "CSP"
   ];
 
   /**
@@ -128,6 +136,13 @@
     "QR":      { bg: "linear-gradient(135deg, #66BB6A, #2E7D32)", text: "#fff" },
     "MP":      { bg: "linear-gradient(135deg, #FF7043, #BF360C)", text: "#fff" },
     "EXP":     { bg: "linear-gradient(135deg, #8D6E63, #3E2723)", text: "#fff" },
+    /* 龙族（集卡社图鉴）专属级别 */
+    "SEC":     { bg: "linear-gradient(135deg, #BFC9CA, #7F8C8D)", text: "#fff" },
+    "LGP":     { bg: "linear-gradient(135deg, #1ABC9C, #117A65)", text: "#fff" },
+    "USP":     { bg: "linear-gradient(135deg, #9B59B6, #6C3483)", text: "#fff" },
+    "XP":      { bg: "linear-gradient(135deg, #E67E22, #CA6F1E)", text: "#fff" },
+    "MSP":     { bg: "linear-gradient(135deg, #3498DB, #21618C)", text: "#fff" },
+    "CSP":     { bg: "linear-gradient(135deg, #FD79A8, #E84393)", text: "#fff" },
     /* 中文 / 特殊级别（周边与隐藏款） */
     "金属卡":   { bg: "linear-gradient(135deg, #B0BEC5, #455A64)", text: "#fff" },
     "特殊SSP":  { bg: "linear-gradient(135deg, #BA68C8, #4A148C)", text: "#fff" },
@@ -155,7 +170,7 @@
    * localStorage 存储键（按 IP 隔离，避免不同 IP 收藏互相串扰）
    * value 格式: {"ownedIds": ["id1","id2",...], "savedAt": "ISO8601"}
    */
-  var STORAGE_KEY_BASE = 'kadong_collection_v1';
+  var STORAGE_KEY_BASE = 'ccb_collection_v1';
   function storageKeyFor(ip) {
     return STORAGE_KEY_BASE + '_' + ip;
   }

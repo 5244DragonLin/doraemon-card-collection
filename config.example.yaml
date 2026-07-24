@@ -8,9 +8,15 @@
 
 # ---------- 路径配置 ----------
 paths:
-  # 卡牌图片根目录（包含各 IP 子目录：哆啦A梦 / 三国志8 REMAKE / CF穿越火线）
-  # 该目录由上游采集工具 kadong_cards_crawler 生成（见 README 「关联项目」）
-  root_dir: "<你的本地图片根目录绝对路径，例如 D:\BaiduSyncdisk\其他\卡动文创图鉴>"
+  # 卡牌图片根目录（列表，支持多个来源目录；每个目录下含各 IP 子目录）
+  # 例如：
+  #   root_dirs:
+  #     - "E:\BaiduSyncdisk\其他\卡动文创图鉴"
+  #     - "E:\BaiduSyncdisk\其他\集卡社图鉴"
+  root_dirs:
+    - "<你的本地图片根目录之一，例如 E:\BaiduSyncdisk\其他\卡动文创图鉴>"
+    - "<你的本地图片根目录之二，例如 E:\BaiduSyncdisk\其他\集卡社图鉴>"
+    - "<你的本地图片根目录之三（可选），不存在时自动跳过>"  # 支持任意多个路径，不存在的自动跳过，不影响其他路径
   # data.js 输出路径（默认项目根目录下）
   output_file: "data.js"
 
@@ -27,6 +33,21 @@ ips:
   - "哆啦A梦"
   - "三国志8 REMAKE"
   - "CF穿越火线"
+  - "龙族"
+
+# ---------- 卡牌二级排序方式（per-IP 配置，可选值：number / name，默认 name）----------
+# number：按「稀有度 → 编号」排序；name：按「稀有度 → 名称」排序
+card_secondary_sort:
+  "龙族": "number"
+
+# ---------- 卡包类型强制覆盖（目录名不含「｜」类型分隔符的 IP，如集卡社图鉴/龙族，归为「卡牌」类与其它 IP 统一）----------
+pack_type_overrides:
+  "龙族": "卡牌"
+
+# ---------- 重复图片检测（默认关闭，依赖 Pillow + imagehash 库）----------
+# 开启后 data.js 生成完毕时会自动运行 generate_duplicate_groups.py
+# 首次使用需安装依赖: pip install pillow imagehash
+run_duplicate_detection: false
 
 # ---------- 各 IP 卡包排序（自定义顺序，未列出的 IP 按文件夹名排序）----------
 # 仅哆啦A梦有完整手写顺序；三国志8 REMAKE / CF穿越火线 省略 → 按文件夹名排序
@@ -47,6 +68,12 @@ ip_pack_orders:
     - "周边｜珍藏版徽章｜第1弹"
     - "周边｜梦想摇摇乐｜第1弹"
     - "周边｜妙趣版立牌｜第1弹"
+
+  # 龙族（集卡社图鉴）：文件夹名排序会把「第一弹」排到最后，这里手动置顶
+  "龙族":
+    - "第一弹"
+    - "时墟刻印"
+    - "幻梦绮想"
 
 # ---------- 全局级别排序（从低到高，覆盖 3 个 IP；与 config.js 中 RARITY_ORDER 一致）----------
 rarity_order:
@@ -104,3 +131,10 @@ rarity_order:
   - "梦幻花边"
   - "EX内页"
   - "EX封面"
+  # 龙族（集卡社图鉴）专属级别
+  - "SEC"
+  - "LGP"
+  - "USP"
+  - "XP"
+  - "MSP"
+  - "CSP"

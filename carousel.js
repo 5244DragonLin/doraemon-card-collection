@@ -1,5 +1,5 @@
 /**
- * 卡动文创图鉴 - 3D Coverflow 圆环预览模块 (carousel.js)
+ * 集卡册 - 3D Coverflow 圆环预览模块 (carousel.js)
  *
  * 实现：
  *   - 真 3D Coverflow 渲染（perspective + rotateY + translateZ + scale + opacity + blur）
@@ -212,7 +212,7 @@
     /**
      * 更新居中卡牌内容（主图、信息、计数器）
      */
-    updateCenterContent: function () {
+    updateCenterContent: function (skipAnimation) {
       var centerIdx = Math.round(this.virtualIndex);
       if (centerIdx < 0) centerIdx = 0;
       if (centerIdx >= this.cards.length) centerIdx = this.cards.length - 1;
@@ -226,8 +226,9 @@
       // 更新主图区
       var mainImg = document.getElementById('modalMainImg');
       if (mainImg) {
+        var animStyle = (this.isDragging || skipAnimation) ? ' style="animation:none"' : '';
         mainImg.innerHTML = '<img src="' + imgSrc + '" alt="' + this._escapeHtml(card.name) + '" ' +
-          'title="点击查看原图" ' +
+          'title="点击查看原图" ' + animStyle + ' ' +
           'onclick="CoverflowCarousel.openLightbox(\'' + imgSrc.replace(/'/g, "\\'") + '\')" ' +
           'onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">' +
           '<div class="modal-img-placeholder">' +
@@ -246,7 +247,7 @@
           '<div class="modal-card-rarity-name">' +
           '<span class="rarity-badge" style="background:' + color.bg + ';color:' + color.text + ';">' +
           this._escapeHtml(card.rarity) + '</span>' +
-          '<span style="margin-left:8px;">' + rarityNameText + '</span>' +
+          '<span>' + rarityNameText + '</span>' +
           '</div>' +
           '<button class="modal-own-toggle' + (isOwned ? ' owned' : '') + '" id="modalOwnToggle">' +
           (isOwned ? '⭐ 已拥有' : '☆ 标记拥有') +
@@ -313,7 +314,7 @@
       if (newIndex > this.cards.length - 1) newIndex = this.cards.length - 1;
       this.virtualIndex = newIndex;
       this.render();
-      this.updateCenterContent();
+      this.updateCenterContent(true);
     },
 
     /* ================================================================
@@ -462,7 +463,7 @@
       this.virtualIndex = snapIndex;
 
       this.render();
-      this.updateCenterContent();
+      this.updateCenterContent(true);
     },
 
     /**

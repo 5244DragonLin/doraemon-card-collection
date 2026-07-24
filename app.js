@@ -1,5 +1,5 @@
 /**
- * 卡动文创图鉴 - 核心交互逻辑 (app.js)
+ * 集卡册 - 核心交互逻辑 (app.js)
  *
  * 包含：
  *   - CollectionStore：收藏状态管理（localStorage 持久化）
@@ -320,7 +320,7 @@
       // 绑定事件
       this._bindEvents();
 
-      console.log('卡动文创图鉴 v2.0 初始化完成 · 当前 IP：' + this.currentIp +
+      console.log('集卡册 v2.0 初始化完成 · 当前 IP：' + this.currentIp +
         ' · 卡包 ' + this.data.meta.totalPacks +
         ' 个 · 卡牌 ' + this.data.meta.totalCards + ' 张');
     },
@@ -520,6 +520,12 @@
       this.currentPackIndex = idx;
       this.searchFilter = '';
       // 保留 rarityFilter 与 currentFilter（拥有状态筛选），跨卡包不重置
+      // 但如果当前级别筛选在新卡包中不存在，则重置为全部显示
+      if (this.rarityFilter) {
+        var pack = this.data.packs[idx];
+        var hasRarity = pack && pack.cards && pack.cards.some(function (c) { return c.rarity === this.rarityFilter; }, this);
+        if (!hasRarity) this.rarityFilter = '';
+      }
 
       // 清空搜索框
       var searchInput = document.getElementById('searchInput');
@@ -583,7 +589,7 @@
       this.selectPack(0);
       // 更新标题中的当前 IP
       var titleEl = document.getElementById('headerTitle');
-      if (titleEl) titleEl.textContent = '卡动文创图鉴 · ' + ip;
+      if (titleEl) titleEl.textContent = '集卡册 · ' + ip;
     },
 
     /**
@@ -949,7 +955,7 @@
       var pct = total > 0 ? Math.round(owned / total * 100) : 0;
       document.getElementById('headerStats').innerHTML =
         '已收集 <strong>' + owned + '</strong> / ' + total +
-        ' <span style="font-size:0.85rem;">(' + pct + '%)</span>';
+        ' <span>(' + pct + '%)</span>';
     },
 
     /**
@@ -1019,7 +1025,7 @@
       var url = URL.createObjectURL(blob);
       var a = document.createElement('a');
       a.href = url;
-      a.download = 'kadong-collection-' + (App.currentIp || 'all') + '-backup-' +
+      a.download = 'ccb-collection-' + (App.currentIp || 'all') + '-backup-' +
         new Date().toISOString().slice(0, 10) + '.json';
       document.body.appendChild(a);
       a.click();
